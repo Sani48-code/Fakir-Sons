@@ -48,11 +48,11 @@ export function MobileDrawer({
       >
         <div className="flex h-[76px] items-center justify-between border-b border-thread px-4">
           <Image
-            src="/brand/logo-dark.png"
+            src="/brand/logo.png"
             alt={SITE.name}
-            width={108}
-            height={56}
-            className="h-14 w-auto"
+            width={1449}
+            height={843}
+            className="h-[52px] w-auto"
           />
           <button onClick={onClose} aria-label="Close menu" className="p-2">
             <CloseIcon />

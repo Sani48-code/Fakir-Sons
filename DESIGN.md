@@ -47,6 +47,13 @@ Dark sections (footer, wholesale band) use `--wine` background with `--cotton` t
 - Prices: Jost 500 with tabular numbers, ৳ symbol before the amount: ৳ 2,450.
 - Scale: 12 / 14 / 16 / 20 / 28 / 40 / 64 / 88px. Hero headlines 64–88px desktop, 40px mobile.
 
+## Logo and header
+
+- One logo only: the full-colour original, `public/brand/logo.png` (transparent PNG, `logo@2x.png` for retina). No white/light/dark variants, and never recolour it. It must always be fully readable, so it only sits on `--paper` or `--cotton`.
+- Header is always solid `--paper` with a 1px `--thread` bottom border, on every page including home. It is never transparent and never overlays the hero; the hero starts below it.
+- Desktop: 112px tall, logo ~92px tall. On scroll it shrinks smoothly (300ms ease-out) to 80px with logo ~64px. Mobile: logo ~52px (header 68px, 60px on scroll).
+- Footer: top area on `--cotton` with the logo ~120px tall and the gold "Est." line; link columns and copyright bar sit below it on `--wine`.
+
 ## Shape, line and space
 
 - Corners: 0 for images and sections, 2px max for buttons and inputs. No pills.
@@ -68,7 +75,7 @@ Dark sections (footer, wholesale band) use `--wine` background with `--cotton` t
 
 ## Motion
 
-Quiet and fast. 200–300ms ease-out. Allowed: image crossfade on product hover, header background change on scroll, drawer slide, slow (6–8s) hero slide change. Not allowed: scroll-triggered fade-ins on every block, parallax everywhere, bouncing.
+Quiet and fast. 200–300ms ease-out. Allowed: image crossfade on product hover, header height shrink on scroll, drawer slide, slow (6–8s) hero slide change. Not allowed: scroll-triggered fade-ins on every block, parallax everywhere, bouncing.
 
 ## Storefront pages
 

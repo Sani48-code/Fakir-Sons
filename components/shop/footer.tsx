@@ -16,36 +16,44 @@ const SOCIALS = [
 
 export function Footer() {
   return (
-    <footer className="bg-wine text-cotton/80">
-      <div className="mx-auto max-w-[1440px] px-4 py-14 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr_1.3fr]">
-          {/* Brand + socials */}
-          <div>
+    <footer>
+      {/* Brand area on cotton */}
+      <div className="border-t border-thread bg-cotton text-ink">
+        <div className="mx-auto flex max-w-[1440px] flex-col items-start gap-8 px-4 py-12 sm:flex-row sm:items-center sm:justify-between lg:px-8">
+          <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-8">
             <Image
-              src="/brand/logo-light.png"
+              src="/brand/logo.png"
               alt={SITE.name}
-              width={216}
-              height={112}
-              className="h-auto w-[216px]"
+              width={1449}
+              height={843}
+              className="h-[120px] w-auto"
             />
-            <p className="label mt-4 text-gold">Est. 19XX · Dhaka</p>
-            <p className="mt-3 max-w-xs text-sm text-cotton/60">
-              Quality clothing and textile equipment, delivered across Bangladesh.
-            </p>
-            <div className="mt-5 flex gap-3">
-              {SOCIALS.map(({ label, href, Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  className="flex h-10 w-10 items-center justify-center border border-cotton/25 text-cotton transition-colors hover:border-gold hover:text-gold"
-                >
-                  <Icon width={18} height={18} />
-                </a>
-              ))}
+            <div>
+              <p className="label text-gold">Est. 19XX · Dhaka</p>
+              <p className="mt-3 max-w-xs text-sm text-stone">
+                Quality clothing and textile equipment, delivered across Bangladesh.
+              </p>
             </div>
           </div>
+          <div className="flex gap-3">
+            {SOCIALS.map(({ label, href, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                aria-label={label}
+                className="flex h-10 w-10 items-center justify-center border border-ink/25 text-ink transition-colors hover:border-maroon hover:text-maroon"
+              >
+                <Icon width={18} height={18} />
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
 
+      {/* Links + legal on wine */}
+      <div className="bg-wine text-cotton/80">
+      <div className="mx-auto max-w-[1440px] px-4 py-14 lg:px-8">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1.4fr]">
           {FOOTER_COLUMNS.map((col) => (
             <div key={col.title}>
               <h3 className="label mb-4 text-cotton">
@@ -126,6 +134,7 @@ export function Footer() {
         <p className="mx-auto max-w-[1440px] px-4 py-4 text-xs text-cotton/50 lg:px-8">
           © {SITE.copyrightYear} {SITE.name}. All rights reserved.
         </p>
+      </div>
       </div>
     </footer>
   );

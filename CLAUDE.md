@@ -74,8 +74,8 @@ Use our own brand name, logo, photos and copy. Never copy another brand's logo, 
 
 ### Global layout
 - Announcement bar (thin, brand accent color): hotline number, free delivery / offer text; right side: Account, Store locations, Wholesale login.
-- Header (76px tall, ~56px logo): logo left, category nav center (Men, Women, Kids, Winter, Textile Equipment, Wholesale, Sale in red), icons right (search, account, wishlist, cart with count badge).
-  - On home page: transparent over the hero image, turns solid on scroll. Sticky on all pages.
+- Header: logo left, category nav center (Men, Women, Kids, Winter, Textile Equipment, Wholesale, Sale in red), icons right (search, account, wishlist, cart with count badge).
+  - Always solid (`paper` background, hairline border), never transparent, on every page including home. Sticky. Desktop 112px tall with ~92px logo, shrinks smoothly to 80px / ~64px on scroll; mobile logo ~52px. Content, including the hero, starts below the header.
   - Nav items open a mega-menu dropdown with subcategories.
   - Mobile: hamburger drawer + bottom icons.
 - Floating "Chat with us" button bottom-right (WhatsApp / Messenger link).

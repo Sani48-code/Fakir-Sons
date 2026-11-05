@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { NAV, SITE } from "@/lib/site";
 import {
@@ -18,9 +17,7 @@ import { MobileDrawer } from "./mobile-drawer";
 const CART_COUNT = 0; // placeholder until the cart exists
 
 export function Header() {
-  const isHome = usePathname() === "/";
   const [scrolled, setScrolled] = useState(false);
-  const [hovered, setHovered] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const closeDrawer = useCallback(() => setDrawerOpen(false), []);
 
@@ -31,21 +28,12 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Transparent only on home, at the top, with nothing hovered/open.
-  const solid = !isHome || scrolled || hovered || drawerOpen;
-
   return (
     <>
+      {/* Always solid. Shrinks on scroll: desktop 112 -> 80px, mobile 68 -> 60px. */}
       <header
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        // On home the header overlays the hero: pull following content up by its height.
-        className={`sticky top-0 z-50 h-[76px] transition-colors duration-300 ${
-          isHome ? "-mb-[76px]" : ""
-        } ${
-          solid
-            ? "border-b border-thread bg-paper text-ink"
-            : "border-b border-transparent bg-transparent text-cotton"
+        className={`sticky top-0 z-50 border-b border-thread bg-paper text-ink transition-[height] duration-300 ease-out ${
+          scrolled ? "h-[60px] lg:h-[80px]" : "h-[68px] lg:h-[112px]"
         }`}
       >
         <div className="mx-auto grid h-full max-w-[1440px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 lg:flex lg:justify-between lg:px-8">
@@ -58,38 +46,32 @@ export function Header() {
             <MenuIcon />
           </button>
 
-          {/* Logo: light over the transparent hero, dark when solid */}
+          {/* Logo: logo ~92px tall on desktop (64 scrolled), ~52px on mobile */}
           <Link
             href="/"
             aria-label={SITE.name}
-            className="relative block h-14 w-[108px] lg:shrink-0"
+            className={`relative block aspect-[1449/843] transition-[height] duration-300 ease-out lg:shrink-0 ${
+              scrolled ? "h-[44px] lg:h-[64px]" : "h-[52px] lg:h-[92px]"
+            }`}
           >
             <Image
-              src="/brand/logo-light.png"
+              src="/brand/logo.png"
               alt={SITE.name}
               fill
               priority
-              sizes="108px"
-              className={`object-contain transition-opacity duration-300 ${solid ? "opacity-0" : "opacity-100"}`}
-            />
-            <Image
-              src="/brand/logo-dark.png"
-              alt=""
-              fill
-              priority
-              sizes="108px"
-              className={`object-contain transition-opacity duration-300 ${solid ? "opacity-100" : "opacity-0"}`}
+              sizes="(min-width: 1024px) 160px, 90px"
+              className="object-contain"
             />
           </Link>
 
           {/* Desktop nav + mega-menu */}
-          <nav aria-label="Main" className="hidden lg:block">
-            <ul className="flex items-center gap-7 label">
+          <nav aria-label="Main" className="hidden h-full lg:block">
+            <ul className="flex h-full items-center gap-7 label">
               {NAV.map((item) => (
-                <li key={item.label} className="group">
+                <li key={item.label} className="group h-full">
                   <Link
                     href={item.href}
-                    className={`flex h-[76px] items-center gap-1 ${
+                    className={`flex h-full items-center gap-1 ${
                       item.sale ? "text-madder" : ""
                     }`}
                   >
