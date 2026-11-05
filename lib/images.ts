@@ -9,7 +9,7 @@
 // hero-01-panjabi-man: Sadanand Gunaga (Pexels) https://www.pexels.com/photo/a-man-in-beige-kurta-5938772/
 // hero-02-saree-woman: Swarup Photography (Pexels) https://www.pexels.com/photo/woman-in-a-blule-traditional-dress-with-saree-13408260/
 // hero-03-salwar-kameez: Gursher Gill (Pexels) https://www.pexels.com/photo/woman-in-traditional-clothing-sitting-on-concrete-stairs-14284159/
-// hero-04-winter-coat: Pavel Danilyuk (Pexels) https://www.pexels.com/photo/woman-in-white-coat-with-white-knitted-cap-standing-on-snow-covered-ground-6712145/
+// hero-04-winter-shawl: Muneeb Malhotra (Pexels) https://www.pexels.com/photo/portrait-of-a-female-model-wearing-a-yellow-dress-and-a-shawl-26970914/
 // hero-05-family-traditional: BD Jewel (Pexels) https://www.pexels.com/photo/family-standing-in-traditional-clothing-in-front-of-building-24866518/
 // hero-06-fabric-shop: Bem Partington (Pexels) https://www.pexels.com/photo/storage-of-carpets-20531149/
 // men-01-panjabi-blue-embroidered: Ali Photographer (Pexels) https://www.pexels.com/photo/a-portrait-of-a-man-wearing-shirt-16777538/
@@ -27,7 +27,7 @@
 // women-05-kurti: Kunal Yadav photography (Pexels) https://www.pexels.com/photo/elegant-portrait-of-a-woman-in-traditional-indian-attire-35521738/
 // women-06-kurti: Neha Mishra (Pexels) https://www.pexels.com/photo/elegant-woman-in-chikankari-kurti-in-lucknow-28512787/
 // women-07-shawl: Ahmed (Pexels) https://www.pexels.com/photo/portrait-of-woman-in-coat-and-scarf-19467713/
-// women-08-winter: Orkhan Sweden (Pexels) https://www.pexels.com/photo/winter-portrait-of-woman-in-colorful-coat-outdoors-37811374/
+// women-08-winter-cardigan: Muneeb Malhotra (Pexels) https://www.pexels.com/photo/eastern-dresses-shoot-28213789/
 // kids-01-panjabi-boy: Raza Arbab (Pexels) https://www.pexels.com/photo/smiling-boy-in-traditional-south-asian-attire-34616145/
 // kids-02-girl-sharara: Khadija Hassan Baloch (Pexels) https://www.pexels.com/photo/smiling-child-in-traditional-dress-at-celebration-38438949/
 // kids-03-summer-outfit: Ismael Abdal Naby (Pexels) https://www.pexels.com/photo/a-little-girl-in-a-cute-outfit-14761172/
@@ -37,6 +37,7 @@
 // winter-02-sweater-stack: Anna Khomutova (Pexels) https://www.pexels.com/photo/stack-of-knitted-sweaters-on-white-surface-5704187/
 // winter-03-jacket: cottonbro studio (Pexels) https://www.pexels.com/photo/a-man-in-puffer-jacket-and-hoodie-7026775/
 // winter-04-wool-blanket: Talha Kuğu (Pexels) https://www.pexels.com/photo/artistic-portrait-with-cozy-brown-blanket-37039717/
+// winter-05-banner: Vlada Karpovich (Pexels) https://www.pexels.com/photo/close-up-photo-of-folded-knitted-sweaters-5603269/
 // accessories-01-scarf: Rachel Claire (Pexels) https://www.pexels.com/photo/clothes-hanging-on-hooks-on-wall-4846383/
 // accessories-02-hat: Mathias Reding (Pexels) https://www.pexels.com/photo/straw-hat-on-round-table-4394282/
 // accessories-03-bag: Vie Studio (Pexels) https://www.pexels.com/photo/brown-tote-bag-on-white-table-8148587/
@@ -119,15 +120,15 @@ export const PHOTOS: Photo[] = [
     pageUrl: "https://www.pexels.com/photo/woman-in-traditional-clothing-sitting-on-concrete-stairs-14284159/",
   },
   {
-    key: "hero-04-winter-coat",
+    key: "hero-04-winter-shawl",
     group: "hero",
     source: "pexels",
-    url: "https://images.pexels.com/photos/6712145/pexels-photo-6712145.jpeg",
-    alt: "Woman in a white coat and knitted cap with a scarf on snow",
-    description: "A woman in a white teddy coat and knitted cap holds a scarf on a snowy frozen lake.",
+    url: "https://images.pexels.com/photos/26970914/pexels-photo-26970914.jpeg",
+    alt: "Woman wearing a pink floral shawl over a cream kurti in a soft studio setting",
+    description: "A South Asian woman in a cream kurti draping a pink floral shawl over her shoulder, with pampas grass and a curtain behind her.",
     orientation: "landscape",
-    photographer: "Pavel Danilyuk",
-    pageUrl: "https://www.pexels.com/photo/woman-in-white-coat-with-white-knitted-cap-standing-on-snow-covered-ground-6712145/",
+    photographer: "Muneeb Malhotra",
+    pageUrl: "https://www.pexels.com/photo/portrait-of-a-female-model-wearing-a-yellow-dress-and-a-shawl-26970914/",
   },
   {
     key: "hero-05-family-traditional",
@@ -317,15 +318,15 @@ export const PHOTOS: Photo[] = [
     pageUrl: "https://www.pexels.com/photo/portrait-of-woman-in-coat-and-scarf-19467713/",
   },
   {
-    key: "women-08-winter",
+    key: "women-08-winter-cardigan",
     group: "women",
     source: "pexels",
-    url: "https://images.pexels.com/photos/37811374/pexels-photo-37811374.jpeg",
-    alt: "Woman in a patterned padded winter coat with fur hood and teal scarf",
-    description: "Woman in a patterned padded winter coat with fur hood and teal scarf outdoors.",
+    url: "https://images.pexels.com/photos/28213789/pexels-photo-28213789.jpeg",
+    alt: "Woman in a black embroidered salwar kameez with a printed shawl-style dupatta",
+    description: "A woman in a black embroidered salwar kameez with a printed dupatta draped over her arm, standing in a styled interior with a teal curtain.",
     orientation: "portrait",
-    photographer: "Orkhan Sweden",
-    pageUrl: "https://www.pexels.com/photo/winter-portrait-of-woman-in-colorful-coat-outdoors-37811374/",
+    photographer: "Muneeb Malhotra",
+    pageUrl: "https://www.pexels.com/photo/eastern-dresses-shoot-28213789/",
   },
   {
     key: "kids-01-panjabi-boy",
@@ -425,6 +426,17 @@ export const PHOTOS: Photo[] = [
     orientation: "portrait",
     photographer: "Talha Kuğu",
     pageUrl: "https://www.pexels.com/photo/artistic-portrait-with-cozy-brown-blanket-37039717/",
+  },
+  {
+    key: "winter-05-banner",
+    group: "winter",
+    source: "pexels",
+    url: "https://images.pexels.com/photos/5603269/pexels-photo-5603269.jpeg",
+    alt: "Stack of folded chunky knit sweaters in warm brown and rust tones",
+    description: "A stack of folded chunky knitted sweaters in brown, rust and grey tones with knitting needles on top.",
+    orientation: "landscape",
+    photographer: "Vlada Karpovich",
+    pageUrl: "https://www.pexels.com/photo/close-up-photo-of-folded-knitted-sweaters-5603269/",
   },
   {
     key: "accessories-01-scarf",

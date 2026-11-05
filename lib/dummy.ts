@@ -101,8 +101,9 @@ const PRODUCT_PHOTOS: Record<string, string[]> = {
   "Infant Soft Romper": ["kids-03-summer-outfit", "kids-04-denim-jacket"], // no infant photo found
   "Ribbed Wool Sweater": ["winter-01-knit-sweater", "winter-02-sweater-stack"],
   "Quilted Winter Jacket": ["men-08-winter-jacket", "winter-03-jacket"],
-  "Handwoven Winter Shawl": ["winter-04-wool-blanket", "women-07-shawl", "women-08-winter"],
+  "Handwoven Winter Shawl": ["winter-04-wool-blanket", "women-07-shawl", "women-08-winter-cardigan"],
   "Fleece Zip Hoodie": ["winter-03-jacket", "men-08-winter-jacket"],
+  "Kids Knit Cardigan": ["kids-04-denim-jacket", "winter-01-knit-sweater"], // no kids knitwear photo found
   "Cotton Twill Cap": ["accessories-02-hat", "accessories-03-bag"],
   "Leather Belt": ["accessories-03-bag", "accessories-02-hat"], // no belt photo found
   "Cotton Handkerchief Set of 3": ["lifestyle-04-holding-folded", "fabric-02-folded-stack", "lifestyle-02-folded-linen"],
@@ -140,7 +141,7 @@ export const CATEGORIES: Category[] = [
   {
     slug: "women",
     name: "Women",
-    image: pic("women-01-saree"),
+    image: pic("hero-03-salwar-kameez"),
     banner: pic("lifestyle-03-colorful-fabric", 2000),
     blurb: "Saree, three-piece and kurti in honest fabrics.",
     sub: [
@@ -153,7 +154,7 @@ export const CATEGORIES: Category[] = [
   {
     slug: "kids",
     name: "Kids",
-    image: pic("kids-01-panjabi-boy"),
+    image: pic("hero-05-family-traditional"),
     banner: pic("lifestyle-04-holding-folded", 2000),
     blurb: "Soft, easy-wash clothes for boys and girls.",
     sub: [
@@ -165,13 +166,14 @@ export const CATEGORIES: Category[] = [
   {
     slug: "winter",
     name: "Winter",
-    image: pic("winter-01-knit-sweater"),
-    banner: pic("lifestyle-02-folded-linen", 2000),
+    image: pic("women-08-winter-cardigan"),
+    banner: pic("winter-05-banner", 2000),
     blurb: "Sweaters, jackets and shawls for the cold months.",
     sub: [
       { slug: "sweater", name: "Sweater" },
       { slug: "jacket", name: "Jacket" },
       { slug: "shawl", name: "Shawl" },
+      { slug: "kids-winter", name: "Kids winter" },
     ],
   },
   {
@@ -231,6 +233,7 @@ type Row = {
   soldOut?: string[];
   stock?: number;
   wholesale?: boolean;
+  fresh?: boolean; // force the NEW label
 };
 
 const ROWS: Row[] = [
@@ -255,10 +258,11 @@ const ROWS: Row[] = [
   { name: "Girls Printed Frock", cat: "kids", sub: "girls", fabric: "COTTON · PRINTED", price: 1190, sale: 990, colors: ["rust", "sky"], sizes: KIDS_SIZES },
   { name: "Infant Soft Romper", cat: "kids", sub: "infants", fabric: "ORGANIC COTTON · INTERLOCK", price: 790, colors: ["ivory", "sand"], sizes: ["0–3M", "3–6M", "6–12M"], stock: 0 },
   // Winter (4)
-  { name: "Ribbed Wool Sweater", cat: "winter", sub: "sweater", fabric: "WOOL BLEND · RIBBED", price: 2890, colors: ["charcoal", "maroon", "sand"] },
-  { name: "Quilted Winter Jacket", cat: "winter", sub: "jacket", fabric: "NYLON SHELL · POLY FILL", price: 4590, sale: 3890, colors: ["black", "olive"], wholesale: true },
-  { name: "Handwoven Winter Shawl", cat: "winter", sub: "shawl", fabric: "WOOL · HANDWOVEN", price: 3490, colors: ["maroon", "charcoal"], sizes: FREE_SIZE },
-  { name: "Fleece Zip Hoodie", cat: "winter", sub: "jacket", fabric: "COTTON FLEECE", price: 2390, colors: ["indigo", "black", "ivory"], wholesale: true },
+  { name: "Ribbed Wool Sweater", cat: "winter", fresh: true, sub: "sweater", fabric: "WOOL BLEND · RIBBED", price: 2890, colors: ["charcoal", "maroon", "sand"] },
+  { name: "Quilted Winter Jacket", cat: "winter", fresh: true, sub: "jacket", fabric: "NYLON SHELL · POLY FILL", price: 4590, sale: 3890, colors: ["black", "olive"], wholesale: true },
+  { name: "Handwoven Winter Shawl", cat: "winter", fresh: true, sub: "shawl", fabric: "WOOL · HANDWOVEN", price: 3490, colors: ["maroon", "charcoal"], sizes: FREE_SIZE },
+  { name: "Fleece Zip Hoodie", cat: "winter", fresh: true, sub: "jacket", fabric: "COTTON FLEECE", price: 2390, colors: ["indigo", "black", "ivory"], wholesale: true },
+  { name: "Kids Knit Cardigan", cat: "winter", sub: "kids-winter", fabric: "WOOL BLEND · KNIT", price: 1490, colors: ["sand", "maroon"], sizes: KIDS_SIZES, fresh: true },
   // Accessories (3)
   { name: "Cotton Twill Cap", cat: "accessories", sub: "cap", fabric: "100% COTTON TWILL", price: 450, colors: ["sand", "black", "olive"], sizes: FREE_SIZE, wholesale: true },
   { name: "Leather Belt", cat: "accessories", sub: "belt", fabric: "GENUINE LEATHER", price: 890, colors: ["black", "rust"], sizes: ["32", "34", "36", "38"] },
@@ -295,7 +299,7 @@ export const PRODUCTS: Product[] = ROWS.map((r, i) => {
     colors: r.colors.map((c) => SWATCHES[c]),
     images: PRODUCT_PHOTOS[r.name].map((k) => pic(k, 1100)),
     stock: r.stock ?? 12 + ((i * 7) % 30),
-    isNew: i % 3 === 0,
+    isNew: r.fresh ?? i % 3 === 0,
     isBestSeller: i % 4 === 1,
     isWholesale: wholesale,
     moq: wholesale ? 10 : undefined,
@@ -407,16 +411,16 @@ export const HERO_SLIDES: HeroSlide[] = [
   {
     id: "h1",
     label: "Winter 2026",
-    headline: "Cloth that keeps the cold out",
-    subtitle: "Wool, fleece and handwoven shawls, made for Dhaka winters.",
-    lang: "en",
+    headline: "Warmth for\nthe season",
+    subtitle: "শীতের উষ্ণতা: shawls, sweaters and light jackets for the cool months.",
+    lang: "bn",
     href: "/category/winter",
-    image: pic("hero-04-winter-coat", 2000),
+    image: pic("hero-04-winter-shawl", 2000),
   },
   {
     id: "h2",
     label: "Panjabi edit",
-    headline: "Made for the long evenings",
+    headline: "Made for the\nlong evenings",
     subtitle: "Handloom cotton panjabi, stitched in our own workshop.",
     lang: "en",
     href: "/category/men/panjabi",
@@ -425,7 +429,7 @@ export const HERO_SLIDES: HeroSlide[] = [
   {
     id: "h3",
     label: "নতুন সংগ্রহ",
-    headline: "Saree, the slow way",
+    headline: "Saree,\nthe slow way",
     subtitle: "হাতে বোনা কাপড়, ঢাকা থেকে আপনার দরজায়।",
     lang: "bn",
     href: "/category/women/saree",
@@ -434,7 +438,7 @@ export const HERO_SLIDES: HeroSlide[] = [
   {
     id: "h4",
     label: "Textile equipment",
-    headline: "Machines for the people who make",
+    headline: "Machines for the\npeople who make",
     subtitle: "Sewing, cutting and finishing equipment with service support.",
     lang: "en",
     href: "/textile-equipment",
@@ -523,4 +527,20 @@ export const getCategory = (slug: string) => CATEGORIES.find((c) => c.slug === s
 export const getProduct = (slug: string) => PRODUCTS.find((p) => p.slug === slug);
 export const getEquipment = (slug: string) => EQUIPMENT.find((e) => e.slug === slug);
 export const productsByCategory = (slug: string) => PRODUCTS.filter((p) => p.category === slug);
+/** New Arrivals: winter products lead the season, then other new pieces. */
+export function newArrivals(limit = 8): Product[] {
+  const winter = PRODUCTS.filter((p) => p.category === "winter");
+  const others = PRODUCTS.filter((p) => p.category !== "winter" && p.isNew);
+  return [...winter, ...others].slice(0, limit);
+}
+
+/** Winter edit: shawls, sweaters, jackets and kids winter. */
+export function winterEdit(limit = 4): Product[] {
+  const names = ["Handwoven Winter Shawl", "Ribbed Wool Sweater", "Quilted Winter Jacket", "Kids Knit Cardigan"];
+  return names
+    .map((n) => PRODUCTS.find((p) => p.name === n))
+    .filter((p): p is Product => Boolean(p))
+    .slice(0, limit);
+}
+
 export const effectivePrice = (p: Product) => p.salePrice ?? p.price;

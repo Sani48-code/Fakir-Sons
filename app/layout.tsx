@@ -12,6 +12,7 @@ const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
   subsets: ["latin"],
   weight: ["500", "600"],
+  style: ["normal", "italic"],
 });
 
 const hind = Hind_Siliguri({

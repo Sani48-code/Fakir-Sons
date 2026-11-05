@@ -109,4 +109,5 @@ Connection check: `GET /api/health/supabase`.
 
 - [ ] Week 1 Day 1: project created, Supabase connected, Vercel deployed
 - [x] Storefront global layout (announcement bar, header, mobile drawer, footer): built
-- [ ] Storefront PROMPTS.md Page 0 (foundation: site/dummy data, UI components, ProductCard, motion, WhatsApp button, /styleguide): built, awaiting review
+- [x] Storefront PROMPTS.md Page 0 (foundation): built
+- [ ] Storefront PROMPTS.md Page 1 (home, winter as lead campaign): built, awaiting review

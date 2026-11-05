@@ -13,6 +13,7 @@
   --maroon: #5a0a0e;
   --maroon-hover: #9b111e;
   --gold: #c8860d;
+  --gold-soft: #e8b84b; /* gold text on dark photos / overlays */
   --madder: #a23b2a;
   --wine: #2b0a0c; /* footer + wholesale band */
 }
@@ -26,6 +27,7 @@
   --color-maroon: var(--maroon);
   --color-maroon-hover: var(--maroon-hover);
   --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
   --color-madder: var(--madder);
   --color-wine: var(--wine);
   --font-sans: var(--font-jost);
@@ -121,7 +123,43 @@ dialog.overlay::backdrop {
   50% { opacity: 0.55; }
 }
 
+/* Promise strip: slow continuous marquee (two identical halves) */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Hero autoplay progress line fills over 7s */
+@keyframes hero-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none !important;
+    flex-wrap: wrap;
+    width: auto;
+  }
+  .marquee-track > [aria-hidden="true"] {
+    display: none;
+  }
   html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
