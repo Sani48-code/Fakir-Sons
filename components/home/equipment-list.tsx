@@ -10,7 +10,7 @@ import { taka } from "@/lib/format";
 export function EquipmentList() {
   const rows = EQUIPMENT.slice(0, 4);
   return (
-    <Container as="section" className="py-16 md:py-28">
+    <Container as="section" className="py-20 md:py-32">
       <Reveal>
         <SectionHeader
           number="03"

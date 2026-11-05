@@ -5,51 +5,58 @@ import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { ProductCard } from "@/components/shop/product-card";
 import { Container } from "@/components/ui/container";
 import { Img } from "@/components/ui/img";
-import { getCategory, winterEdit } from "@/lib/dummy";
+import { WINTER_FEATURE, winterEdit } from "@/lib/dummy";
 
-/** Lead campaign: wide banner with title, then four winter products. */
+/** Lead campaign: one large split. Big image on one half, a 2x2 of winter pieces on the other. */
 export function WinterEdit() {
-  const winter = getCategory("winter");
-  if (!winter) return null;
   const products = winterEdit(4);
+  const f = WINTER_FEATURE;
 
   return (
-    <Container as="section" className="pb-16 md:pb-28">
-      <div className="relative aspect-[16/9] overflow-hidden md:aspect-[4/1]">
+    <section className="grid md:grid-cols-2">
+      <div className="group relative min-h-[560px] overflow-hidden md:min-h-[820px]">
         <RevealImage className="absolute inset-0">
           <Img
-            src={winter.banner.src}
-            alt={winter.banner.alt}
-            sizes="(min-width: 1440px) 1376px, 100vw"
+            src={f.image.src}
+            alt={f.image.alt}
+            sizes="(min-width: 768px) 50vw, 100vw"
             ratio=""
+            position={f.image.pos}
             className="absolute inset-0 h-full w-full"
-            imgClassName="object-center"
           />
         </RevealImage>
-        <div className="absolute inset-y-0 left-0 flex items-center">
-          <div className="m-4 max-w-md bg-ink/45 p-5 text-cotton md:m-8 md:p-8">
-            <p className="label text-gold-soft">Winter 2026</p>
-            <h2 className="mt-2 font-display text-[28px] font-medium leading-[1.02] md:text-[40px]">
-              The winter edit
-            </h2>
-            <Link href="/category/winter" className="link-grow mt-4 inline-block text-sm font-medium">
-              Shop winter →
-            </Link>
-          </div>
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/70 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 p-5 pb-10 text-cotton md:p-10 md:pb-14">
+          <p className="label text-gold-soft">Winter 2026</p>
+          <h2 className="mt-3 font-display text-[44px] font-medium leading-[0.98] md:text-[64px]">
+            The winter edit
+          </h2>
+          <p className="mt-3 max-w-sm text-[15px] text-cotton/85">
+            শীতের উষ্ণতা: coats, knits and wraps in camel, cream and cocoa.
+          </p>
+          <Link href="/category/winter" className="link-grow mt-5 inline-block text-sm font-medium">
+            Shop winter →
+          </Link>
         </div>
       </div>
 
-      <Reveal className="mt-6 max-w-lg text-[15px] text-stone">
-        শীতের উষ্ণতা: shawls, sweaters and light jackets, chosen for the cool months.
-      </Reveal>
-
-      <Stagger className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-4 md:gap-x-6">
-        {products.map((p, i) => (
-          <StaggerItem key={p.id} index={i}>
-            <ProductCard product={p} />
-          </StaggerItem>
-        ))}
-      </Stagger>
-    </Container>
+      <div className="bg-paper px-5 py-14 md:px-10 md:py-20 lg:px-14">
+        <Reveal>
+          <p className="label text-stone">Four pieces to begin</p>
+        </Reveal>
+        <Stagger className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 md:gap-x-6 md:gap-y-12">
+          {products.map((p, i) => (
+            <StaggerItem key={p.id} index={i}>
+              <ProductCard product={p} />
+            </StaggerItem>
+          ))}
+        </Stagger>
+        <Container className="mt-12 px-0 md:px-0">
+          <Link href="/category/winter" className="link-grow label">
+            View all winter →
+          </Link>
+        </Container>
+      </div>
+    </section>
   );
 }

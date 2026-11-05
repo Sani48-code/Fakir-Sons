@@ -8,7 +8,7 @@ import { STORY } from "@/lib/dummy";
 export function StoryStrip() {
   const s = STORY.home;
   return (
-    <Container as="section" className="py-16 md:py-28">
+    <Container as="section" className="py-20 md:py-32">
       <div className="grid items-center gap-10 md:grid-cols-12 md:gap-12">
         <RevealImage className="md:col-span-7">
           <Img
@@ -20,7 +20,7 @@ export function StoryStrip() {
         </RevealImage>
         <Reveal className="md:col-span-5 md:pl-6">
           <p className="label text-gold">{s.label}</p>
-          <h2 className="mt-4 font-display text-[28px] font-medium leading-[1.05] sm:text-[40px]">
+          <h2 className="mt-4 font-display text-[36px] font-medium leading-[1.05] sm:text-[52px]">
             {s.title[0]}
             <br />
             {s.title[1]}

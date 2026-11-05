@@ -29,7 +29,7 @@ export function SectionHeader({
             {label}
           </p>
         )}
-        <Tag className="font-display text-[28px] font-medium leading-[1.05] sm:text-[40px]">
+        <Tag className="font-display text-[36px] font-medium leading-[1.02] sm:text-[52px]">
           {title}
         </Tag>
       </div>

@@ -54,10 +54,18 @@ Dark sections (footer, wholesale band) use `--wine` background with `--cotton` t
 - Desktop: 112px tall, logo ~92px tall. On scroll it shrinks smoothly (300ms ease-out) to 80px with logo ~64px. Mobile: logo ~52px (header 68px, 60px on scroll).
 - Footer: top area on `--cotton` with the logo ~120px tall and the gold "Est." line; link columns and copyright bar sit below it on `--wine`.
 
+## Editorial layout (home redesign)
+
+- Container max 1600px with 40px gutters (20px mobile). Editorial images (category tiles, the Winter edit split) run edge to edge.
+- Section titles 48-56px Cormorant (36px mobile). Product names and prices 15px. Section spacing 128px desktop / 80px mobile.
+- Hero: full viewport height (100svh minus announcement bar and header), 6 slides, crossfade 1.2s + slow Ken Burns, autoplay 6s. No box behind text: text sits on the image bottom-left over a soft dark vignette (the one allowed gradient, bottom only). Each slide has its own desktop and mobile `focus` (object-position) so faces are never cropped. Bottom bar: "01 — 06" with a clickable thin progress line per slide.
+- Home product sections: one "New season" row and one large split "Winter edit" feature (big image half, 2x2 products half). Do not repeat the same product across sections.
+- Photography: Pexels editorial/studio photos in warm neutrals. Every photo must literally show what its title says (a saree is a saree, a winter coat is a winter coat). `lib/images.ts` is the single source; see its credits list.
+
 ## Shape, line and space
 
 - Corners: 0 for images and sections, 2px max for buttons and inputs. No pills.
-- Borders: 1px `--thread` hairlines instead of shadows. No drop shadows on cards.
+- Borders: 1px `--thread` hairlines instead of shadows. No drop shadows on cards. (Exception: the soft bottom vignette on hero and full-bleed feature images, for text legibility.)
 - Buttons: primary = solid `--ink` with cotton text; secondary = 1px ink outline; text links underlined with offset. Height 48px.
 - Generous whitespace: sections 96–128px apart on desktop, 64px on mobile.
 - Grid: 12 columns, max width 1440px, 24–32px gutters. Break the grid on purpose: one large image beside two small ones, text offset from images.

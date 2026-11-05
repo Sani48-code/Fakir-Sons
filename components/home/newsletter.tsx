@@ -34,7 +34,7 @@ export function Newsletter() {
     <section className="border-t border-thread bg-cotton py-16 md:py-24">
       <Container>
         <Reveal className="mx-auto max-w-xl text-center">
-          <h2 className="font-display text-[28px] font-medium leading-tight sm:text-[40px]">
+          <h2 className="font-display text-[36px] font-medium leading-tight sm:text-[52px]">
             Letters from the shop
           </h2>
           <p className="mt-3 text-[15px] text-stone">New cloth, new arrivals and the occasional offer. Once a month.</p>

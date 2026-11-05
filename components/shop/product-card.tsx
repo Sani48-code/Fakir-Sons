@@ -46,19 +46,23 @@ export function ProductCard({
               alt={product.name}
               sizes={SIZES}
               ratio=""
+              position={product.images[0].pos}
               priority={priority}
               className={cn("absolute inset-0", soldOut && "opacity-55")}
             />
-            <Img
-              src={product.images[1].src}
-              alt=""
-              sizes={SIZES}
-              ratio=""
-              className={cn(
-                "absolute inset-0 opacity-0 transition-opacity duration-[400ms] ease-out hoverable:group-hover:opacity-100 hoverable:group-focus-within:opacity-100",
-                soldOut && "!opacity-0",
-              )}
-            />
+            {product.images[1] && (
+              <Img
+                src={product.images[1].src}
+                alt=""
+                sizes={SIZES}
+                ratio=""
+                position={product.images[1].pos}
+                className={cn(
+                  "absolute inset-0 opacity-0 transition-opacity duration-[400ms] ease-out hoverable:group-hover:opacity-100 hoverable:group-focus-within:opacity-100",
+                  soldOut && "!opacity-0",
+                )}
+              />
+            )}
           </div>
         </Link>
 

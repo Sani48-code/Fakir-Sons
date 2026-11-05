@@ -1,5 +1,6 @@
 import { cn } from "@/lib/format";
 
+/** Site container: max 1600px, 40px gutters (20px on mobile). Editorial images go full-bleed outside it. */
 export function Container({
   children,
   className,
@@ -10,8 +11,6 @@ export function Container({
   as?: "div" | "section" | "main" | "header" | "footer" | "nav";
 }) {
   return (
-    <Tag className={cn("mx-auto w-full max-w-[1440px] px-4 md:px-6 lg:px-8", className)}>
-      {children}
-    </Tag>
+    <Tag className={cn("mx-auto w-full max-w-[1600px] px-5 md:px-10", className)}>{children}</Tag>
   );
 }

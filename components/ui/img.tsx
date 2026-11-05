@@ -11,6 +11,7 @@ export function Img({
   sizes,
   ratio = "aspect-[3/4]",
   priority = false,
+  position,
   className,
   imgClassName,
 }: {
@@ -19,6 +20,7 @@ export function Img({
   sizes: string;
   ratio?: string; // tailwind aspect class, e.g. "aspect-[3/4]"; "" to fill parent
   priority?: boolean;
+  position?: string; // CSS object-position (focal point), e.g. "50% 20%"
   className?: string;
   imgClassName?: string;
 }) {
@@ -37,6 +39,7 @@ export function Img({
         fill
         sizes={sizes}
         priority={priority}
+        style={position ? { objectPosition: position } : undefined}
         className={cn("object-cover", imgClassName)}
       />
     </div>

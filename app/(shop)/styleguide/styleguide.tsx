@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { CandidateSheet } from "./candidate-sheet";
 import { ProductCard } from "@/components/shop/product-card";
 import { Reveal } from "@/components/motion/reveal";
 import { RevealImage } from "@/components/motion/reveal-image";
@@ -88,10 +87,6 @@ export function Styleguide() {
             </div>
           ))}
         </div>
-      </Block>
-
-      <Block id="candidates" title="Premium image candidates (awaiting approval)">
-        <CandidateSheet />
       </Block>
 
       <Block id="type" title="Typography">
@@ -253,11 +248,11 @@ export function Styleguide() {
             <Reveal className="mt-6 text-stone">Reveal: fade in and rise 16px when 20% visible.</Reveal>
           </div>
           <RevealImage>
-            <Img src={pic("lifestyle-02-folded-linen", 1400).src} alt="Folded linen on a wooden table" ratio="aspect-[5/4]" sizes="(min-width: 768px) 45vw, 100vw" />
+            <Img src={pic("fabric-02-folded-linen", 1400).src} alt="Folded linen on a wooden table" ratio="aspect-[5/4]" sizes="(min-width: 768px) 45vw, 100vw" />
           </RevealImage>
           <div className="relative aspect-[16/9] overflow-hidden md:col-span-2">
             <SlowZoom className="absolute inset-0">
-              <Img src={pic("hero-06-fabric-shop", 2000).src} alt="Shelves of fabric rolls in a textile shop" ratio="" className="absolute inset-0" sizes="100vw" />
+              <Img src={pic("hero-06-fabric", 2000).src} alt="Folded neutral fabrics on a white shelf" ratio="" className="absolute inset-0" sizes="100vw" />
             </SlowZoom>
           </div>
         </div>
