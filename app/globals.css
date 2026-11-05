@@ -1,23 +1,45 @@
 @import "tailwindcss";
 
+/* Tokens: see DESIGN.md */
 :root {
-  --background: #ffffff;
-  --foreground: #1a1a1a;
+  --cotton: #f5f1e8;
+  --paper: #fbf9f4;
+  --ink: #1b1a17;
+  --stone: #77705f;
+  --thread: #ddd5c4;
+  --maroon: #5a0a0e;
+  --maroon-hover: #9b111e;
+  --gold: #c8860d;
+  --madder: #a23b2a;
+  --wine: #2b0a0c; /* footer + wholesale band */
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-ink: #1a1a1a;
-  --color-footer: #2b2b2b;
-  --color-accent: #f5c518; /* placeholder brand color */
-  --color-sale: #d62828;
+  --color-cotton: var(--cotton);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-stone: var(--stone);
+  --color-thread: var(--thread);
+  --color-maroon: var(--maroon);
+  --color-maroon-hover: var(--maroon-hover);
+  --color-gold: var(--gold);
+  --color-madder: var(--madder);
+  --color-wine: var(--wine);
   --font-sans: var(--font-jost);
-  --font-display: var(--font-playfair);
+  --font-display: var(--font-cormorant);
+  --font-bangla: var(--font-hind);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  background: var(--cotton);
+  color: var(--ink);
+  font-family: var(--font-jost), var(--font-hind), system-ui, sans-serif;
+}
+
+/* Small uppercase label style (DESIGN.md: Jost 500, 0.14em, 11-12px) */
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }

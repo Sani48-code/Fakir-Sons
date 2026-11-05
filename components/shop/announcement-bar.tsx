@@ -3,7 +3,7 @@ import { SITE, TOP_LINKS } from "@/lib/site";
 
 export function AnnouncementBar() {
   return (
-    <div className="bg-accent text-ink text-xs">
+    <div className="bg-maroon text-cotton text-xs">
       <div className="mx-auto flex h-9 max-w-[1440px] items-center justify-between gap-4 px-4 lg:px-8">
         <p className="truncate">
           <a href={`tel:${SITE.hotline.replace(/[^+\d]/g, "")}`} className="font-medium">

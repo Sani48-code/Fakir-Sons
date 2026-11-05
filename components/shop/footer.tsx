@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { FOOTER_COLUMNS, PAYMENT_METHODS, SITE } from "@/lib/site";
 import {
@@ -15,15 +16,20 @@ const SOCIALS = [
 
 export function Footer() {
   return (
-    <footer className="bg-footer text-white/80">
+    <footer className="bg-wine text-cotton/80">
       <div className="mx-auto max-w-[1440px] px-4 py-14 lg:px-8">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr_1.3fr]">
           {/* Brand + socials */}
           <div>
-            <p className="font-display text-2xl font-semibold tracking-[0.12em] text-white">
-              {SITE.name}
-            </p>
-            <p className="mt-3 max-w-xs text-sm text-white/60">
+            <Image
+              src="/brand/logo-light.png"
+              alt={SITE.name}
+              width={216}
+              height={112}
+              className="h-auto w-[216px]"
+            />
+            <p className="label mt-4 text-gold">Est. 19XX · Dhaka</p>
+            <p className="mt-3 max-w-xs text-sm text-cotton/60">
               Quality clothing and textile equipment, delivered across Bangladesh.
             </p>
             <div className="mt-5 flex gap-3">
@@ -32,7 +38,7 @@ export function Footer() {
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/25 text-white transition-colors hover:border-accent hover:text-accent"
+                  className="flex h-10 w-10 items-center justify-center border border-cotton/25 text-cotton transition-colors hover:border-gold hover:text-gold"
                 >
                   <Icon width={18} height={18} />
                 </a>
@@ -42,13 +48,13 @@ export function Footer() {
 
           {FOOTER_COLUMNS.map((col) => (
             <div key={col.title}>
-              <h3 className="mb-4 text-sm font-medium uppercase tracking-widest text-white">
+              <h3 className="label mb-4 text-cotton">
                 {col.title}
               </h3>
               <ul className="space-y-2.5 text-sm">
                 {col.links.map((l) => (
                   <li key={l.label}>
-                    <Link href={l.href} className="transition-colors hover:text-accent">
+                    <Link href={l.href} className="transition-colors hover:text-gold">
                       {l.label}
                     </Link>
                   </li>
@@ -59,26 +65,26 @@ export function Footer() {
 
           {/* Contact + newsletter */}
           <div>
-            <h3 className="mb-4 text-sm font-medium uppercase tracking-widest text-white">
+            <h3 className="label mb-4 text-cotton">
               Contact
             </h3>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <a href={`tel:${SITE.hotline.replace(/[^+\d]/g, "")}`} className="hover:text-accent">
+                <a href={`tel:${SITE.hotline.replace(/[^+\d]/g, "")}`} className="hover:text-gold">
                   {SITE.hotline}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${SITE.email}`} className="hover:text-accent">
+                <a href={`mailto:${SITE.email}`} className="hover:text-gold">
                   {SITE.email}
                 </a>
               </li>
-              <li className="text-white/60">{SITE.address}</li>
+              <li className="text-cotton/60">{SITE.address}</li>
             </ul>
 
             {/* Placeholder: not wired up yet */}
             <form className="mt-6" aria-label="Newsletter">
-              <label htmlFor="newsletter-email" className="mb-2 block text-xs uppercase tracking-widest text-white/60">
+              <label htmlFor="newsletter-email" className="mb-2 block label text-cotton/60">
                 Newsletter
               </label>
               <div className="flex">
@@ -86,12 +92,12 @@ export function Footer() {
                   id="newsletter-email"
                   type="email"
                   placeholder="Your email"
-                  className="min-w-0 flex-1 border border-white/25 bg-transparent px-3 py-2.5 text-sm text-white placeholder:text-white/40 focus:border-accent focus:outline-none"
+                  className="min-w-0 flex-1 border border-cotton/25 bg-transparent px-3 py-2.5 text-sm text-cotton placeholder:text-cotton/40 focus:border-gold focus:outline-none"
                 />
                 <button
                   type="button"
                   aria-label="Subscribe"
-                  className="flex w-11 items-center justify-center bg-accent text-ink transition-opacity hover:opacity-90"
+                  className="flex w-11 items-center justify-center bg-gold text-ink transition-opacity hover:opacity-90"
                 >
                   <ArrowRightIcon width={18} height={18} />
                 </button>
@@ -101,14 +107,14 @@ export function Footer() {
         </div>
 
         {/* Payment methods strip (text pills until real logos are added) */}
-        <div className="mt-12 flex flex-wrap items-center gap-3 border-t border-white/10 pt-8">
-          <span className="mr-2 text-xs uppercase tracking-widest text-white/50">
+        <div className="mt-12 flex flex-wrap items-center gap-3 border-t border-cotton/10 pt-8">
+          <span className="mr-2 label text-cotton/50">
             We accept
           </span>
           {PAYMENT_METHODS.map((m) => (
             <span
               key={m}
-              className="rounded-sm border border-white/20 bg-white/5 px-3 py-1.5 text-xs font-medium text-white"
+              className="border border-cotton/20 px-3 py-1.5 text-xs font-medium text-cotton"
             >
               {m}
             </span>
@@ -116,8 +122,8 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-white/10">
-        <p className="mx-auto max-w-[1440px] px-4 py-4 text-xs text-white/50 lg:px-8">
+      <div className="border-t border-cotton/10">
+        <p className="mx-auto max-w-[1440px] px-4 py-4 text-xs text-cotton/50 lg:px-8">
           © {SITE.copyrightYear} {SITE.name}. All rights reserved.
         </p>
       </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { NAV, SITE, TOP_LINKS } from "@/lib/site";
@@ -33,7 +34,7 @@ export function MobileDrawer({
     >
       <div
         onClick={onClose}
-        className={`absolute inset-0 bg-black/50 transition-opacity duration-300 ${
+        className={`absolute inset-0 bg-ink/50 transition-opacity duration-300 ${
           open ? "opacity-100" : "opacity-0"
         }`}
       />
@@ -41,14 +42,18 @@ export function MobileDrawer({
         role="dialog"
         aria-modal="true"
         aria-label="Menu"
-        className={`absolute left-0 top-0 flex h-full w-[85%] max-w-sm flex-col bg-white transition-transform duration-300 ${
+        className={`absolute left-0 top-0 flex h-full w-[85%] max-w-sm flex-col bg-paper transition-transform duration-300 ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex h-16 items-center justify-between border-b border-black/10 px-4">
-          <span className="font-display text-xl font-semibold tracking-wide">
-            {SITE.name}
-          </span>
+        <div className="flex h-[76px] items-center justify-between border-b border-thread px-4">
+          <Image
+            src="/brand/logo-dark.png"
+            alt={SITE.name}
+            width={108}
+            height={56}
+            className="h-14 w-auto"
+          />
           <button onClick={onClose} aria-label="Close menu" className="p-2">
             <CloseIcon />
           </button>
@@ -57,7 +62,7 @@ export function MobileDrawer({
         <nav className="flex-1 overflow-y-auto px-4 py-2" aria-label="Mobile">
           <ul>
             {NAV.map((item) => (
-              <li key={item.label} className="border-b border-black/5">
+              <li key={item.label} className="border-b border-thread">
                 {item.children ? (
                   <>
                     <div className="flex items-center justify-between">
@@ -90,7 +95,7 @@ export function MobileDrawer({
                             <Link
                               href={c.href}
                               onClick={onClose}
-                              className="block py-2 text-sm text-black/70"
+                              className="block py-2 text-sm text-stone"
                             >
                               {c.label}
                             </Link>
@@ -104,7 +109,7 @@ export function MobileDrawer({
                     href={item.href}
                     onClick={onClose}
                     className={`block py-3.5 text-base ${
-                      item.sale ? "font-medium text-sale" : ""
+                      item.sale ? "text-madder" : ""
                     }`}
                   >
                     {item.label}
@@ -114,7 +119,7 @@ export function MobileDrawer({
             ))}
           </ul>
 
-          <ul className="mt-5 space-y-3 text-sm text-black/70">
+          <ul className="mt-5 space-y-3 text-sm text-stone">
             {TOP_LINKS.map((l) => (
               <li key={l.label}>
                 <Link href={l.href} onClick={onClose}>
@@ -125,7 +130,7 @@ export function MobileDrawer({
           </ul>
         </nav>
 
-        <div className="border-t border-black/10 bg-accent px-4 py-3 text-sm text-ink">
+        <div className="bg-maroon px-4 py-3 text-sm text-cotton">
           Hotline: {SITE.hotline}
         </div>
       </aside>

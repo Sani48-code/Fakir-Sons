@@ -67,12 +67,14 @@ Store `unit_price` and name snapshots in order_items so later price changes don'
 
 ## Storefront UI
 
+**Visual design, palette, fonts and component style live in `DESIGN.md`. It is the source of truth: where it disagrees with this file (colors, fonts, header/hero/product card layout), follow DESIGN.md.**
+
 Reference style: clean, image-led fashion storefront typical of Bangladeshi clothing brands.
 Use our own brand name, logo, photos and copy. Never copy another brand's logo, images or text.
 
 ### Global layout
 - Announcement bar (thin, brand accent color): hotline number, free delivery / offer text; right side: Account, Store locations, Wholesale login.
-- Header: logo left, category nav center (Men, Women, Kids, Winter, Textile Equipment, Wholesale, Sale in red), icons right (search, account, wishlist, cart with count badge).
+- Header (76px tall, ~56px logo): logo left, category nav center (Men, Women, Kids, Winter, Textile Equipment, Wholesale, Sale in red), icons right (search, account, wishlist, cart with count badge).
   - On home page: transparent over the hero image, turns solid on scroll. Sticky on all pages.
   - Nav items open a mega-menu dropdown with subcategories.
   - Mobile: hamburger drawer + bottom icons.

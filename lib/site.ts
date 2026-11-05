@@ -1,7 +1,7 @@
 // Placeholder site config. Replace with real brand data / DB-driven categories later.
 
 export const SITE = {
-  name: "BRAND NAME", // placeholder logo text
+  name: "Fakir & Son's",
   hotline: "+880 1XXX-XXXXXX",
   email: "hello@example.com",
   address: "Your address line, Dhaka, Bangladesh",
