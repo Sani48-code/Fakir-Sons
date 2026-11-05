@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CandidateSheet } from "./candidate-sheet";
 import { ProductCard } from "@/components/shop/product-card";
 import { Reveal } from "@/components/motion/reveal";
 import { RevealImage } from "@/components/motion/reveal-image";
@@ -87,6 +88,10 @@ export function Styleguide() {
             </div>
           ))}
         </div>
+      </Block>
+
+      <Block id="candidates" title="Premium image candidates (awaiting approval)">
+        <CandidateSheet />
       </Block>
 
       <Block id="type" title="Typography">

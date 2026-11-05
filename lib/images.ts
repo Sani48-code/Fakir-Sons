@@ -69,7 +69,8 @@ export type PhotoGroup =
   | "accessories"
   | "fabric"
   | "equipment"
-  | "lifestyle";
+  | "lifestyle"
+  | "banner";
 
 export type Photo = {
   key: string;
