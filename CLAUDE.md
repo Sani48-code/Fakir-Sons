@@ -6,6 +6,8 @@ Supports retail (B2C) and wholesale (B2B) orders.
 
 The developer builds this in small daily steps. Do one step at a time, explain what changed, and stop for review before moving to the next step.
 
+NOTE (Windows path): this folder's path contains `&` and `'`, so `npx` and the usual `.bin` shims do not work here. Always run CLI tools through node directly, e.g. `node node_modules/next/dist/bin/next build`, `node node_modules/eslint/bin/eslint.js .`, `node node_modules/typescript/bin/tsc --noEmit`. The `package.json` scripts already do this (relative paths, so they also work on Vercel/Linux).
+
 NOTE: This Next.js version has breaking changes (see AGENTS.md). Read `node_modules/next/dist/docs/` before writing Next.js code. `middleware.ts` may now be `proxy` (see docs 16-proxy.md).
 
 ## Stack
