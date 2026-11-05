@@ -78,3 +78,35 @@ export const YoutubeIcon = (p: P) => (
     <path d="m10 9 5 3-5 3V9Z" fill="currentColor" />
   </svg>
 );
+
+export const WhatsAppIcon = (p: P) => (
+  <svg {...base({ strokeWidth: 1.6, ...p })}>
+    <path d="M3.5 20.5 5 16A8.5 8.5 0 1 1 8 19l-4.5 1.5Z" />
+    <path d="M9 8.5c0 3.5 3 6.5 6.5 6.5l1-1.5-2-1-1 .8c-1-.4-1.8-1.2-2.3-2.3l.8-1-1-2L9 8.5Z" />
+  </svg>
+);
+export const CheckIcon = (p: P) => (
+  <svg {...base({ strokeWidth: 2, ...p })}>
+    <path d="m5 12.5 4.5 4.5L19 7.5" />
+  </svg>
+);
+export const PlusIcon = (p: P) => (
+  <svg {...base({ width: 16, height: 16, strokeWidth: 1.8, ...p })}>
+    <path d="M12 5v14M5 12h14" />
+  </svg>
+);
+export const MinusIcon = (p: P) => (
+  <svg {...base({ width: 16, height: 16, strokeWidth: 1.8, ...p })}>
+    <path d="M5 12h14" />
+  </svg>
+);
+export const ChevronLeftIcon = (p: P) => (
+  <svg {...base({ width: 18, height: 18, strokeWidth: 1.8, ...p })}>
+    <path d="m15 6-6 6 6 6" />
+  </svg>
+);
+export const ChevronRightIcon = (p: P) => (
+  <svg {...base({ width: 18, height: 18, strokeWidth: 1.8, ...p })}>
+    <path d="m9 6 6 6-6 6" />
+  </svg>
+);

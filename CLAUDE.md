@@ -67,45 +67,20 @@ Store `unit_price` and name snapshots in order_items so later price changes don'
 
 ## Storefront UI
 
-**Visual design, palette, fonts and component style live in `DESIGN.md`. It is the source of truth: where it disagrees with this file (colors, fonts, header/hero/product card layout), follow DESIGN.md.**
+Visual design (palette, fonts, shapes, motion, header/footer, logo rules) lives in `DESIGN.md`. The page-by-page storefront build plan (components, sections, behaviour) lives in `PROMPTS.md`. Both are the source of truth; where they disagree with this file, follow them. Do not describe visuals here.
 
-Reference style: clean, image-led fashion storefront typical of Bangladeshi clothing brands.
 Use our own brand name, logo, photos and copy. Never copy another brand's logo, images or text.
 
-### Global layout
-- Announcement bar (thin, brand accent color): hotline number, free delivery / offer text; right side: Account, Store locations, Wholesale login.
-- Header: logo left, category nav center (Men, Women, Kids, Winter, Textile Equipment, Wholesale, Sale in red), icons right (search, account, wishlist, cart with count badge).
-  - Always solid (`paper` background, hairline border), never transparent, on every page including home. Sticky. Desktop 112px tall with ~92px logo, shrinks smoothly to 80px / ~64px on scroll; mobile logo ~52px. Content, including the hero, starts below the header.
-  - Nav items open a mega-menu dropdown with subcategories.
-  - Mobile: hamburger drawer + bottom icons.
-- Floating "Chat with us" button bottom-right (WhatsApp / Messenger link).
-- Footer (dark background): logo + social icons; columns: Categories, Information (About, Contact, FAQ, Store locations), Policies (Delivery, Return & Exchange, Refund, Privacy, Terms), Contact (phone, email, address); newsletter input with accent arrow button; payment methods strip (Visa, Mastercard, bKash, Nagad, Rocket, COD); copyright bar.
+### Content sources
+- Business info: `lib/site.ts`. Dummy content: `lib/dummy.ts`. Image URLs: `lib/images.ts`. Dummy data is replaced by Supabase data page by page later.
+- Money format: `lib/format.ts` (`taka()`, BDT with lakh grouping).
 
-### Home page sections (top to bottom)
-1. Full-width hero slider: large image, headline (display serif + bold sans), subtext, "Shop Now" button bottom-left.
-2. Promo / sale banner (full width).
-3. Category image grid: large lifestyle photos with category label tag in the corner (2 columns desktop, 1 on mobile).
-4. "Shop by Category": horizontal row of circular images with names, scrollable on mobile.
-5. Product rows: New Arrivals, Best Sellers, a featured collection. Product card: image (second image on hover), name, price in ৳ with strikethrough original price when discounted, sale badge, quick add-to-cart.
-6. Wholesale / B2B band: "Bulk order? Get wholesale prices" with Apply for Wholesale + Request a Quote buttons.
-7. Textile equipment showcase (separate section, spec-focused cards).
-8. Optional video section (YouTube embed) and Instagram link.
-9. Trust badges row: Nationwide Cash on Delivery, Store locations, Easy return, Secure digital payment.
-10. Newsletter band (accent background).
-
-### Hero banners and home sections are admin-managed
-Add tables: `banners` (id, image_url, mobile_image_url, title, subtitle, button_text, link, position, placement: hero/promo, active, sort_order) and `home_sections` (id, title, type: category_grid/product_row/video, config jsonb, sort_order, active). Admin panel gets a "Homepage" page to edit them.
+### Hero banners and home sections are admin-managed (database plan, keep)
+Tables: `banners` (id, image_url, mobile_image_url, title, subtitle, button_text, link, position, placement: hero/promo, active, sort_order) and `home_sections` (id, title, type: category_grid/product_row/video, config jsonb, sort_order, active). The admin panel gets a "Homepage" page to edit them.
+Until then, hero slides come from `HERO_SLIDES` in `lib/dummy.ts`, shaped so they can be swapped for rows from `banners` (placement = hero) later.
 
 ### Other storefront pages
-- Category page: filters sidebar (size, color, price range, availability), sort dropdown, product grid, pagination or load more.
-- Product page: image gallery with zoom, name, price (retail, or tier table if wholesale user), size/color selector, size guide modal, quantity, Add to cart / Buy now, MOQ notice for wholesale, description and specs tabs, related products.
-- Cart drawer (slides from right) + full cart page; checkout single page.
-
-### Style tokens
-- Font: display serif for hero headlines (e.g. Playfair Display), clean sans for UI (e.g. Jost or Inter), via next/font.
-- Colors: near-black text #1a1a1a, white background, dark footer #2b2b2b, one accent (brand color; yellow #F5C518 placeholder until brand color is decided), sale red #D62828.
-- Lots of whitespace, square or slightly rounded corners, large photography, minimal borders.
-- Mobile-first; images via next/image with Supabase Storage URLs.
+Category, product, cart drawer + cart page, single-page checkout, search, wholesale, quote, textile equipment, account, auth, about, contact, FAQ and policy pages are specified in `PROMPTS.md`.
 
 ## Env variables
 
@@ -133,4 +108,5 @@ Connection check: `GET /api/health/supabase`.
 ## Current progress
 
 - [ ] Week 1 Day 1: project created, Supabase connected, Vercel deployed
-- [ ] Storefront global layout (announcement bar, header, mobile drawer, footer) — built, awaiting review
+- [x] Storefront global layout (announcement bar, header, mobile drawer, footer): built
+- [ ] Storefront PROMPTS.md Page 0 (foundation: site/dummy data, UI components, ProductCard, motion, WhatsApp button, /styleguide): built, awaiting review

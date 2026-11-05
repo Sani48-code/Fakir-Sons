@@ -1,13 +1,29 @@
-// Placeholder site config. Replace with real brand data / DB-driven categories later.
+// Business info lives here only. Components must read from SITE, never hardcode.
 
 export const SITE = {
   name: "Fakir & Son's",
-  hotline: "+880 1XXX-XXXXXX",
-  email: "hello@example.com",
-  address: "Your address line, Dhaka, Bangladesh",
+  est: 2023,
+  city: "Dhaka",
+  phone: "+880 1745-947359", // display
+  tel: "+8801745947359", // for tel: links
+  whatsapp: "https://wa.me/8801745947359",
+  facebook: "https://www.facebook.com/profile.php?id=61560423444727",
+  email: "info@fakirandsons.com", // placeholder
+  address: "TODO: full shop address, Dhaka, Bangladesh",
+  hours: "TODO: Sat–Thu, 10:00 am – 8:00 pm",
   copyrightYear: 2026, // fixed: this Next version forbids new Date() during prerender
-  announcement:"Free delivery on orders over ৳3,000",
-};
+  announcement: "Free delivery on orders over ৳3,000",
+} as const;
+
+/** "Est. 2023 · Dhaka" */
+export const EST_LINE = `Est. ${SITE.est} · ${SITE.city}`;
+
+/** Delivery charges in BDT. Server must recompute these; never trust the client. */
+export const DELIVERY = {
+  insideDhaka: { fee: 70, days: "1–2 days" },
+  outsideDhaka: { fee: 130, days: "3–5 days" },
+  freeAbove: 3000,
+} as const;
 
 export type NavItem = {
   label: string;

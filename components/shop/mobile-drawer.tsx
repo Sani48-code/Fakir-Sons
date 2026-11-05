@@ -131,7 +131,7 @@ export function MobileDrawer({
         </nav>
 
         <div className="bg-maroon px-4 py-3 text-sm text-cotton">
-          Hotline: {SITE.hotline}
+          Hotline: {SITE.phone}
         </div>
       </aside>
     </div>

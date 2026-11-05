@@ -6,8 +6,8 @@ export function AnnouncementBar() {
     <div className="bg-maroon text-cotton text-xs">
       <div className="mx-auto flex h-9 max-w-[1440px] items-center justify-between gap-4 px-4 lg:px-8">
         <p className="truncate">
-          <a href={`tel:${SITE.hotline.replace(/[^+\d]/g, "")}`} className="font-medium">
-            Hotline: {SITE.hotline}
+          <a href={`tel:${SITE.tel}`} className="font-medium">
+            Hotline: {SITE.phone}
           </a>
           <span className="mx-2 hidden sm:inline">|</span>
           <span className="hidden sm:inline">{SITE.announcement}</span>

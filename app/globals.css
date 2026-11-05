@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Pointer devices that can hover (touch devices skip hover-only reveals) */
+@custom-variant hoverable (@media (hover: hover));
+
 /* Tokens: see DESIGN.md */
 :root {
   --cotton: #f5f1e8;
@@ -30,6 +33,10 @@
   --font-bangla: var(--font-hind);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--cotton);
   color: var(--ink);
@@ -42,4 +49,83 @@ body {
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+}
+
+/* Visible focus ring: maroon, 2px, offset */
+:focus-visible {
+  outline: 2px solid var(--maroon);
+  outline-offset: 2px;
+}
+.bg-wine :focus-visible,
+.on-dark :focus-visible {
+  outline-color: var(--gold);
+}
+
+/* Underline that grows from the left on hover (250ms) */
+.link-grow {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size 250ms ease-out;
+  padding-bottom: 2px;
+}
+.link-grow:hover,
+.link-grow:focus-visible {
+  background-size: 100% 1px;
+}
+
+/* Tabular figures for prices */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Native <dialog> used by Modal and Sheet */
+dialog.overlay {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  max-width: none;
+  max-height: none;
+  width: 100%;
+  height: 100%;
+  color: var(--ink);
+}
+dialog.overlay::backdrop {
+  background: rgb(27 26 23 / 0.5);
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes sheet-in-right {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+@keyframes sheet-in-bottom {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.sheet-anim {
+  animation: sheet-in-bottom 300ms ease-out;
+}
+@media (min-width: 768px) {
+  .sheet-anim {
+    animation-name: sheet-in-right;
+  }
+}
+
+@keyframes skeleton {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

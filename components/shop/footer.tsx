@@ -1,17 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { FOOTER_COLUMNS, PAYMENT_METHODS, SITE } from "@/lib/site";
-import {
-  ArrowRightIcon,
-  FacebookIcon,
-  InstagramIcon,
-  YoutubeIcon,
-} from "./icons";
+import { EST_LINE, FOOTER_COLUMNS, PAYMENT_METHODS, SITE } from "@/lib/site";
+import { ArrowRightIcon, FacebookIcon, WhatsAppIcon } from "./icons";
 
 const SOCIALS = [
-  { label: "Facebook", href: "#", Icon: FacebookIcon },
-  { label: "Instagram", href: "#", Icon: InstagramIcon },
-  { label: "YouTube", href: "#", Icon: YoutubeIcon },
+  { label: "Facebook", href: SITE.facebook, Icon: FacebookIcon },
+  { label: "WhatsApp", href: SITE.whatsapp, Icon: WhatsAppIcon },
 ];
 
 export function Footer() {
@@ -29,7 +23,7 @@ export function Footer() {
               className="h-[120px] w-auto"
             />
             <div>
-              <p className="label text-gold">Est. 19XX · Dhaka</p>
+              <p className="label text-gold">{EST_LINE}</p>
               <p className="mt-3 max-w-xs text-sm text-stone">
                 Quality clothing and textile equipment, delivered across Bangladesh.
               </p>
@@ -40,6 +34,8 @@ export function Footer() {
               <a
                 key={label}
                 href={href}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={label}
                 className="flex h-10 w-10 items-center justify-center border border-ink/25 text-ink transition-colors hover:border-maroon hover:text-maroon"
               >
@@ -78,8 +74,8 @@ export function Footer() {
             </h3>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <a href={`tel:${SITE.hotline.replace(/[^+\d]/g, "")}`} className="hover:text-gold">
-                  {SITE.hotline}
+                <a href={`tel:${SITE.tel}`} className="hover:text-gold">
+                  {SITE.phone}
                 </a>
               </li>
               <li>
