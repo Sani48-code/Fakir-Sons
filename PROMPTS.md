@@ -29,8 +29,8 @@ Install `motion` (Framer Motion). Build these once in `components/motion/` and r
 
 ## Images
 
-- Create `lib/images.ts` with one function `img(key)` returning placeholder URLs, so swapping to real photos later means changing one file.
-- Placeholders: `https://picsum.photos/seed/<key>/<w>/<h>` with fixed seeds. Add the host to `next.config` `images.remotePatterns`.
+- `lib/images.ts` is the single source of photos: `PHOTOS` (key, url, alt, description, group, orientation, photographer, pageUrl), plus `img(key)`, `pic(key)` (src + alt) and `photo(key)`. Swapping to real photos later means changing that one file. Use real keys only; never invent a key. The `/styleguide` Image library lists every photo.
+- Photos are free stock from Pexels (images.pexels.com) and Unsplash (images.unsplash.com), both in `next.config` `images.remotePatterns`.
 - Use files from `Images/` where relevant (copy needed ones to `public/images/`; never commit `Images/` itself). `bags design.png` → About page and packaging strip.
 - Aspect ratios: product 3:4, hero 16:9 desktop / 4:5 mobile, category tall 2:3, category wide 4:3, story 5:4.
 

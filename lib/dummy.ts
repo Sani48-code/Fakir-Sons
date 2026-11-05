@@ -1,7 +1,7 @@
 // Dummy content for building the storefront. Replaced by Supabase data later.
 // Everything here is deterministic (no Math.random / new Date) so prerendering is stable.
 
-import { img, RATIO } from "./images";
+import { pic, type Pic } from "./images";
 
 /* ---------- Types ---------- */
 
@@ -10,7 +10,8 @@ export type Subcategory = { slug: string; name: string };
 export type Category = {
   slug: string;
   name: string;
-  image: string;
+  image: Pic; // tile photo
+  banner: Pic; // wide 4:1 banner photo
   blurb: string;
   sub: Subcategory[];
 };
@@ -32,7 +33,7 @@ export type Product = {
   sizes: string[];
   soldOutSizes: string[];
   colors: Swatch[];
-  images: string[]; // 3
+  images: Pic[]; // 2-3 photos
   stock: number;
   isNew: boolean;
   isBestSeller: boolean;
@@ -49,7 +50,7 @@ export type Equipment = {
   type: string;
   fromPrice: number;
   keySpecs: string[];
-  images: string[];
+  images: Pic[];
   specTable: [string, string][];
 };
 
@@ -60,8 +61,7 @@ export type HeroSlide = {
   subtitle: string;
   lang: "en" | "bn";
   href: string;
-  image: string;
-  imageMobile: string;
+  image: Pic;
 };
 
 export type Faq = { id: string; group: string; q: string; a: string };
@@ -72,9 +72,54 @@ export type Store = {
   address: string;
   hours: string;
   phone: string;
-  image: string;
+  image: Pic;
   mapsUrl: string;
 };
+
+
+/* ---------- Photo mapping (keys from lib/images.ts) ---------- */
+// 2-3 photos per product; a photo repeats only where we have too few for that
+// garment (noted inline). Replace with real product photos later.
+
+const PRODUCT_PHOTOS: Record<string, string[]> = {
+  "Handloom Cotton Panjabi": ["men-02-panjabi-white-chikan", "hero-01-panjabi-man", "men-03-kurta-yellow"],
+  "Embroidered Festive Panjabi": ["men-01-panjabi-blue-embroidered", "men-04-kurta-waistcoat", "men-03-kurta-yellow"],
+  "Linen Blend Casual Shirt": ["men-07-trousers-chinos", "men-05-shirt-blue"],
+  "Oxford Formal Shirt": ["men-05-shirt-blue", "men-06-shirt-black"],
+  "Pique Polo T-shirt": ["men-06-shirt-black", "men-05-shirt-blue", "men-07-trousers-chinos"], // no polo photo found
+  "Plain Crew T-shirt": ["men-05-shirt-blue", "men-07-trousers-chinos"], // no t-shirt photo found
+  "Chino Trouser": ["men-07-trousers-chinos", "hero-01-panjabi-man"],
+  "Jamdani Style Saree": ["women-01-saree", "women-02-saree"],
+  "Silk Blend Party Saree": ["women-02-saree", "hero-02-saree-woman", "women-01-saree"],
+  "Block Print Three-piece": ["women-03-salwar-kameez", "women-04-three-piece", "hero-03-salwar-kameez"],
+  "Everyday Cotton Three-piece": ["women-04-three-piece", "women-03-salwar-kameez"],
+  "Straight Cut Kurti": ["women-06-kurti", "women-05-kurti"],
+  "Printed Long Kurti": ["women-05-kurti", "women-06-kurti"],
+  "Cotton Voile Scarf": ["women-07-shawl", "accessories-01-scarf"],
+  "Boys Cotton Panjabi": ["kids-01-panjabi-boy", "kids-03-summer-outfit"],
+  "Girls Printed Frock": ["kids-02-girl-sharara", "kids-05-maroon-tee"],
+  "Infant Soft Romper": ["kids-03-summer-outfit", "kids-04-denim-jacket"], // no infant photo found
+  "Ribbed Wool Sweater": ["winter-01-knit-sweater", "winter-02-sweater-stack"],
+  "Quilted Winter Jacket": ["men-08-winter-jacket", "winter-03-jacket"],
+  "Handwoven Winter Shawl": ["winter-04-wool-blanket", "women-07-shawl", "women-08-winter"],
+  "Fleece Zip Hoodie": ["winter-03-jacket", "men-08-winter-jacket"],
+  "Cotton Twill Cap": ["accessories-02-hat", "accessories-03-bag"],
+  "Leather Belt": ["accessories-03-bag", "accessories-02-hat"], // no belt photo found
+  "Cotton Handkerchief Set of 3": ["lifestyle-04-holding-folded", "fabric-02-folded-stack", "lifestyle-02-folded-linen"],
+};
+
+const EQUIPMENT_PHOTOS: string[][] = [
+  ["equipment-01-sewing-machine", "equipment-03-overlock", "equipment-08-factory-floor"],
+  ["equipment-03-overlock", "equipment-01-sewing-machine"],
+  ["equipment-02-presser-foot", "equipment-03-overlock"],
+  ["equipment-05-fabric-cutting", "fabric-06-pattern-cutting"],
+  ["fabric-06-pattern-cutting", "equipment-05-fabric-cutting"],
+  ["equipment-06-iron-pressing", "fabric-02-folded-stack"],
+  ["equipment-07-thread-cones", "equipment-02-presser-foot"],
+  ["equipment-04-embroidery-machine", "equipment-02-presser-foot"],
+];
+
+const STORE_PHOTOS = ["lifestyle-01-clothes-rack", "lifestyle-03-colorful-fabric", "fabric-01-fabric-rolls-shop"];
 
 /* ---------- Categories ---------- */
 
@@ -82,7 +127,8 @@ export const CATEGORIES: Category[] = [
   {
     slug: "men",
     name: "Men",
-    image: img("cat-men", RATIO.categoryWide),
+    image: pic("hero-01-panjabi-man"),
+    banner: pic("lifestyle-01-clothes-rack", 2000),
     blurb: "Panjabi, shirts and everyday cloth for men.",
     sub: [
       { slug: "panjabi", name: "Panjabi" },
@@ -94,7 +140,8 @@ export const CATEGORIES: Category[] = [
   {
     slug: "women",
     name: "Women",
-    image: img("cat-women", RATIO.categoryTall),
+    image: pic("women-01-saree"),
+    banner: pic("lifestyle-03-colorful-fabric", 2000),
     blurb: "Saree, three-piece and kurti in honest fabrics.",
     sub: [
       { slug: "saree", name: "Saree" },
@@ -106,7 +153,8 @@ export const CATEGORIES: Category[] = [
   {
     slug: "kids",
     name: "Kids",
-    image: img("cat-kids", RATIO.categoryWide),
+    image: pic("kids-01-panjabi-boy"),
+    banner: pic("lifestyle-04-holding-folded", 2000),
     blurb: "Soft, easy-wash clothes for boys and girls.",
     sub: [
       { slug: "boys", name: "Boys" },
@@ -117,7 +165,8 @@ export const CATEGORIES: Category[] = [
   {
     slug: "winter",
     name: "Winter",
-    image: img("cat-winter", RATIO.categoryWide),
+    image: pic("winter-01-knit-sweater"),
+    banner: pic("lifestyle-02-folded-linen", 2000),
     blurb: "Sweaters, jackets and shawls for the cold months.",
     sub: [
       { slug: "sweater", name: "Sweater" },
@@ -128,7 +177,8 @@ export const CATEGORIES: Category[] = [
   {
     slug: "textile-equipment",
     name: "Textile Equipment",
-    image: img("cat-equipment", RATIO.categoryWide),
+    image: pic("equipment-07-thread-cones"),
+    banner: pic("equipment-08-factory-floor", 2000),
     blurb: "Sewing machines, cutting tools and spare parts.",
     sub: [
       { slug: "sewing-machines", name: "Sewing machines" },
@@ -139,7 +189,8 @@ export const CATEGORIES: Category[] = [
   {
     slug: "accessories",
     name: "Accessories",
-    image: img("cat-accessories", RATIO.categoryWide),
+    image: pic("accessories-02-hat"),
+    banner: pic("fabric-02-folded-stack", 2000),
     blurb: "Caps, belts, handkerchiefs and small things.",
     sub: [
       { slug: "cap", name: "Cap" },
@@ -242,7 +293,7 @@ export const PRODUCTS: Product[] = ROWS.map((r, i) => {
     sizes: r.sizes ?? (isKids(r.cat) ? KIDS_SIZES : CLOTHING_SIZES),
     soldOutSizes: r.soldOut ?? [],
     colors: r.colors.map((c) => SWATCHES[c]),
-    images: [1, 2, 3].map((n) => img(`${slug}-${n}`, RATIO.product)),
+    images: PRODUCT_PHOTOS[r.name].map((k) => pic(k, 1100)),
     stock: r.stock ?? 12 + ((i * 7) % 30),
     isNew: i % 3 === 0,
     isBestSeller: i % 4 === 1,
@@ -268,7 +319,7 @@ export const EQUIPMENT: Equipment[] = [
     type: "Sewing machines",
     fromPrice: 38500,
     keySpecs: ["5000 spm", "Single needle", "220V"],
-    images: [1, 2, 3].map((n) => img(`eq-jk8700-${n}`, RATIO.categoryWide)),
+    images: EQUIPMENT_PHOTOS[0].map((k) => pic(k, 1200)),
     specTable: [["Max speed", "5000 spm"], ["Stitch length", "5 mm"], ["Motor", "Direct drive servo, 550W"], ["Voltage", "220V / 50Hz"], ["Warranty", "12 months"]],
   },
   {
@@ -279,7 +330,7 @@ export const EQUIPMENT: Equipment[] = [
     type: "Sewing machines",
     fromPrice: 46000,
     keySpecs: ["6500 spm", "4 thread", "220V"],
-    images: [1, 2, 3].map((n) => img(`eq-sn4-${n}`, RATIO.categoryWide)),
+    images: EQUIPMENT_PHOTOS[1].map((k) => pic(k, 1200)),
     specTable: [["Max speed", "6500 spm"], ["Threads", "4"], ["Differential feed", "0.7 – 2.0"], ["Voltage", "220V / 50Hz"], ["Warranty", "12 months"]],
   },
   {
@@ -290,7 +341,7 @@ export const EQUIPMENT: Equipment[] = [
     type: "Sewing machines",
     fromPrice: 52000,
     keySpecs: ["5500 spm", "Flatbed", "220V"],
-    images: [1, 2, 3].map((n) => img(`eq-flatlock-${n}`, RATIO.categoryWide)),
+    images: EQUIPMENT_PHOTOS[2].map((k) => pic(k, 1200)),
     specTable: [["Max speed", "5500 spm"], ["Needles", "2 or 3"], ["Bed", "Flatbed"], ["Voltage", "220V / 50Hz"], ["Warranty", "12 months"]],
   },
   {
@@ -301,7 +352,7 @@ export const EQUIPMENT: Equipment[] = [
     type: "Cutting tools",
     fromPrice: 21500,
     keySpecs: ["8 in blade", "550W", "Up to 200 plies"],
-    images: [1, 2, 3].map((n) => img(`eq-cutter-${n}`, RATIO.categoryWide)),
+    images: EQUIPMENT_PHOTOS[3].map((k) => pic(k, 1200)),
     specTable: [["Blade height", "8 in"], ["Motor", "550W"], ["Cutting capacity", "Up to 200 plies"], ["Voltage", "220V / 50Hz"], ["Warranty", "6 months"]],
   },
   {
@@ -312,7 +363,7 @@ export const EQUIPMENT: Equipment[] = [
     type: "Cutting tools",
     fromPrice: 16800,
     keySpecs: ["Round knife", "370W", "Table mounted"],
-    images: [1, 2, 3].map((n) => img(`eq-endcutter-${n}`, RATIO.categoryWide)),
+    images: EQUIPMENT_PHOTOS[4].map((k) => pic(k, 1200)),
     specTable: [["Knife", "Round, 110 mm"], ["Motor", "370W"], ["Mount", "Table"], ["Voltage", "220V / 50Hz"], ["Warranty", "6 months"]],
   },
   {
@@ -323,7 +374,7 @@ export const EQUIPMENT: Equipment[] = [
     type: "Finishing",
     fromPrice: 29500,
     keySpecs: ["Vacuum table", "1.5 kW boiler", "220V"],
-    images: [1, 2, 3].map((n) => img(`eq-irontable-${n}`, RATIO.categoryWide)),
+    images: EQUIPMENT_PHOTOS[5].map((k) => pic(k, 1200)),
     specTable: [["Boiler", "1.5 kW"], ["Table", "Vacuum + heated"], ["Voltage", "220V / 50Hz"], ["Warranty", "6 months"]],
   },
   {
@@ -334,7 +385,7 @@ export const EQUIPMENT: Equipment[] = [
     type: "Spare parts",
     fromPrice: 1400,
     keySpecs: ["DBx1", "Size 11–18", "100 pcs"],
-    images: [1, 2, 3].map((n) => img(`eq-needles-${n}`, RATIO.categoryWide)),
+    images: EQUIPMENT_PHOTOS[6].map((k) => pic(k, 1200)),
     specTable: [["System", "DBx1"], ["Sizes", "11 – 18"], ["Pack", "100 pieces"]],
   },
   {
@@ -345,7 +396,7 @@ export const EQUIPMENT: Equipment[] = [
     type: "Spare parts",
     fromPrice: 2200,
     keySpecs: ["Lockstitch", "Fits JK-8700", "Steel"],
-    images: [1, 2, 3].map((n) => img(`eq-bobbin-${n}`, RATIO.categoryWide)),
+    images: EQUIPMENT_PHOTOS[7].map((k) => pic(k, 1200)),
     specTable: [["Fits", "JK-8700 and similar"], ["Material", "Hardened steel"], ["Pack", "Set of 1"]],
   },
 ];
@@ -360,8 +411,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     subtitle: "Wool, fleece and handwoven shawls, made for Dhaka winters.",
     lang: "en",
     href: "/category/winter",
-    image: img("hero-winter", RATIO.heroDesktop),
-    imageMobile: img("hero-winter-m", RATIO.heroMobile),
+    image: pic("hero-04-winter-coat", 2000),
   },
   {
     id: "h2",
@@ -370,8 +420,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     subtitle: "Handloom cotton panjabi, stitched in our own workshop.",
     lang: "en",
     href: "/category/men/panjabi",
-    image: img("hero-panjabi", RATIO.heroDesktop),
-    imageMobile: img("hero-panjabi-m", RATIO.heroMobile),
+    image: pic("hero-01-panjabi-man", 2000),
   },
   {
     id: "h3",
@@ -380,8 +429,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     subtitle: "হাতে বোনা কাপড়, ঢাকা থেকে আপনার দরজায়।",
     lang: "bn",
     href: "/category/women/saree",
-    image: img("hero-saree", RATIO.heroDesktop),
-    imageMobile: img("hero-saree-m", RATIO.heroMobile),
+    image: pic("hero-02-saree-woman", 2000),
   },
   {
     id: "h4",
@@ -390,8 +438,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     subtitle: "Sewing, cutting and finishing equipment with service support.",
     lang: "en",
     href: "/textile-equipment",
-    image: img("hero-equipment", RATIO.heroDesktop),
-    imageMobile: img("hero-equipment-m", RATIO.heroMobile),
+    image: pic("equipment-04-embroidery-machine", 2000),
   },
 ];
 
@@ -415,7 +462,7 @@ export const STORES: Store[] = [
     address: "TODO: address, Dhaka",
     hours: "Sat–Thu 10:00 – 20:00",
     phone: "+880 1745-947359",
-    image: img("store-1", RATIO.categoryWide),
+    image: pic(STORE_PHOTOS[0]),
     mapsUrl: "https://maps.google.com",
   },
   {
@@ -424,7 +471,7 @@ export const STORES: Store[] = [
     address: "TODO: address, Dhaka",
     hours: "Sat–Thu 10:00 – 20:00",
     phone: "+880 1745-947359",
-    image: img("store-2", RATIO.categoryWide),
+    image: pic(STORE_PHOTOS[1]),
     mapsUrl: "https://maps.google.com",
   },
   {
@@ -433,10 +480,42 @@ export const STORES: Store[] = [
     address: "TODO: address, Dhaka",
     hours: "Sat–Thu 09:00 – 18:00",
     phone: "+880 1745-947359",
-    image: img("store-3", RATIO.categoryWide),
+    image: pic(STORE_PHOTOS[2]),
     mapsUrl: "https://maps.google.com",
   },
 ];
+
+/* ---------- Story blocks (copy is TODO: replace with the real family story) ---------- */
+
+export const STORY = {
+  home: {
+    image: pic("hero-06-fabric-shop", 1600),
+    label: "Our story",
+    title: ["Cloth, cut and sold", "by one family"],
+    lines: [
+      "TODO: Started in Dhaka in 2023, Fakir & Son's began with a few rolls of cloth and a promise to sell it honestly.",
+      "TODO: We still choose our fabric ourselves and finish our garments in our own workshop.",
+      "TODO: From panjabi to sewing machines, we serve both the people who wear cloth and the people who make it.",
+    ],
+  },
+  about: [
+    {
+      title: "TODO: How it began",
+      text: "TODO: Write the opening of the family story here.",
+      image: pic("fabric-04-chalk-marking", 1400),
+    },
+    {
+      title: "TODO: The workshop",
+      text: "TODO: Describe the workshop, the tailors and how garments are made.",
+      image: pic("fabric-01-fabric-rolls-shop", 1400),
+    },
+    {
+      title: "TODO: Today",
+      text: "TODO: Describe the shop today and what comes next.",
+      image: pic("hero-05-family-traditional", 1400),
+    },
+  ],
+} as const;
 
 /* ---------- Helpers ---------- */
 

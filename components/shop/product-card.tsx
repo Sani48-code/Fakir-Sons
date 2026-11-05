@@ -42,15 +42,15 @@ export function ProductCard({
         <Link href={href} aria-label={product.name} tabIndex={-1} className="block">
           <div className="relative aspect-[3/4] overflow-hidden bg-thread/60">
             <Img
-              src={product.images[0]}
-              alt={`${product.name}, front`}
+              src={product.images[0].src}
+              alt={product.name}
               sizes={SIZES}
               ratio=""
               priority={priority}
               className={cn("absolute inset-0", soldOut && "opacity-55")}
             />
             <Img
-              src={product.images[1]}
+              src={product.images[1].src}
               alt=""
               sizes={SIZES}
               ratio=""
