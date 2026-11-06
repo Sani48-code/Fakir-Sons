@@ -14,6 +14,7 @@ export function StoryStrip() {
           <Img
             src={s.image.src}
             alt={s.image.alt}
+            position={s.image.pos}
             ratio="aspect-[5/4]"
             sizes="(min-width: 768px) 58vw, 100vw"
           />

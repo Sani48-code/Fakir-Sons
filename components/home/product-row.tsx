@@ -117,7 +117,7 @@ export function ProductRow({
         role="region"
         aria-label={title}
         tabIndex={0}
-        className={`no-scrollbar -mx-5 mt-8 overflow-x-auto px-5 md:-mx-10 md:px-10 ${
+        className={`no-scrollbar -mx-5 mt-8 scroll-px-5 overflow-x-auto px-5 md:-mx-10 md:scroll-px-10 md:px-10 ${
           dragging ? "cursor-grabbing select-none" : "cursor-grab snap-x snap-mandatory"
         }`}
       >

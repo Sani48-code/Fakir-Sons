@@ -135,7 +135,7 @@ export const HERO_PHOTOS: HeroPhoto[] = [
     724,
     579,
     "Tailor measuring a man in a black bandhgala in a warm-lit tailoring shop",
-    { desktop: "60% 40%", mobile: "50% 25%" },
+    { desktop: "0% 40%", mobile: "50% 25%" },
     "left",
   ),
   hero(
@@ -254,6 +254,15 @@ export function photo(key: string): AnyPhoto {
   const p = BY_KEY.get(key);
   if (!p) throw new Error(`Unknown photo key: ${key}`);
   return p;
+}
+
+/** A photo ready for <Img>: src, alt and focal points (pos = desktop object-position). */
+export type Pic = { key: string; src: string; alt: string; pos: string; posMobile: string };
+
+/** Look up a photo for use in data. Pass `pos` to re-aim a shared shot (e.g. one person in a group photo). */
+export function pic(key: string, pos?: string, alt?: string): Pic {
+  const p = photo(key);
+  return { key, src: p.src, alt: alt ?? p.alt, pos: pos ?? p.focal.desktop, posMobile: pos ?? p.focal.mobile };
 }
 
 /** Brand files in public/. */

@@ -10,6 +10,9 @@ const container = {
   hidden: {},
   show: { transition: { staggerChildren: 0.06 } },
 };
+const instant = { hidden: {}, show: {} };
+// Same keys as `item` so the server-rendered transform is also reset.
+const instantItem = { hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0 } } };
 const item = {
   hidden: { opacity: 0, y: 16 },
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE } },
@@ -25,16 +28,13 @@ export function Stagger({
   className?: string;
   as?: "div" | "ul" | "ol";
 }) {
+  // Always the same element on server and client (see Reveal). Reduced motion = instant.
   const reduce = useReducedMotion();
   const Comp = motion[as];
-  if (reduce) {
-    const Static = as;
-    return <Static className={className}>{children}</Static>;
-  }
   return (
     <Comp
       className={className}
-      variants={container}
+      variants={reduce ? instant : container}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.1 }}
@@ -57,12 +57,12 @@ export function StaggerItem({
 }) {
   const reduce = useReducedMotion();
   const Comp = motion[as];
-  if (reduce || index >= MAX_STAGGERED) {
+  if (index >= MAX_STAGGERED) {
     const Static = as;
     return <Static className={className}>{children}</Static>;
   }
   return (
-    <Comp className={className} variants={item}>
+    <Comp className={className} variants={reduce ? instantItem : item}>
       {children}
     </Comp>
   );

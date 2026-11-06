@@ -1,7 +1,8 @@
 // Dummy content for building the storefront. Replaced by Supabase data later.
 // Everything here is deterministic (no Math.random / new Date) so prerendering is stable.
+// Products are our real garments: one product per garment in our own photos.
 
-import { pic, type Pic } from "./images-legacy";
+import { HERO_PHOTOS, pic, type HeroPhoto, type Pic } from "./images";
 
 /* ---------- Types ---------- */
 
@@ -10,9 +11,11 @@ export type Subcategory = { slug: string; name: string };
 export type Category = {
   slug: string;
   name: string;
-  image: Pic; // tile photo
-  banner: Pic; // wide 4:1 banner photo
+  /** Ledger number used in section labels, "01". */
+  number: string;
   blurb: string;
+  /** One strong photo for tiles. */
+  image: Pic;
   sub: Subcategory[];
 };
 
@@ -20,20 +23,26 @@ export type Swatch = { name: string; hex: string };
 
 export type PriceTier = { minQty: number; maxQty?: number; price: number };
 
+export type Department = "men" | "women" | "kids";
+
 export type Product = {
   id: string;
   slug: string;
   name: string;
-  category: string; // Category.slug
-  sub: string; // Subcategory.slug
-  fabric: string; // small-caps line, e.g. "100% COTTON · HANDLOOM"
+  /** Department slug: men | women | kids. */
+  category: Department;
+  /** Subcategory slug inside the department, e.g. "panjabi". */
+  sub: string;
+  /** Also part of the top-level Winter collection. */
+  winter: boolean;
+  fabric: string; // small-caps line, e.g. "COTTON SILK · GOLD EMBROIDERY"
   description: string;
   price: number; // retail, BDT
   salePrice?: number;
   sizes: string[];
   soldOutSizes: string[];
   colors: Swatch[];
-  images: Pic[]; // 2-3 photos
+  images: Pic[]; // 1-2 photos of this garment
   stock: number;
   isNew: boolean;
   isBestSeller: boolean;
@@ -47,23 +56,22 @@ export type Equipment = {
   slug: string;
   model: string;
   brand: string;
-  type: string;
+  /** Subcategory slug under textile-equipment. */
+  sub: string;
   fromPrice: number;
   keySpecs: string[];
   images: Pic[];
   specTable: [string, string][];
 };
 
+/** Shaped like a row of the future `banners` table (placement = hero). */
 export type HeroSlide = {
   id: string;
-  label: string;
-  headline: string;
-  subtitle: string;
-  lang: "en" | "bn";
-  href: string;
-  image: Pic;
-  /** object-position per breakpoint so faces are never cropped */
-  focus: { desktop: string; mobile: string };
+  title: string; // small caps line, "WINTER 2026"
+  subtitle: string; // Cormorant headline
+  buttonText: string;
+  link: string;
+  image: HeroPhoto;
 };
 
 export type Faq = { id: string; group: string; q: string; a: string };
@@ -78,53 +86,10 @@ export type Store = {
   mapsUrl: string;
 };
 
+/* ---------- URLs ---------- */
 
-/* ---------- Photo mapping (keys from lib/images.ts) ---------- */
-// Each product uses photos that actually show that garment. A photo repeats only
-// where we have too few of that garment. Replace with real product photos later.
-
-const PRODUCT_PHOTOS: Record<string, string[]> = {
-  "Handloom Cotton Panjabi": ["men-01-panjabi", "men-03-kurta"],
-  "Teal Jacquard Panjabi": ["men-02-panjabi"],
-  "Linen Blend Casual Shirt": ["men-05-shirt-linen"],
-  "Oxford Formal Shirt": ["men-04-shirt-white"],
-  "Pique Polo T-shirt": ["men-08-polo-tee"],
-  "Pleated Wool Trouser": ["men-06-trousers"],
-  "Tailored Cream Suit": ["men-07-suit"],
-  "Cream Gold Silk Saree": ["women-01-saree", "women-02-saree"],
-  "Golden Silk Saree": ["women-02-saree", "women-01-saree"],
-  "Embroidered Three-piece": ["women-04-salwar-kameez"],
-  "Chikankari Kurti": ["women-06-kurti"],
-  "Boys Kurta Waistcoat Set": ["kids-01-kurta"],
-  "Boys Polo and Chino Set": ["kids-03-casual"],
-  "Girls Utility Jumpsuit": ["kids-04-casual"],
-  "Ribbed Wool Sweater": ["winter-01-sweater", "winter-03-sweater"],
-  "Oversized Camel Pullover": ["winter-02-sweater"],
-  "Merino Turtleneck": ["winter-04-cashmere"],
-  "Camel Wool Overcoat": ["winter-08-wool-coat", "winter-06-wool-coat"],
-  "Belted Camel Coat": ["winter-07-wool-coat"],
-  "Belted Trench Coat": ["women-08-long-coat"],
-  "Quilted Puffer Jacket": ["winter-09-puffer", "men-10-jacket"],
-  "Oatmeal Knit Cardigan": ["women-09-cardigan"],
-  "Handwoven Wool Shawl": ["winter-11-shawl", "winter-12-scarf"],
-  "Cream Wool Shawl": ["women-10-shawl"],
-  "Kids Knit Pullover": ["kids-05-knit"],
-  "Merino Wool Scarf": ["accessories-01-scarf"],
-  "Leather Tote Bag": ["accessories-03-bag"],
-};
-
-const EQUIPMENT_PHOTOS: string[][] = [
-  ["equipment-02-needle-detail", "fabric-03-tailor-hands"],
-  ["equipment-02-needle-detail"],
-  ["equipment-04-embroidery-machine", "equipment-02-needle-detail"],
-  ["equipment-05-cutting", "fabric-03-tailor-hands"],
-  ["equipment-05-cutting", "fabric-04-rolls"],
-  ["equipment-07-thread-cones", "equipment-05-cutting"],
-  ["equipment-02-needle-detail", "fabric-06-thread-buttons"],
-  ["fabric-06-thread-buttons", "equipment-07-thread-cones"],
-];
-
-const STORE_PHOTOS = ["banner-04-clothing-rail", "fabric-04-rolls", "fabric-02-folded-linen"];
+/** Every category link on the site is built here, so they always match real routes. */
+export const categoryHref = (slug: string, sub?: string) => (sub ? `/category/${slug}/${sub}` : `/category/${slug}`);
 
 /* ---------- Categories ---------- */
 
@@ -132,149 +97,357 @@ export const CATEGORIES: Category[] = [
   {
     slug: "men",
     name: "Men",
-    image: pic("men-09-coat", 1400, "50% 10%"),
-    banner: pic("banner-04-clothing-rail", 2000),
-    blurb: "Panjabi, shirts and tailoring for men.",
+    number: "01",
+    blurb: "Panjabi, suits, winter jackets and hoodies.",
+    image: pic("suits-navy-check-three-piece"),
     sub: [
       { slug: "panjabi", name: "Panjabi" },
-      { slug: "shirt", name: "Shirt" },
-      { slug: "polo", name: "Polo" },
-      { slug: "trouser", name: "Trouser" },
-      { slug: "suit", name: "Suit" },
+      { slug: "suits", name: "Suits" },
+      { slug: "winter", name: "Winter" },
+      { slug: "hoodies", name: "Hoodies" },
     ],
   },
   {
     slug: "women",
     name: "Women",
-    image: pic("women-04-salwar-kameez", 1400, "50% 24%"),
-    banner: pic("fabric-05-embroidery", 2000),
-    blurb: "Saree, three-piece and kurti in honest fabrics.",
+    number: "02",
+    blurb: "Silk sarees and soft winter knits.",
+    image: pic("sarees-maroon-banarasi-silk"),
     sub: [
-      { slug: "saree", name: "Saree" },
-      { slug: "three-piece", name: "Three-piece" },
-      { slug: "kurti", name: "Kurti" },
+      { slug: "sarees", name: "Sarees" },
+      { slug: "winter", name: "Winter knits" },
     ],
   },
   {
     slug: "kids",
     name: "Kids",
-    image: pic("kids-01-kurta", 1400, "50% 26%"),
-    banner: pic("fabric-02-folded-linen", 2000),
-    blurb: "Soft, easy-wash clothes for boys and girls.",
-    sub: [
-      { slug: "boys", name: "Boys" },
-      { slug: "girls", name: "Girls" },
-    ],
+    number: "03",
+    blurb: "Jackets and suits for boys.",
+    image: pic("boys-winter-pair"),
+    sub: [{ slug: "boys", name: "Boys" }],
   },
   {
     slug: "winter",
     name: "Winter",
-    image: pic("winter-07-wool-coat", 1600, "50% 24%"),
-    banner: pic("banner-01-winter-knits", 2000),
-    blurb: "Coats, knitwear and wraps for the cool months.",
+    number: "04",
+    blurb: "Coats, puffers, leather and knits for the cool months.",
+    image: pic("winter-black-hooded-puffer"),
     sub: [
-      { slug: "sweater", name: "Sweater" },
-      { slug: "coat", name: "Coat" },
-      { slug: "jacket", name: "Jacket" },
-      { slug: "shawl", name: "Shawl" },
-      { slug: "kids-winter", name: "Kids winter" },
+      { slug: "men", name: "Men" },
+      { slug: "women", name: "Women" },
+      { slug: "boys", name: "Boys" },
     ],
   },
   {
     slug: "textile-equipment",
     name: "Textile Equipment",
-    image: pic("equipment-04-embroidery-machine"),
-    banner: pic("equipment-07-thread-cones", 2000),
-    blurb: "Sewing machines, cutting tools and spare parts.",
+    number: "05",
+    blurb: "Industrial sewing machines, cutting, pressing and spare parts.",
+    image: pic("stock-eq-overlock-hands"),
     sub: [
       { slug: "sewing-machines", name: "Sewing machines" },
-      { slug: "cutting-tools", name: "Cutting tools" },
+      { slug: "cutting", name: "Cutting" },
+      { slug: "pressing", name: "Pressing" },
       { slug: "spare-parts", name: "Spare parts" },
-    ],
-  },
-  {
-    slug: "accessories",
-    name: "Accessories",
-    image: pic("accessories-03-bag"),
-    banner: pic("banner-03-fabric-rolls", 2000),
-    blurb: "Scarves and leather goods.",
-    sub: [
-      { slug: "scarf", name: "Scarf" },
-      { slug: "bag", name: "Bag" },
     ],
   },
 ];
 
 /* ---------- Products ---------- */
 
-const SWATCHES: Record<string, Swatch> = {
+const SWATCHES = {
   ivory: { name: "Ivory", hex: "#EFE6D2" },
   cream: { name: "Cream", hex: "#E8DCC4" },
+  ecru: { name: "Ecru", hex: "#DDD2BC" },
   maroon: { name: "Maroon", hex: "#5A0A0E" },
-  sand: { name: "Sand", hex: "#C9B48A" },
+  mustard: { name: "Mustard", hex: "#D19A2A" },
   camel: { name: "Camel", hex: "#B98A57" },
-  cocoa: { name: "Cocoa", hex: "#5B4636" },
-  charcoal: { name: "Charcoal", hex: "#3A3A38" },
-  ash: { name: "Ash grey", hex: "#B9B9B6" },
-  teal: { name: "Teal", hex: "#1F5F5B" },
-  gold: { name: "Gold", hex: "#D4A537" },
-  black: { name: "Black", hex: "#1B1A17" },
+  brown: { name: "Saddle brown", hex: "#6B3E22" },
+  bottle: { name: "Bottle green", hex: "#1F3B2C" },
   olive: { name: "Olive", hex: "#5F6038" },
-  sky: { name: "Sky", hex: "#9DB7CF" },
-};
+  navy: { name: "Navy", hex: "#1E2A44" },
+  denim: { name: "Mid denim", hex: "#4F6D8F" },
+  black: { name: "Black", hex: "#1B1A17" },
+} satisfies Record<string, Swatch>;
+
+type SwatchKey = keyof typeof SWATCHES;
 
 const CLOTHING_SIZES = ["S", "M", "L", "XL", "XXL"];
-const KIDS_SIZES = ["2Y", "4Y", "6Y", "8Y", "10Y"];
+const SUIT_SIZES = ["38", "40", "42", "44", "46"];
+const KIDS_SIZES = ["6Y", "8Y", "10Y", "12Y", "14Y"];
 const FREE_SIZE = ["Free size"];
 
 type Row = {
   name: string;
-  cat: string;
+  dept: Department;
   sub: string;
+  winter?: boolean;
   fabric: string;
   price: number;
   sale?: number;
-  colors: string[];
+  colors: SwatchKey[];
   sizes?: string[];
   soldOut?: string[];
   stock?: number;
   wholesale?: boolean;
-  fresh?: boolean; // force the NEW label
+  fresh?: boolean;
+  best?: boolean;
+  description: string;
+  images: Pic[];
 };
 
 const ROWS: Row[] = [
-  // Men (7)
-  { name: "Handloom Cotton Panjabi", cat: "men", sub: "panjabi", fabric: "COTTON · EMBROIDERED PLACKET", price: 2450, colors: ["ash", "ivory"], wholesale: true },
-  { name: "Teal Jacquard Panjabi", cat: "men", sub: "panjabi", fabric: "COTTON SILK · JACQUARD", price: 3890, sale: 3290, colors: ["teal", "maroon"], soldOut: ["XXL"] },
-  { name: "Linen Blend Casual Shirt", cat: "men", sub: "shirt", fabric: "LINEN COTTON BLEND", price: 1890, colors: ["sand", "ivory"], wholesale: true },
-  { name: "Oxford Formal Shirt", cat: "men", sub: "shirt", fabric: "100% COTTON · OXFORD", price: 1650, sale: 1390, colors: ["ivory", "sky"], wholesale: true },
-  { name: "Pique Polo T-shirt", cat: "men", sub: "polo", fabric: "100% COTTON · PIQUE", price: 990, colors: ["sand", "ivory", "charcoal"], wholesale: true, stock: 4 },
-  { name: "Pleated Wool Trouser", cat: "men", sub: "trouser", fabric: "WOOL BLEND · PLEATED", price: 3290, colors: ["cocoa", "charcoal"] },
-  { name: "Tailored Cream Suit", cat: "men", sub: "suit", fabric: "WOOL BLEND · TAILORED", price: 8900, colors: ["cream"], sizes: ["46", "48", "50", "52"] },
-  // Women (4)
-  { name: "Cream Gold Silk Saree", cat: "women", sub: "saree", fabric: "SILK · GOLD ZARI BORDER", price: 5900, colors: ["cream", "gold"], sizes: FREE_SIZE },
-  { name: "Golden Silk Saree", cat: "women", sub: "saree", fabric: "SILK · CONTRAST BORDER", price: 7450, sale: 6450, colors: ["gold", "maroon"], sizes: FREE_SIZE },
-  { name: "Embroidered Three-piece", cat: "women", sub: "three-piece", fabric: "COTTON · EMBROIDERED", price: 3290, colors: ["cocoa", "sand"], wholesale: true },
-  { name: "Chikankari Kurti", cat: "women", sub: "kurti", fabric: "COTTON · CHIKANKARI", price: 1790, sale: 1490, colors: ["ivory"], soldOut: ["S"] },
-  // Kids (3)
-  { name: "Boys Kurta Waistcoat Set", cat: "kids", sub: "boys", fabric: "COTTON · JACQUARD WAISTCOAT", price: 1890, colors: ["ivory", "maroon"], sizes: KIDS_SIZES, wholesale: true },
-  { name: "Boys Polo and Chino Set", cat: "kids", sub: "boys", fabric: "COTTON PIQUE · TWILL", price: 1390, sale: 1190, colors: ["ivory", "sand"], sizes: KIDS_SIZES },
-  { name: "Girls Utility Jumpsuit", cat: "kids", sub: "girls", fabric: "COTTON · UTILITY WEAVE", price: 1290, colors: ["sand", "olive"], sizes: KIDS_SIZES, stock: 0 },
-  // Winter (11)
-  { name: "Ribbed Wool Sweater", cat: "winter", sub: "sweater", fabric: "WOOL BLEND · RIBBED", price: 2890, colors: ["cream", "camel"], fresh: true },
-  { name: "Oversized Camel Pullover", cat: "winter", sub: "sweater", fabric: "WOOL · CHUNKY KNIT", price: 3190, colors: ["camel", "cream"], fresh: true },
-  { name: "Merino Turtleneck", cat: "winter", sub: "sweater", fabric: "MERINO WOOL · FINE KNIT", price: 2790, colors: ["maroon", "charcoal"], fresh: true },
-  { name: "Camel Wool Overcoat", cat: "winter", sub: "coat", fabric: "WOOL · DOUBLE FACE", price: 9800, sale: 8400, colors: ["camel", "charcoal"], fresh: true },
-  { name: "Belted Camel Coat", cat: "winter", sub: "coat", fabric: "WOOL BLEND · BELTED", price: 8900, colors: ["camel"], fresh: true },
-  { name: "Belted Trench Coat", cat: "winter", sub: "coat", fabric: "COTTON GABARDINE", price: 5900, colors: ["sand"], fresh: true },
-  { name: "Quilted Puffer Jacket", cat: "winter", sub: "jacket", fabric: "NYLON SHELL · POLY FILL", price: 4590, sale: 3890, colors: ["cream", "black"], wholesale: true, fresh: true },
-  { name: "Oatmeal Knit Cardigan", cat: "winter", sub: "sweater", fabric: "WOOL BLEND · KNIT", price: 3290, colors: ["sand"], fresh: true },
-  { name: "Handwoven Wool Shawl", cat: "winter", sub: "shawl", fabric: "WOOL · HANDWOVEN", price: 3490, colors: ["ash", "cocoa"], sizes: FREE_SIZE, fresh: true },
-  { name: "Cream Wool Shawl", cat: "winter", sub: "shawl", fabric: "PURE WOOL", price: 3790, colors: ["cream"], sizes: FREE_SIZE, fresh: true },
-  { name: "Kids Knit Pullover", cat: "winter", sub: "kids-winter", fabric: "WOOL BLEND · KNIT", price: 1490, colors: ["olive", "sand"], sizes: KIDS_SIZES, fresh: true },
-  // Accessories (2)
-  { name: "Merino Wool Scarf", cat: "accessories", sub: "scarf", fabric: "MERINO WOOL", price: 1290, colors: ["ash", "charcoal"], sizes: FREE_SIZE },
-  { name: "Leather Tote Bag", cat: "accessories", sub: "bag", fabric: "PEBBLED LEATHER", price: 4900, colors: ["sand"], sizes: FREE_SIZE },
+  // Men · Panjabi
+  {
+    name: "Ivory Embroidered Panjabi",
+    dept: "men",
+    sub: "panjabi",
+    fabric: "COTTON SILK · GOLD THREAD EMBROIDERY",
+    price: 4850,
+    colors: ["ivory"],
+    best: true,
+    wholesale: true,
+    description: "Ivory cotton silk with gold thread embroidery down the placket and across the chest. A band collar and a straight, easy fall for weddings and Eid.",
+    images: [pic("panjabi-ivory-embroidered"), pic("hero-03-panjabi-ivory", "64% 40%")],
+  },
+  {
+    name: "Bottle-Green Embroidered Panjabi",
+    dept: "men",
+    sub: "panjabi",
+    fabric: "COTTON · TONE-ON-TONE EMBROIDERY",
+    price: 3450,
+    colors: ["bottle"],
+    fresh: true,
+    wholesale: true,
+    description: "Deep bottle-green cotton with a tone-on-tone embroidered placket and collar. Quiet enough for every day, rich enough for the evening.",
+    images: [pic("panjabi-bottle-green-embroidered")],
+  },
+  // Men · Suits
+  {
+    name: "Navy Windowpane Three-Piece Suit",
+    dept: "men",
+    sub: "suits",
+    fabric: "WOOL BLEND · WINDOWPANE CHECK",
+    price: 18500,
+    colors: ["navy"],
+    sizes: SUIT_SIZES,
+    best: true,
+    description: "Navy wool blend with a fine windowpane check: two-button jacket, matching waistcoat and flat-front trousers. Altered to fit in our workshop.",
+    images: [pic("suits-navy-check-three-piece")],
+  },
+  {
+    name: "Navy Two-Piece Suit",
+    dept: "men",
+    sub: "suits",
+    fabric: "WOOL BLEND · TWO-BUTTON",
+    price: 13900,
+    colors: ["navy"],
+    sizes: SUIT_SIZES,
+    soldOut: ["46"],
+    description: "A plain navy two-button suit with notch lapels. The one suit every wardrobe needs, for the office and for occasions.",
+    images: [pic("suits-navy-two-piece")],
+  },
+  {
+    name: "Black Bandhgala",
+    dept: "men",
+    sub: "suits",
+    fabric: "WOOL BLEND · MANDARIN COLLAR",
+    price: 11500,
+    colors: ["black"],
+    sizes: SUIT_SIZES,
+    fresh: true,
+    description: "A black bandhgala jacket with a mandarin collar and covered buttons, cut close and measured by hand. Wear it with a pocket square.",
+    images: [pic("suits-black-bandhgala"), pic("hero-05-suits-tailoring", "54% 40%")],
+  },
+  // Men · Winter
+  {
+    name: "Camel Wool Overcoat",
+    dept: "men",
+    sub: "winter",
+    winter: true,
+    fabric: "WOOL BLEND · SINGLE-BREASTED",
+    price: 9800,
+    colors: ["camel"],
+    fresh: true,
+    best: true,
+    description: "Single-breasted camel overcoat in a soft wool blend with notch lapels. Long enough to cover a suit, light enough for Dhaka winters.",
+    images: [pic("winter-camel-wool-overcoat"), pic("hero-02-mens-winter-coat", "58% 40%")],
+  },
+  {
+    name: "Black Hooded Puffer Jacket",
+    dept: "men",
+    sub: "winter",
+    winter: true,
+    fabric: "NYLON SHELL · QUILTED FILL",
+    price: 5450,
+    colors: ["black"],
+    fresh: true,
+    wholesale: true,
+    description: "Quilted black puffer with a fixed hood, drawcords and zip pockets. Warm without the bulk.",
+    images: [pic("winter-black-hooded-puffer")],
+  },
+  {
+    name: "Navy Puffer Jacket",
+    dept: "men",
+    sub: "winter",
+    winter: true,
+    fabric: "NYLON SHELL · QUILTED FILL",
+    price: 4950,
+    colors: ["navy"],
+    fresh: true,
+    wholesale: true,
+    description: "A navy quilted puffer with a stand collar, for cold mornings and trips north. Pair it with a cream knit scarf.",
+    images: [pic("winter-navy-puffer-cream-scarf")],
+  },
+  {
+    name: "Ecru Trucker Jacket",
+    dept: "men",
+    sub: "winter",
+    winter: true,
+    fabric: "HEAVY COTTON TWILL",
+    price: 3650,
+    colors: ["ecru"],
+    fresh: true,
+    description: "An ecru trucker jacket in heavy cotton twill with chest pockets. The easy layer for cool evenings.",
+    images: [pic("winter-ecru-trucker-jacket")],
+  },
+  {
+    name: "Brown Leather Jacket",
+    dept: "men",
+    sub: "winter",
+    winter: true,
+    fabric: "LEATHER · ZIP POCKETS",
+    price: 12900,
+    colors: ["brown"],
+    stock: 3,
+    description: "Saddle-brown leather jacket with a snap collar, quilted shoulders and zip pockets. Softens and darkens with wear.",
+    images: [pic("winter-brown-leather-jacket")],
+  },
+  {
+    name: "Black Bomber Jacket",
+    dept: "men",
+    sub: "winter",
+    winter: true,
+    fabric: "NYLON TWILL · RIB TRIM",
+    price: 3950,
+    sale: 3450,
+    colors: ["black"],
+    description: "A black bomber with rib-knit collar, cuffs and hem and a sleeve zip pocket. Light, clean and easy over a tee.",
+    images: [pic("winter-black-bomber-jacket")],
+  },
+  // Men · Hoodies
+  {
+    name: "Black Fleece Hoodie",
+    dept: "men",
+    sub: "hoodies",
+    fabric: "COTTON FLEECE · 320 GSM",
+    price: 1850,
+    colors: ["black"],
+    fresh: true,
+    wholesale: true,
+    best: true,
+    description: "Heavyweight black cotton fleece with a lined hood, drawcords and a kangaroo pocket.",
+    images: [pic("hoodies-black-hoodie"), pic("hoodies-hoodie-trio", "50% 25%")],
+  },
+  {
+    name: "Cream Fleece Hoodie",
+    dept: "men",
+    sub: "hoodies",
+    fabric: "COTTON FLEECE · 320 GSM",
+    price: 1850,
+    colors: ["cream"],
+    fresh: true,
+    wholesale: true,
+    description: "Heavyweight cream cotton fleece with a lined hood, drawcords and a kangaroo pocket.",
+    images: [pic("hoodies-cream-hoodie"), pic("hoodies-hoodie-trio", "12% 25%")],
+  },
+  {
+    name: "Bottle-Green Fleece Hoodie",
+    dept: "men",
+    sub: "hoodies",
+    fabric: "COTTON FLEECE · 320 GSM",
+    price: 1850,
+    colors: ["bottle"],
+    fresh: true,
+    wholesale: true,
+    description: "Heavyweight bottle-green cotton fleece with a lined hood, drawcords and a kangaroo pocket.",
+    images: [pic("hoodies-bottle-green-hoodie"), pic("hoodies-hoodie-trio", "88% 25%")],
+  },
+  // Women · Sarees
+  {
+    name: "Maroon Banarasi Silk Saree",
+    dept: "women",
+    sub: "sarees",
+    fabric: "PURE SILK · GOLD ZARI",
+    price: 12500,
+    colors: ["maroon"],
+    sizes: FREE_SIZE,
+    best: true,
+    description: "Maroon Banarasi silk woven with gold zari buttis and a broad zari border and pallu. Comes with an unstitched blouse piece.",
+    images: [pic("sarees-maroon-banarasi-silk"), pic("hero-04-saree-maroon", "45% 60%")],
+  },
+  {
+    name: "Mustard Silk Saree",
+    dept: "women",
+    sub: "sarees",
+    fabric: "SOFT SILK · CONTRAST BORDER",
+    price: 7450,
+    sale: 6450,
+    colors: ["mustard"],
+    sizes: FREE_SIZE,
+    description: "A mustard soft-silk saree with a gold-edged contrast border. Light to drape and easy to wear all day.",
+    images: [pic("sarees-mustard-silk")],
+  },
+  // Women · Winter
+  {
+    name: "Cream Chunky Knit Sweater",
+    dept: "women",
+    sub: "winter",
+    winter: true,
+    fabric: "WOOL BLEND · CHUNKY KNIT",
+    price: 3650,
+    colors: ["cream"],
+    fresh: true,
+    description: "An oversized cream sweater in a chunky open knit, with dropped shoulders and long sleeves to pull over your hands.",
+    images: [pic("winter-cream-chunky-knit"), pic("hero-01-winter-knit", "62% 40%")],
+  },
+  // Kids · Boys
+  {
+    name: "Boys Olive Puffer Jacket",
+    dept: "kids",
+    sub: "boys",
+    winter: true,
+    fabric: "NYLON SHELL · FAUX-FUR HOOD",
+    price: 2950,
+    colors: ["olive"],
+    sizes: KIDS_SIZES,
+    fresh: true,
+    description: "Olive quilted puffer for boys, with a faux-fur trimmed hood and deep pockets. Built for play outside.",
+    images: [pic("boys-olive-puffer"), pic("boys-winter-pair", "25% 35%")],
+  },
+  {
+    name: "Boys Denim Jacket",
+    dept: "kids",
+    sub: "boys",
+    fabric: "COTTON DENIM · BUTTON FRONT",
+    price: 2250,
+    sale: 1890,
+    colors: ["denim"],
+    sizes: KIDS_SIZES,
+    description: "A classic mid-wash denim jacket for boys with chest pockets. Layers over a hoodie for cooler days.",
+    images: [pic("boys-denim-jacket"), pic("boys-winter-pair", "75% 35%")],
+  },
+  {
+    name: "Boys Navy Suit",
+    dept: "kids",
+    sub: "boys",
+    fabric: "POLY-VISCOSE · TWO-PIECE",
+    price: 4450,
+    colors: ["navy"],
+    sizes: KIDS_SIZES,
+    description: "A two-piece navy suit for boys, for weddings, school events and Eid. Pair with a white shirt and a blue tie.",
+    images: [pic("boys-navy-suit")],
+  },
 ];
 
 function slugify(s: string): string {
@@ -285,26 +458,26 @@ function slugify(s: string): string {
 }
 
 export const PRODUCTS: Product[] = ROWS.map((r, i) => {
-  const slug = slugify(r.name);
   const wholesale = !!r.wholesale;
   const price = r.sale ?? r.price;
   return {
     id: `p${String(i + 1).padStart(2, "0")}`,
-    slug,
+    slug: slugify(r.name),
     name: r.name,
-    category: r.cat,
+    category: r.dept,
     sub: r.sub,
+    winter: !!r.winter,
     fabric: r.fabric,
-    description: `${r.name}, in ${r.fabric.toLowerCase()}. TODO: replace with the real product description.`,
+    description: r.description,
     price: r.price,
     salePrice: r.sale,
     sizes: r.sizes ?? CLOTHING_SIZES,
     soldOutSizes: r.soldOut ?? [],
     colors: r.colors.map((c) => SWATCHES[c]),
-    images: PRODUCT_PHOTOS[r.name].map((k) => pic(k, 1100)),
+    images: r.images,
     stock: r.stock ?? 12 + ((i * 7) % 30),
-    isNew: r.fresh ?? i % 3 === 0,
-    isBestSeller: i % 4 === 1,
+    isNew: !!r.fresh,
+    isBestSeller: !!r.best,
     isWholesale: wholesale,
     moq: wholesale ? 10 : undefined,
     tiers: wholesale
@@ -316,7 +489,7 @@ export const PRODUCTS: Product[] = ROWS.map((r, i) => {
   };
 });
 
-/* ---------- Textile equipment ---------- */
+/* ---------- Textile equipment (photos are Pexels stand-ins until we shoot our machines) ---------- */
 
 export const EQUIPMENT: Equipment[] = [
   {
@@ -324,76 +497,76 @@ export const EQUIPMENT: Equipment[] = [
     slug: "jk-8700-single-needle-lockstitch",
     model: "JK-8700 Single Needle Lockstitch",
     brand: "Jack",
-    type: "Sewing machines",
+    sub: "sewing-machines",
     fromPrice: 38500,
-    keySpecs: ["5000 spm", "Single needle", "220V"],
-    images: EQUIPMENT_PHOTOS[0].map((k) => pic(k, 1200)),
+    keySpecs: ["5000 spm", "Single needle", "Servo motor"],
+    images: [pic("stock-eq-lockstitch-side"), pic("stock-eq-lockstitch-head")],
     specTable: [["Max speed", "5000 spm"], ["Stitch length", "5 mm"], ["Motor", "Direct drive servo, 550W"], ["Voltage", "220V / 50Hz"], ["Warranty", "12 months"]],
   },
   {
     id: "e2",
     slug: "sn-4-thread-overlock",
-    model: "HD-5 Walking Foot Machine",
+    model: "4-Thread Overlock",
     brand: "Siruba",
-    type: "Sewing machines",
+    sub: "sewing-machines",
     fromPrice: 46000,
-    keySpecs: ["4500 spm", "Walking foot", "220V"],
-    images: EQUIPMENT_PHOTOS[1].map((k) => pic(k, 1200)),
+    keySpecs: ["6500 spm", "4 threads", "Differential feed"],
+    images: [pic("stock-eq-overlock-hands"), pic("stock-eq-overlock-foot")],
     specTable: [["Max speed", "6500 spm"], ["Threads", "4"], ["Differential feed", "0.7 – 2.0"], ["Voltage", "220V / 50Hz"], ["Warranty", "12 months"]],
   },
   {
     id: "e3",
     slug: "flatlock-interlock-machine",
-    model: "Computerised Embroidery Machine",
+    model: "Flatlock Interlock Machine",
     brand: "Kingtex",
-    type: "Sewing machines",
+    sub: "sewing-machines",
     fromPrice: 52000,
-    keySpecs: ["1000 spm", "6 needles", "220V"],
-    images: EQUIPMENT_PHOTOS[2].map((k) => pic(k, 1200)),
+    keySpecs: ["5500 spm", "3 needles", "Flatbed"],
+    images: [pic("stock-eq-flatlock-machine"), pic("stock-eq-flatlock-knit")],
     specTable: [["Max speed", "5500 spm"], ["Needles", "2 or 3"], ["Bed", "Flatbed"], ["Voltage", "220V / 50Hz"], ["Warranty", "12 months"]],
   },
   {
     id: "e4",
     slug: "straight-knife-cutting-machine-8in",
-    model: "Electric Rotary Fabric Cutter",
+    model: "8in Straight Knife Cutting Machine",
     brand: "Eastman",
-    type: "Cutting tools",
+    sub: "cutting",
     fromPrice: 21500,
-    keySpecs: ["70 mm blade", "550W", "Up to 40 plies"],
-    images: EQUIPMENT_PHOTOS[3].map((k) => pic(k, 1200)),
-    specTable: [["Blade height", "8 in"], ["Motor", "550W"], ["Cutting capacity", "Up to 200 plies"], ["Voltage", "220V / 50Hz"], ["Warranty", "6 months"]],
+    keySpecs: ["8in blade", "750W", "Up to 200 plies"],
+    images: [pic("stock-eq-straight-knife"), pic("stock-eq-cloth-cutter")],
+    specTable: [["Blade height", "8 in"], ["Motor", "750W"], ["Cutting capacity", "Up to 200 plies"], ["Voltage", "220V / 50Hz"], ["Warranty", "6 months"]],
   },
   {
     id: "e5",
     slug: "fabric-end-cutter",
-    model: "Electric Fabric End Cutter",
+    model: "Fabric End Cutter",
     brand: "Hoshi",
-    type: "Cutting tools",
+    sub: "cutting",
     fromPrice: 16800,
-    keySpecs: ["Round knife", "370W", "Table mounted"],
-    images: EQUIPMENT_PHOTOS[4].map((k) => pic(k, 1200)),
-    specTable: [["Knife", "Round, 110 mm"], ["Motor", "370W"], ["Mount", "Table"], ["Voltage", "220V / 50Hz"], ["Warranty", "6 months"]],
+    keySpecs: ["Round knife", "370W", "Rail mounted"],
+    images: [pic("stock-eq-cutting-table"), pic("stock-eq-cutting-shears")],
+    specTable: [["Knife", "Round, 110 mm"], ["Motor", "370W"], ["Mount", "Cutting table rail"], ["Voltage", "220V / 50Hz"], ["Warranty", "6 months"]],
   },
   {
     id: "e6",
     slug: "steam-iron-vacuum-table",
-    model: "Polyester Thread Cone Set, 24 cones",
+    model: "Steam Iron and Vacuum Table",
     brand: "Veit",
-    type: "Spare parts",
+    sub: "pressing",
     fromPrice: 29500,
-    keySpecs: ["40/2 polyester", "5000 m cones", "24 pcs"],
-    images: EQUIPMENT_PHOTOS[5].map((k) => pic(k, 1200)),
+    keySpecs: ["1.5 kW boiler", "Vacuum + heated", "220V"],
+    images: [pic("stock-eq-steam-iron")],
     specTable: [["Boiler", "1.5 kW"], ["Table", "Vacuum + heated"], ["Voltage", "220V / 50Hz"], ["Warranty", "6 months"]],
   },
   {
     id: "e7",
     slug: "industrial-needle-pack",
-    model: "Industrial Needle Pack (100 pcs)",
+    model: "Industrial Needle Pack, 100 pcs",
     brand: "Organ",
-    type: "Spare parts",
+    sub: "spare-parts",
     fromPrice: 1400,
     keySpecs: ["DBx1", "Size 11–18", "100 pcs"],
-    images: EQUIPMENT_PHOTOS[6].map((k) => pic(k, 1200)),
+    images: [pic("stock-eq-needles-row"), pic("stock-eq-needles-fan")],
     specTable: [["System", "DBx1"], ["Sizes", "11 – 18"], ["Pack", "100 pieces"]],
   },
   {
@@ -401,77 +574,29 @@ export const EQUIPMENT: Equipment[] = [
     slug: "bobbin-case-and-hook-set",
     model: "Bobbin Case and Hook Set",
     brand: "Jack",
-    type: "Spare parts",
+    sub: "spare-parts",
     fromPrice: 2200,
-    keySpecs: ["Lockstitch", "Fits JK-8700", "Steel"],
-    images: EQUIPMENT_PHOTOS[7].map((k) => pic(k, 1200)),
+    keySpecs: ["Lockstitch", "Fits JK-8700", "Hardened steel"],
+    images: [pic("stock-eq-bobbin-stack"), pic("stock-eq-bobbins-table")],
     specTable: [["Fits", "JK-8700 and similar"], ["Material", "Hardened steel"], ["Pack", "Set of 1"]],
   },
 ];
 
-/* ---------- Hero slides ---------- */
+/* ---------- Hero slides (order matters) ---------- */
+
+const H = (key: string) => {
+  const h = HERO_PHOTOS.find((p) => p.key === key);
+  if (!h) throw new Error(`Unknown hero photo ${key}`);
+  return h;
+};
 
 export const HERO_SLIDES: HeroSlide[] = [
-  {
-    id: "h1",
-    label: "Winter 2026",
-    headline: "Warmth for\nthe season",
-    subtitle: "শীতের উষ্ণতা: coats, knits and wraps for the cool months.",
-    lang: "bn",
-    href: "/category/winter",
-    image: pic("hero-01-winter-coat", 2400),
-    focus: { desktop: "50% 24%", mobile: "38% 40%" },
-  },
-  {
-    id: "h2",
-    label: "Panjabi edit",
-    headline: "Made for the\nlong evenings",
-    subtitle: "Handloom cotton panjabi, stitched in our own workshop.",
-    lang: "en",
-    href: "/category/men/panjabi",
-    image: pic("hero-02-panjabi", 2400),
-    focus: { desktop: "50% 30%", mobile: "86% 35%" },
-  },
-  {
-    id: "h3",
-    label: "নতুন সংগ্রহ",
-    headline: "Saree,\nthe slow way",
-    subtitle: "হাতে বোনা কাপড়, ঢাকা থেকে আপনার দরজায়।",
-    lang: "bn",
-    href: "/category/women/saree",
-    image: pic("hero-03-saree", 2400),
-    focus: { desktop: "50% 40%", mobile: "64% 45%" },
-  },
-  {
-    id: "h4",
-    label: "Knitwear",
-    headline: "Soft things for\ncold mornings",
-    subtitle: "Chunky knits and fine merino in camel, cream and cocoa.",
-    lang: "en",
-    href: "/category/winter/sweater",
-    image: pic("hero-04-knitwear", 2400),
-    focus: { desktop: "50% 38%", mobile: "42% 45%" },
-  },
-  {
-    id: "h5",
-    label: "Tailoring",
-    headline: "Cut to\nfit you",
-    subtitle: "Suits and trousers, tailored in Dhaka.",
-    lang: "en",
-    href: "/category/men/suit",
-    image: pic("hero-05-tailoring", 2400),
-    focus: { desktop: "50% 28%", mobile: "72% 35%" },
-  },
-  {
-    id: "h6",
-    label: "The cloth",
-    headline: "Good cloth,\nhonestly sold",
-    subtitle: "Wholesale cloth and trims for tailors and boutiques.",
-    lang: "en",
-    href: "/wholesale",
-    image: pic("hero-06-fabric", 2400),
-    focus: { desktop: "50% 78%", mobile: "55% 80%" },
-  },
+  { id: "h1", title: "Winter 2026", subtitle: "Soft layers for cooler days", buttonText: "Shop winter", link: categoryHref("winter"), image: H("hero-01-winter-knit") },
+  { id: "h2", title: "Men's winter", subtitle: "Tailored for the season", buttonText: "Shop men's winter", link: categoryHref("men", "winter"), image: H("hero-02-mens-winter-coat") },
+  { id: "h3", title: "Panjabi collection", subtitle: "Crafted for every occasion", buttonText: "Shop panjabi", link: categoryHref("men", "panjabi"), image: H("hero-03-panjabi-ivory") },
+  { id: "h4", title: "Saree collection", subtitle: "Draped in heritage", buttonText: "Shop sarees", link: categoryHref("women", "sarees"), image: H("hero-04-saree-maroon") },
+  { id: "h5", title: "Suits & tailoring", subtitle: "Made to measure, made to last", buttonText: "Shop suits", link: categoryHref("men", "suits"), image: H("hero-05-suits-tailoring") },
+  { id: "h6", title: "Fabric & textile", subtitle: "Where every garment begins", buttonText: "Explore textile equipment", link: categoryHref("textile-equipment"), image: H("hero-06-fabric-textile") },
 ];
 
 /* ---------- FAQ ---------- */
@@ -488,93 +613,91 @@ export const FAQS: Faq[] = [
 /* ---------- Stores (TODO: replace with real locations) ---------- */
 
 export const STORES: Store[] = [
-  {
-    id: "s1",
-    name: "TODO: Main showroom",
-    address: "TODO: address, Dhaka",
-    hours: "Sat–Thu 10:00 – 20:00",
-    phone: "+880 1745-947359",
-    image: pic(STORE_PHOTOS[0]),
-    mapsUrl: "https://maps.google.com",
-  },
-  {
-    id: "s2",
-    name: "TODO: Second showroom",
-    address: "TODO: address, Dhaka",
-    hours: "Sat–Thu 10:00 – 20:00",
-    phone: "+880 1745-947359",
-    image: pic(STORE_PHOTOS[1]),
-    mapsUrl: "https://maps.google.com",
-  },
-  {
-    id: "s3",
-    name: "TODO: Wholesale counter",
-    address: "TODO: address, Dhaka",
-    hours: "Sat–Thu 09:00 – 18:00",
-    phone: "+880 1745-947359",
-    image: pic(STORE_PHOTOS[2]),
-    mapsUrl: "https://maps.google.com",
-  },
+  { id: "s1", name: "TODO: Main showroom", address: "TODO: address, Dhaka", hours: "Sat–Thu 10:00 – 20:00", phone: "+880 1745-947359", image: pic("stock-at-atelier"), mapsUrl: "https://maps.google.com" },
+  { id: "s2", name: "TODO: Second showroom", address: "TODO: address, Dhaka", hours: "Sat–Thu 10:00 – 20:00", phone: "+880 1745-947359", image: pic("stock-fab-shop-shelves"), mapsUrl: "https://maps.google.com" },
+  { id: "s3", name: "TODO: Wholesale counter", address: "TODO: address, Dhaka", hours: "Sat–Thu 09:00 – 18:00", phone: "+880 1745-947359", image: pic("stock-fab-suiting-stack"), mapsUrl: "https://maps.google.com" },
 ];
 
-/* ---------- Story blocks (copy is TODO: replace with the real family story) ---------- */
+/* ---------- Story blocks ---------- */
+// TODO(owner): replace with the real family story. Kept plain (no "TODO" text on the page).
 
 export const STORY = {
   home: {
-    image: pic("fabric-03-tailor-hands", 1600, "50% 45%"),
+    image: pic("hero-06-fabric-textile", "18% 50%", "Stacked suiting fabrics with a tailor's measuring tape"),
     label: "Our story",
     title: ["Cloth, cut and sold", "by one family"],
     lines: [
-      "TODO: Started in Dhaka in 2023, Fakir & Son's began with a few rolls of cloth and a promise to sell it honestly.",
-      "TODO: We still choose our fabric ourselves and finish our garments in our own workshop.",
-      "TODO: From panjabi to sewing machines, we serve both the people who wear cloth and the people who make it.",
+      `Fakir & Son's began in Dhaka with a few rolls of cloth and a simple rule: sell it honestly.`,
+      "We still choose our fabric by hand and finish our garments with tailors we know by name.",
+      "From panjabi to sewing machines, we serve the people who wear cloth and the people who make it.",
     ],
   },
   about: [
-    {
-      title: "TODO: How it began",
-      text: "TODO: Write the opening of the family story here.",
-      image: pic("fabric-03-tailor-hands", 1400),
-    },
-    {
-      title: "TODO: The workshop",
-      text: "TODO: Describe the workshop, the tailors and how garments are made.",
-      image: pic("fabric-04-rolls", 1400),
-    },
-    {
-      title: "TODO: Today",
-      text: "TODO: Describe the shop today and what comes next.",
-      image: pic("fabric-05-embroidery", 1400),
-    },
+    { title: "TODO: How it began", text: "TODO: Write the opening of the family story here.", image: pic("stock-at-pattern") },
+    { title: "TODO: The workshop", text: "TODO: Describe the workshop, the tailors and how garments are made.", image: pic("stock-fab-shop-shelves") },
+    { title: "TODO: Today", text: "TODO: Describe the shop today and what comes next.", image: pic("stock-fab-velvet-embroidery") },
   ],
 } as const;
 
-/* ---------- Helpers ---------- */
+/* ---------- Queries ---------- */
 
 export const getCategory = (slug: string) => CATEGORIES.find((c) => c.slug === slug);
 export const getProduct = (slug: string) => PRODUCTS.find((p) => p.slug === slug);
 export const getEquipment = (slug: string) => EQUIPMENT.find((e) => e.slug === slug);
-export const productsByCategory = (slug: string) => PRODUCTS.filter((p) => p.category === slug);
-const WINTER_EDIT_NAMES = ["Oversized Camel Pullover", "Handwoven Wool Shawl", "Quilted Puffer Jacket", "Kids Knit Pullover"];
+const byName = (names: string[]) =>
+  names.map((n) => {
+    const p = PRODUCTS.find((x) => x.name === n);
+    if (!p) throw new Error(`Unknown product ${n}`);
+    return p;
+  });
 
-/** Large image for the Winter edit split feature. */
-export const WINTER_FEATURE = {
-  image: pic("winter-06-wool-coat", 1800, "50% 22%"),
+/** Products in a category URL: /category/[slug] or /category/[slug]/[sub]. */
+export function productsIn(slug: string, sub?: string): Product[] {
+  if (slug === "winter") {
+    const dept = sub === "boys" ? "kids" : sub;
+    return PRODUCTS.filter((p) => p.winter && (!dept || p.category === dept));
+  }
+  return PRODUCTS.filter((p) => p.category === slug && (!sub || p.sub === sub));
+}
+
+export const equipmentIn = (sub?: string) => EQUIPMENT.filter((e) => !sub || e.sub === sub);
+
+/* ---------- Home sections (no product repeats across sections) ---------- */
+
+export const HOME = {
+  newSeason: byName([
+    "Navy Puffer Jacket",
+    "Ecru Trucker Jacket",
+    "Black Fleece Hoodie",
+    "Brown Leather Jacket",
+    "Cream Fleece Hoodie",
+    "Black Bomber Jacket",
+    "Bottle-Green Fleece Hoodie",
+    "Boys Denim Jacket",
+  ]),
+  winterEdit: {
+    image: pic("winter-ecru-trucker-jacket", "50% 40%", "Man in an ecru jacket by a still lake at dusk with snow peaks behind"),
+    products: byName(["Camel Wool Overcoat", "Cream Chunky Knit Sweater", "Black Hooded Puffer Jacket", "Boys Olive Puffer Jacket"]),
+  },
+  panjabi: {
+    image: pic("stock-fab-gold-zardozi", "50% 45%"),
+    products: byName(["Ivory Embroidered Panjabi", "Bottle-Green Embroidered Panjabi"]),
+  },
+  sarees: {
+    image: HERO_SLIDES[3].image,
+    products: byName(["Maroon Banarasi Silk Saree", "Mustard Silk Saree"]),
+  },
+  suits: byName(["Navy Windowpane Three-Piece Suit", "Black Bandhgala", "Navy Two-Piece Suit", "Boys Navy Suit"]),
+  /** "Shop by collection" tiles: one strong photo per collection. */
+  collections: [
+    { name: "Winter", number: "01", href: categoryHref("winter"), image: pic("winter-black-hooded-puffer", "50% 20%") },
+    { name: "Panjabi", number: "02", href: categoryHref("men", "panjabi"), image: pic("panjabi-bottle-green-embroidered", "50% 25%") },
+    { name: "Suits", number: "03", href: categoryHref("men", "suits"), image: pic("suits-navy-check-three-piece", "50% 20%") },
+    { name: "Sarees", number: "04", href: categoryHref("women", "sarees"), image: pic("hero-04-saree-maroon", "58% 30%") },
+    { name: "Hoodies", number: "05", href: categoryHref("men", "hoodies"), image: pic("hoodies-hoodie-trio", "50% 25%") },
+    { name: "Boys", number: "06", href: categoryHref("kids", "boys"), image: pic("boys-winter-pair", "50% 30%") },
+    { name: "Textile Equipment", number: "07", href: categoryHref("textile-equipment"), image: pic("stock-eq-overlock-hands", "50% 50%") },
+  ],
 };
-
-/** Winter edit: knit, wrap, jacket and kids winter. */
-export function winterEdit(limit = 4): Product[] {
-  return WINTER_EDIT_NAMES.map((n) => PRODUCTS.find((p) => p.name === n))
-    .filter((p): p is Product => Boolean(p))
-    .slice(0, limit);
-}
-
-/** New season row: other winter pieces first, then a few new non-winter pieces. No repeats of the Winter edit. */
-export function newSeason(limit = 8): Product[] {
-  const edit = new Set(WINTER_EDIT_NAMES);
-  const winter = PRODUCTS.filter((p) => p.category === "winter" && !edit.has(p.name));
-  const others = PRODUCTS.filter((p) => p.category !== "winter" && p.isNew);
-  return [...winter.slice(0, 5), ...others.slice(0, 3)].slice(0, limit);
-}
 
 export const effectivePrice = (p: Product) => p.salePrice ?? p.price;

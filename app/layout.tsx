@@ -21,7 +21,14 @@ const hind = Hind_Siliguri({
   weight: ["400", "500"],
 });
 
+// Absolute base for Open Graph image URLs (our photos are local paths).
+// TODO: set to the real domain when it is connected.
+const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : "http://localhost:3000";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Fakir & Son's",
   description: "Clothing and textile equipment, delivered across Bangladesh.",
 };

@@ -28,20 +28,17 @@ export function TextLines({
     <Tag className={className} aria-label={lines.join(" ")}>
       {lines.map((line, i) => (
         <span key={i} aria-hidden className="block overflow-hidden pb-[0.08em]">
-          {reduce ? (
-            <span className={lineClassName ? `block ${lineClassName}` : "block"}>{line}</span>
-          ) : (
-            <motion.span
-              className={lineClassName ? `block ${lineClassName}` : "block"}
-              initial={{ y: "105%" }}
-              {...(trigger === "mount"
-                ? { animate: { y: 0 } }
-                : { whileInView: { y: 0 }, viewport: { once: true, amount: 0.6 } })}
-              transition={{ duration: 0.7, ease: EASE, delay: delay + i * 0.08 }}
-            >
-              {line}
-            </motion.span>
-          )}
+          {/* Same element on server and client (see Reveal); reduced motion = instant. */}
+          <motion.span
+            className={lineClassName ? `block ${lineClassName}` : "block"}
+            initial={{ y: "105%" }}
+            {...(trigger === "mount"
+              ? { animate: { y: 0 } }
+              : { whileInView: { y: 0 }, viewport: { once: true, amount: 0.6 } })}
+            transition={reduce ? { duration: 0 } : { duration: 0.7, ease: EASE, delay: delay + i * 0.08 }}
+          >
+            {line}
+          </motion.span>
         </span>
       ))}
     </Tag>

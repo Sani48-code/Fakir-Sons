@@ -2,11 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    // Free stock photos (Unsplash + Pexels) until our own are uploaded to Supabase Storage.
-    remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com" },
-      { protocol: "https", hostname: "images.pexels.com" },
-    ],
+    // All photos are local (public/images). 90 is used for the hero only.
+    qualities: [75, 90],
   },
   /* config options here */
   cacheComponents: true,

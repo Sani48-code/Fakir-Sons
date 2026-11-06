@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
+import { getImageProps } from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties, KeyboardEvent, PointerEvent } from "react";
@@ -9,15 +10,46 @@ import { SlowZoom } from "@/components/motion/slow-zoom";
 import { TextLines } from "@/components/motion/text-lines";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/shop/icons";
 import { Container } from "@/components/ui/container";
-import { Img } from "@/components/ui/img";
 import type { HeroSlide } from "@/lib/dummy";
+import { cn } from "@/lib/format";
 
 const AUTOPLAY_MS = 6000;
+const QUALITY = 90; // hero only; allowed in next.config images.qualities
 
 /**
- * Full-viewport editorial hero. Text sits directly on the photo (no box) over a
- * soft bottom-only vignette. Each slide has its own desktop and mobile focal
- * point so faces are never cropped.
+ * Art-directed photo: the desktop banner from md up, a separate (swappable)
+ * 4:5 mobile file below it. Each has its own focal point.
+ */
+function HeroPicture({ slide, first }: { slide: HeroSlide; first: boolean }) {
+  const { image } = slide;
+  const common = { alt: "", sizes: "100vw", quality: QUALITY, fill: true } as const;
+  const {
+    props: { srcSet: desktop },
+  } = getImageProps({ ...common, src: image.src });
+  const {
+    props: { srcSet: mobile, ...rest },
+  } = getImageProps({ ...common, src: image.mobile.src });
+
+  return (
+    <picture>
+      <source media="(min-width: 768px)" srcSet={desktop} />
+      <img
+        {...rest}
+        srcSet={mobile}
+        alt={image.alt}
+        loading={first ? "eager" : "lazy"}
+        fetchPriority={first ? "high" : "auto"}
+        className="absolute inset-0 h-full w-full object-cover [object-position:var(--pm)] md:[object-position:var(--pd)]"
+      />
+    </picture>
+  );
+}
+
+/**
+ * Editorial hero: 6 slides, crossfade 1.2s with a slow zoom, autoplay 6s.
+ * Desktop: text on the empty side of each photo over a soft side vignette.
+ * Mobile: 4:5 crop, text at the bottom over a soft bottom vignette.
+ * No box behind the text.
  */
 export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
   const reduce = useReducedMotion();
@@ -65,7 +97,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
   };
 
   const slide = slides[index];
-  const lines = slide.headline.split("\n");
+  const right = slide.image.textSide === "right";
   const pad = (n: number) => String(n).padStart(2, "0");
 
   return (
@@ -80,76 +112,65 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
       onBlur={() => setFocused(false)}
       onPointerDown={onPointerDown}
       onPointerUp={onPointerUp}
-      className="relative h-[calc(100svh-104px)] min-h-[520px] w-full touch-pan-y overflow-hidden bg-ink text-cotton focus-visible:outline-offset-[-4px] md:h-[calc(100svh-148px)]"
+      className="relative aspect-[4/5] max-h-[calc(100svh-104px)] w-full touch-pan-y overflow-hidden bg-ink text-cotton focus-visible:outline-offset-[-4px] md:aspect-auto md:h-[min(80svh,820px)] md:max-h-none md:min-h-[520px]"
     >
-      {/* Slides: crossfade 1.2s + slow Ken Burns */}
+      {/* Slides */}
       {slides.map((s, i) => (
         <div
           key={s.id}
           role="group"
           aria-roledescription="slide"
-          aria-label={`${i + 1} of ${count}`}
+          aria-label={`${i + 1} of ${count}: ${s.title}`}
           aria-hidden={i !== index}
-          style={{ "--pd": s.focus.desktop, "--pm": s.focus.mobile } as CSSProperties}
+          style={{ "--pd": s.image.focal.desktop, "--pm": s.image.focal.mobile } as CSSProperties}
           className={`absolute inset-0 transition-opacity duration-[1200ms] ease-in-out ${
             i === index ? "opacity-100" : "opacity-0"
           }`}
         >
           <SlowZoom active={i === index || i === prev} className="absolute inset-0">
-            <Img
-              src={s.image.src}
-              alt={i === index ? s.image.alt : ""}
-              sizes="100vw"
-              ratio=""
-              priority={i === 0}
-              className="absolute inset-0"
-              imgClassName="[object-position:var(--pm)] md:[object-position:var(--pd)]"
-            />
+            <HeroPicture slide={s} first={i === 0} />
           </SlowZoom>
+          {/* Soft vignette on the text side only (bottom on mobile) */}
+          <div
+            aria-hidden
+            className={cn(
+              "pointer-events-none absolute inset-x-0 bottom-0 h-[75%] bg-gradient-to-t from-ink/85 via-ink/50 to-transparent",
+              "md:inset-y-0 md:h-auto md:w-[62%] md:via-ink/25",
+              s.image.textSide === "right"
+                ? "md:left-auto md:right-0 md:bg-gradient-to-l md:from-ink/65"
+                : "md:right-auto md:left-0 md:bg-gradient-to-r md:from-ink/65",
+            )}
+          />
         </div>
       ))}
 
-      {/* Soft dark vignette, bottom only */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-[62%] bg-gradient-to-t from-ink/75 via-ink/30 to-transparent"
-      />
-
-      {/* Text sits directly on the image, bottom-left */}
-      <div className="absolute inset-x-0 bottom-0 pb-24 md:pb-32">
-        <Container>
-          <div key={slide.id} className="max-w-[900px]">
+      {/* Text: bottom on mobile; on the photo's empty side on desktop */}
+      <div className="absolute inset-0 flex items-end pb-20 md:items-center md:pb-0">
+        <Container className={cn("flex", right ? "md:justify-end" : "md:justify-start")}>
+          <div key={slide.id} className="max-w-[560px] md:pb-8">
             <motion.p
               initial={reduce ? false : { opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: EASE, delay: 0.15 }}
-              className="label text-gold-soft"
+              className="label text-cotton md:text-gold-soft"
             >
-              {slide.label}
+              {slide.title}
             </motion.p>
             <TextLines
-              lines={lines}
-              as="h1"
+              lines={[slide.subtitle]}
+              as={index === 0 ? "h1" : "h2"}
               trigger="mount"
               delay={0.2}
-              className="mt-4 font-display text-[48px] font-medium leading-[0.96] md:text-[96px]"
+              className="mt-3 font-display text-[40px] font-medium leading-[1] md:mt-4 md:text-[72px] lg:text-[84px]"
             />
-            <motion.p
-              initial={reduce ? false : { opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: EASE, delay: 0.55 }}
-              className="mt-5 max-w-lg text-[15px] leading-relaxed text-cotton/90 md:text-base"
-            >
-              {slide.subtitle}
-            </motion.p>
             <motion.div
               initial={reduce ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.7 }}
-              className="mt-6"
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="mt-5 md:mt-7"
             >
-              <Link href={slide.href} className="link-grow text-sm font-medium">
-                Shop the collection →
+              <Link href={slide.link} className="link-grow text-sm font-medium">
+                {slide.buttonText} →
               </Link>
             </motion.div>
           </div>
@@ -157,8 +178,8 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
       </div>
 
       {/* Bottom bar: 01 — 06, a clickable progress line per slide, arrows */}
-      <div className="absolute inset-x-0 bottom-0 pb-5 md:pb-8">
-        <Container className="flex items-center gap-4 pr-[84px] md:gap-8 md:pr-[96px]">
+      <div className="absolute inset-x-0 bottom-0 pb-4 md:pb-7">
+        <Container className="flex items-center gap-4 md:gap-8">
           <p aria-live={autoplay && !paused ? "off" : "polite"} className="tnum shrink-0 text-sm tracking-wider">
             {pad(index + 1)} — {pad(count)}
           </p>
@@ -167,7 +188,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
               <button
                 key={s.id}
                 type="button"
-                aria-label={`Go to slide ${i + 1}: ${s.label}`}
+                aria-label={`Go to slide ${i + 1}: ${s.title}`}
                 aria-current={i === index}
                 onClick={() => go(i)}
                 className="group flex h-8 flex-1 items-center"

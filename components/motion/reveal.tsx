@@ -17,19 +17,17 @@ export function Reveal({
   delay?: number;
   as?: "div" | "section" | "li" | "p";
 }) {
+  // Same element on server and client (branching on reduced motion breaks hydration
+  // and leaves the server's opacity:0 in place). Reduced motion = instant, no movement.
   const reduce = useReducedMotion();
   const Comp = motion[as];
-  if (reduce) {
-    const Static = as;
-    return <Static className={className}>{children}</Static>;
-  }
   return (
     <Comp
       className={className}
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.5, ease: EASE, delay }}
+      transition={reduce ? { duration: 0 } : { duration: 0.5, ease: EASE, delay }}
     >
       {children}
     </Comp>

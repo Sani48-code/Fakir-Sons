@@ -23,20 +23,19 @@ export function RevealImage({
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.15 });
 
-  if (reduce) return <div className={className}>{children}</div>;
   return (
     <div ref={ref} className={className}>
       <motion.div
         className="h-full w-full"
         initial={{ clipPath: "inset(100% 0 0 0)" }}
         animate={{ clipPath: inView ? "inset(0% 0 0 0)" : "inset(100% 0 0 0)" }}
-        transition={{ duration: 0.9, ease: EASE }}
+        transition={reduce ? { duration: 0 } : { duration: 0.9, ease: EASE }}
       >
         <motion.div
           className="h-full w-full"
           initial={{ scale: 1.06 }}
           animate={{ scale: inView ? 1 : 1.06 }}
-          transition={{ duration: 0.9, ease: EASE }}
+          transition={reduce ? { duration: 0 } : { duration: 0.9, ease: EASE }}
         >
           {children}
         </motion.div>

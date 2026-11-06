@@ -3,20 +3,20 @@ import { Reveal } from "@/components/motion/reveal";
 import { Container } from "@/components/ui/container";
 import { Img } from "@/components/ui/img";
 import { SectionHeader } from "@/components/ui/section-header";
-import { EQUIPMENT } from "@/lib/dummy";
+import { EQUIPMENT, categoryHref } from "@/lib/dummy";
 import { taka } from "@/lib/format";
 
 /** Catalogue-style list, not a fashion grid. */
 export function EquipmentList() {
-  const rows = EQUIPMENT.slice(0, 4);
+  const rows = EQUIPMENT.slice(0, 6);
   return (
     <Container as="section" className="py-20 md:py-32">
       <Reveal>
         <SectionHeader
-          number="03"
+          number="05"
           label="Equipment"
           title="Textile equipment"
-          href="/textile-equipment"
+          href={categoryHref("textile-equipment")}
           hrefLabel="View catalogue"
         />
       </Reveal>
@@ -24,12 +24,13 @@ export function EquipmentList() {
         {rows.map((e) => (
           <li key={e.id} className="border-b border-thread">
             <Link
-              href={`/textile-equipment/${e.slug}`}
+              href={categoryHref("textile-equipment", e.sub)}
               className="group flex flex-wrap items-center gap-x-6 gap-y-3 px-2 py-5 transition-colors duration-200 hover:bg-paper md:flex-nowrap md:px-4"
             >
               <Img
                 src={e.images[0].src}
                 alt={e.images[0].alt}
+                position={e.images[0].pos}
                 ratio="aspect-square"
                 sizes="96px"
                 className="w-20 shrink-0 md:w-24"

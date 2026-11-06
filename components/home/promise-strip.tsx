@@ -6,7 +6,7 @@ const ITEMS = [
   "Wholesale & bulk orders",
   "Easy exchange",
   `Since ${SITE.est}`,
-  "ঢাকা থেকে সারা দেশে",
+  "Delivered from Dhaka, nationwide",
 ];
 
 function Half({ hidden = false }: { hidden?: boolean }) {

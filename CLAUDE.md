@@ -115,5 +115,5 @@ Connection check: `GET /api/health/supabase`.
 - [x] Storefront PROMPTS.md Page 1 (home, winter as lead campaign): built
 - [x] Home redesign (premium editorial photo library, full-viewport hero, 1600px layout, New season + Winter edit): built
 - [x] Own photos optimised to public/images (hero + collections), lib/images.ts rebuilt around local files
-- [ ] Pexels stock picks (47) in public/images/stock, contact sheet in /styleguide: awaiting approval
-- [ ] Next: restructure nav + dummy.ts around real collections, 6-slide hero, full home page, drop remote image hosts
+- [x] Pexels stock picks (45) approved, in public/images/stock
+- [ ] Home rebuilt on our own photos: nav + dummy.ts around real collections (Men: Panjabi/Suits/Winter/Hoodies, Women: Sarees/Winter knits, Kids: Boys, Winter, Textile Equipment), 6-slide hero, full home page, basic /category/[slug]/[sub] pages, remote image hosts removed: built, awaiting review

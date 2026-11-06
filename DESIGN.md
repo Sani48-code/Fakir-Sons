@@ -58,9 +58,9 @@ Dark sections (footer, wholesale band) use `--wine` background with `--cotton` t
 
 - Container max 1600px with 40px gutters (20px mobile). Editorial images (category tiles, the Winter edit split) run edge to edge.
 - Section titles 48-56px Cormorant (36px mobile). Product names and prices 15px. Section spacing 128px desktop / 80px mobile.
-- Hero: full viewport height (100svh minus announcement bar and header), 6 slides, crossfade 1.2s + slow Ken Burns, autoplay 6s. No box behind text: text sits on the image bottom-left over a soft dark vignette (the one allowed gradient, bottom only). Each slide has its own desktop and mobile `focus` (object-position) so faces are never cropped. Bottom bar: "01 — 06" with a clickable thin progress line per slide.
-- Home product sections: one "New season" row and one large split "Winter edit" feature (big image half, 2x2 products half). Do not repeat the same product across sections.
-- Photography: Pexels editorial/studio photos in warm neutrals. Every photo must literally show what its title says (a saree is a saree, a winter coat is a winter coat). `lib/images.ts` is the single source; see its credits list.
+- Hero: desktop height min(80svh, 820px), mobile a 4:5 crop. 6 slides, crossfade 1.2s + slow zoom, autoplay 6s, swipe/arrows/keyboard. No box behind text. Desktop: text on the empty side of the photo (`textSide` in lib/images.ts) over a soft vignette on that side only. Mobile: text at the bottom over a soft bottom vignette. English only. Bottom bar: "01 — 06" with a clickable thin progress line per slide.
+- Home order: hero, promise strip, Shop by collection (Winter large), New season row, Winter edit split, Panjabi collection row, Saree split feature, Suits & tailoring row, story strip, wholesale band, textile equipment list, packaging, trust row, newsletter. Do not repeat the same product across sections.
+- Photography: our own photos first; Pexels stock only where we have none (flagged `stock: true`). Every photo must literally show what its title says. `lib/images.ts` is the single source.
 
 ## Shape, line and space
 
@@ -88,7 +88,7 @@ Quiet and fast. 200–300ms ease-out. Allowed: image crossfade on product hover,
 ## Storefront pages
 
 **Home**
-1. Hero: full-bleed photo, headline bottom-left in Cormorant, one small Bangla/English subtitle, one text-style "Shop the collection →" link (not a big button). Slide counter "01 / 04" bottom-right.
+1. Hero: see "Editorial layout" above (the current spec). Headline in Cormorant, a small caps label, one text-style link (not a big button).
 2. Thin marquee or single line: "Nationwide Cash on Delivery · Wholesale available · Since 19XX".
 3. Editorial category block: one tall image + two stacked images, numbered labels.
 4. New Arrivals: horizontal scroll row of product cards, "View all" link right.
