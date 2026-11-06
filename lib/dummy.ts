@@ -702,4 +702,72 @@ export const HOME = {
   panjabiFeature: pic("feature-panjabi"),
 };
 
+/* ---------- Mega-menu (keyed by the NAV item href in lib/site.ts) ---------- */
+
+export type MegaLink = { label: string; href: string };
+export type MegaMenu = {
+  groups: { title: string; links: MegaLink[] }[];
+  featured: { image: Pic; caption: string; href: string }[];
+};
+
+const L = (label: string, slug: string, sub?: string): MegaLink => ({ label, href: categoryHref(slug, sub) });
+
+export const MEGA: Record<string, MegaMenu> = {
+  "/category/men": {
+    groups: [
+      { title: "Clothing", links: [L("Panjabi", "men", "panjabi"), L("Suits", "men", "suits"), L("Winter", "men", "winter"), L("Hoodies", "men", "hoodies")] },
+      { title: "Occasions", links: [L("Weddings & Eid", "men", "panjabi"), L("Office & formal", "men", "suits"), L("Cold days", "men", "winter")] },
+      { title: "Also", links: [L("All men", "men"), L("Boys", "kids", "boys"), L("Winter collection", "winter")] },
+    ],
+    featured: [
+      { image: pic("tile-panjabi"), caption: "Panjabi collection", href: categoryHref("men", "panjabi") },
+      { image: pic("tile-suits"), caption: "Suits & tailoring", href: categoryHref("men", "suits") },
+    ],
+  },
+  "/category/women": {
+    groups: [
+      { title: "Clothing", links: [L("Sarees", "women", "sarees"), L("Winter knits", "women", "winter")] },
+      { title: "Occasions", links: [L("Weddings", "women", "sarees"), L("Cold days", "women", "winter")] },
+      { title: "Also", links: [L("All women", "women"), L("Winter collection", "winter")] },
+    ],
+    featured: [
+      { image: pic("tile-sarees"), caption: "Saree collection", href: categoryHref("women", "sarees") },
+      { image: pic("tile-winter-knit"), caption: "Winter knits", href: categoryHref("women", "winter") },
+    ],
+  },
+  "/category/kids": {
+    groups: [
+      { title: "Boys", links: [L("All boys", "kids", "boys"), L("Winter jackets", "winter", "boys")] },
+      { title: "Occasions", links: [L("Weddings & Eid", "kids", "boys")] },
+      { title: "Also", links: [L("Men", "men"), L("Winter collection", "winter")] },
+    ],
+    featured: [
+      { image: pic("product-boys-denim-jacket"), caption: "Boys denim jacket", href: categoryHref("kids", "boys") },
+      { image: pic("boys-navy-suit"), caption: "Boys navy suit", href: categoryHref("kids", "boys") },
+    ],
+  },
+  "/category/winter": {
+    groups: [
+      { title: "Men", links: [L("Coats & jackets", "winter", "men"), L("Hoodies", "men", "hoodies")] },
+      { title: "Women", links: [L("Knits", "winter", "women")] },
+      { title: "Boys", links: [L("Jackets", "winter", "boys")] },
+    ],
+    featured: [
+      { image: pic("tile-winter-knit"), caption: "Winter 2026", href: categoryHref("winter") },
+      { image: pic("product-black-hooded-puffer-jacket"), caption: "Black hooded puffer", href: categoryHref("winter", "men") },
+    ],
+  },
+  "/category/textile-equipment": {
+    groups: [
+      { title: "Machines", links: [L("Sewing machines", "textile-equipment", "sewing-machines"), L("Cutting", "textile-equipment", "cutting"), L("Pressing", "textile-equipment", "pressing")] },
+      { title: "Parts", links: [L("Spare parts", "textile-equipment", "spare-parts")] },
+      { title: "Also", links: [L("All equipment", "textile-equipment")] },
+    ],
+    featured: [
+      { image: pic("stock-eq-overlock-hands", "50% 50%"), caption: "Overlock machines", href: categoryHref("textile-equipment", "sewing-machines") },
+      { image: pic("stock-eq-needles-fan", "50% 50%"), caption: "Needles & parts", href: categoryHref("textile-equipment", "spare-parts") },
+    ],
+  },
+};
+
 export const effectivePrice = (p: Product) => p.salePrice ?? p.price;

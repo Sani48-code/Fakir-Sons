@@ -13,6 +13,10 @@ How to use: keep this file in the project root. Each day tell Claude Code:
 - Animation follows the "Motion system" below and is disabled under `prefers-reduced-motion`.
 - Every page has: metadata (title, description, Open Graph image), a loading state, and an empty/error state where data can be missing.
 - Before stopping: run typecheck, lint and build; open the page in the browser at mobile and desktop width and fix anything broken; then commit and push.
+- English only. Use our real collections and products from `lib/dummy.ts`.
+- Product grids use the cutout images (`public/images/products/`). Products without a cutout use their original photo inside the same #EDE8DF frame (`bg-studio`).
+- The 15% resolution rule applies to every image: rendered CSS width x 2 must not exceed the source by more than ~15%. Never display an image larger than its source allows; show it smaller instead. On the product page, cap the main image size to its source and disable zoom when the source is too small for it.
+- After each page: check at 390px and 1440px, take screenshots and look at them yourself, fix problems, then commit, push and stop.
 
 ## Motion system
 

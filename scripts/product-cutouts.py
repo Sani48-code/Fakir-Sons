@@ -1,6 +1,6 @@
 """Product cutouts on one shared studio backdrop.
 
-usage: python cutout.py <src_png_root> <out_dir> <model> [slug|-] [defringe]
+usage: python product-cutouts.py <src_png_root> <out_dir> <model> [slug|-] [defringe] [transparent]
   <src_png_root> comes from: node scripts/optimize-images.mjs --png <dir>
   (plus wide/ banner regions for panjabi, coat, knit, saree; see WIDE below).
   Needs a venv with: pip install "rembg[cpu]" pillow scipy. Model used: isnet-general-use.
@@ -18,7 +18,9 @@ from scipy import ndimage
 
 SRC, OUT, MODEL = Path(sys.argv[1]), Path(sys.argv[2]), sys.argv[3]
 ONLY = sys.argv[4] if len(sys.argv) > 4 and sys.argv[4] != "-" else None
-DEFRINGE = len(sys.argv) > 5 and sys.argv[5] == "defringe"
+DEFRINGE = "defringe" in sys.argv[5:]
+# "transparent": backdrop left transparent (shadow kept as alpha) so the page frame colour shows through exactly.
+TRANSPARENT = "transparent" in sys.argv[5:]
 OUT.mkdir(parents=True, exist_ok=True)
 
 BG = (0xED, 0xE8, 0xDF)
@@ -113,8 +115,13 @@ for slug, rel in PRODUCTS.items():
         cx, fy = W / 2, top + sh
         d.ellipse((cx - sw * 0.42, fy - H * 0.018, cx + sw * 0.42, fy + H * 0.022), fill=255)
         shadow = shadow.filter(ImageFilter.GaussianBlur(H * 0.02)).point(lambda v: int(v * 0.30))
-    canvas = Image.composite(Image.new("RGB", (W, H), SHADOW), canvas, shadow)
-    canvas.paste(subject, (left, top), subject)
+    if TRANSPARENT:
+        canvas = Image.new("RGBA", (W, H), (*SHADOW, 0))
+        canvas.putalpha(shadow)
+        canvas.alpha_composite(subject, (left, top))
+    else:
+        canvas = Image.composite(Image.new("RGB", (W, H), SHADOW), canvas, shadow)
+        canvas.paste(subject, (left, top), subject)
 
     if H > 1600:
         canvas = canvas.resize((1200, 1600), Image.LANCZOS)

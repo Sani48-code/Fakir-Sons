@@ -1,35 +1,21 @@
 import { SITE } from "@/lib/site";
 
-const ITEMS = [
-  "Winter collection now in",
-  "Nationwide Cash on Delivery",
-  "Wholesale & bulk orders",
-  "Easy exchange",
-  `Since ${SITE.est}`,
-  "Delivered from Dhaka, nationwide",
-];
+// The last item is hidden on phones so the line fits without scrolling.
+const ITEMS = ["COD nationwide", "Wholesale available", "Easy exchange", `Since ${SITE.est}`];
 
-function Half({ hidden = false }: { hidden?: boolean }) {
-  return (
-    <ul aria-hidden={hidden || undefined} className="flex shrink-0 items-center">
-      {ITEMS.map((t) => (
-        <li key={t} className="flex items-center">
-          <span className="label px-6 py-3.5 text-ink">{t}</span>
-          <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-gold" />
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-/** Thin hairline band with a slow continuous marquee (pauses on hover). */
+/** One thin, static line under the hero. */
 export function PromiseStrip() {
   return (
-    <div className="marquee overflow-hidden border-y border-thread bg-cotton">
-      <div className="marquee-track">
-        <Half />
-        <Half hidden />
-      </div>
+    <div className="border-b border-thread bg-cotton">
+      <ul className="mx-auto flex max-w-[1440px] items-center justify-center gap-x-3 px-3 py-3 sm:gap-x-5 md:gap-x-8 md:px-12">
+        {ITEMS.map((t, i) => (
+          <li key={t} className={`flex shrink-0 items-center gap-x-3 sm:gap-x-5 md:gap-x-8 ${i === ITEMS.length - 1 ? "max-sm:hidden" : ""}`}>
+            {i > 0 && <span aria-hidden className="h-1 w-1 bg-gold" />}
+            {/* Not .label: its unlayered size would override these phone sizes. */}
+            <span className="whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.08em] text-ink sm:text-[11px] sm:tracking-[0.14em]">{t}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { MEGA } from "@/lib/dummy";
 import { NAV, SITE, TOP_LINKS } from "@/lib/site";
 import { ChevronDownIcon, CloseIcon } from "./icons";
 
@@ -89,19 +90,22 @@ export function MobileDrawer({
                       </button>
                     </div>
                     {expanded === item.label && (
-                      <ul className="pb-3 pl-3">
-                        {item.children.map((c) => (
-                          <li key={c.label}>
-                            <Link
-                              href={c.href}
-                              onClick={onClose}
-                              className="block py-2 text-sm text-stone"
-                            >
-                              {c.label}
-                            </Link>
-                          </li>
+                      <div className="space-y-4 pb-4 pl-3">
+                        {(MEGA[item.href]?.groups ?? [{ title: item.label, links: item.children }]).map((g) => (
+                          <div key={g.title}>
+                            <p className="label text-[11px] text-stone">{g.title}</p>
+                            <ul className="mt-1">
+                              {g.links.map((c) => (
+                                <li key={c.label}>
+                                  <Link href={c.href} onClick={onClose} className="block py-2 text-[15px]">
+                                    {c.label}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
                         ))}
-                      </ul>
+                      </div>
                     )}
                   </>
                 ) : (

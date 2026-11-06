@@ -54,7 +54,9 @@ export function Img({
   return (
     <div
       className={cn(
-        "overflow-hidden bg-thread/60",
+        "overflow-hidden",
+        // placeholder colour while loading, unless the caller sets its own background
+        !className?.includes("bg-") && "bg-thread/60",
         !className?.includes("absolute") && "relative",
         ratio,
         className,

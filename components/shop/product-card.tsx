@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Img } from "@/components/ui/img";
 import { PriceTag } from "@/components/ui/price-tag";
 import { useToast } from "@/components/ui/toast";
 import type { Product } from "@/lib/dummy";
 import { cn } from "@/lib/format";
 import { BagIcon, HeartIcon, PlusIcon } from "./icons";
+import { ProductImage } from "./product-image";
+import { useWishlist } from "./wishlist";
 
 // Matches the 4-up grid inside the 1440px container (48px gutters, 24px gaps).
 const SIZES = "(min-width: 1440px) 320px, (min-width: 1280px) 23vw, (min-width: 768px) 31vw, 48vw";
@@ -27,7 +27,8 @@ export function ProductCard({
   onQuickAdd?: (p: Product) => void;
   className?: string;
 }) {
-  const [wished, setWished] = useState(false);
+  const wishlist = useWishlist();
+  const wished = wishlist.has(product.slug);
   const toast = useToast();
   const soldOut = product.stock === 0;
   const onSale = product.salePrice !== undefined && product.salePrice < product.price;
@@ -44,29 +45,21 @@ export function ProductCard({
     <article className={cn("group relative", className)}>
       <div className="relative">
         <Link href={href} aria-label={product.name} tabIndex={-1} className="block">
-          <div className="relative aspect-[3/4] overflow-hidden bg-thread/60">
-            <Img
-              src={product.images[0].src}
+          <div className="relative aspect-[3/4] overflow-hidden bg-studio">
+            <ProductImage
+              pic={product.images[0]}
               alt={product.name}
               sizes={sizes}
-              ratio=""
-              position={product.images[0].pos}
-              source={product.images[0].source}
-              box={3 / 4}
               priority={priority}
-              className={cn("absolute inset-0", soldOut && "opacity-55")}
+              className={cn(soldOut && "opacity-55")}
             />
             {product.images[1] && (
-              <Img
-                src={product.images[1].src}
+              <ProductImage
+                pic={product.images[1]}
                 alt=""
                 sizes={sizes}
-                ratio=""
-                position={product.images[1].pos}
-                source={product.images[1].source}
-                box={3 / 4}
                 className={cn(
-                  "absolute inset-0 opacity-0 transition-opacity duration-[400ms] ease-out hoverable:group-hover:opacity-100 hoverable:group-focus-within:opacity-100",
+                  "opacity-0 transition-opacity duration-[400ms] ease-out hoverable:group-hover:opacity-100 hoverable:group-focus-within:opacity-100",
                   soldOut && "!opacity-0",
                 )}
               />
@@ -90,7 +83,7 @@ export function ProductCard({
           type="button"
           aria-label={wished ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
           aria-pressed={wished}
-          onClick={() => setWished((w) => !w)}
+          onClick={() => wishlist.toggle(product.slug)}
           className={cn(
             "absolute right-2 top-2 flex h-9 w-9 items-center justify-center bg-paper/90 text-ink transition-opacity duration-200",
             "hoverable:opacity-0 hoverable:group-hover:opacity-100 hoverable:group-focus-within:opacity-100",

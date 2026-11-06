@@ -117,4 +117,6 @@ Connection check: `GET /api/health/supabase`.
 - [x] Own photos optimised to public/images (hero + collections), lib/images.ts rebuilt around local files
 - [x] Pexels stock picks (45) approved, in public/images/stock
 - [x] Home rebuilt on our own photos, real collections, 6-slide hero, basic /category pages
-- [ ] Home simplified + image quality fix (retina audit, pre-cropped slots, q85/q90, 13 product cutouts on #EDE8DF, 1440px container): built, awaiting review
+- [x] Home simplified + image quality fix (retina audit, pre-cropped slots, q85/q90, 13 product cutouts on #EDE8DF, 1440px container)
+- [ ] PROMPTS.md Page 4 (search panel, /search, mega-menu, mobile drawer accordion) + promise strip + /wishlist and /account pages: built, awaiting review
+- [ ] Next, in order: Page 2 (category), Page 3 (product), Page 5 (cart), Page 6 (checkout); stop after each

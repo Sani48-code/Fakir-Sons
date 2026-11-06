@@ -5,6 +5,7 @@ import { FeatureBanner } from "@/components/home/feature-banner";
 import { HeroSlider } from "@/components/home/hero-slider";
 import { Newsletter } from "@/components/home/newsletter";
 import { ProductRow } from "@/components/home/product-row";
+import { PromiseStrip } from "@/components/home/promise-strip";
 import { TrustRow } from "@/components/home/trust-row";
 import { WholesaleBand } from "@/components/home/wholesale-band";
 import { Container } from "@/components/ui/container";
@@ -28,6 +29,7 @@ export default function HomePage() {
   return (
     <>
       <HeroSlider slides={HERO_SLIDES} />
+      <PromiseStrip />
       <div className="pt-8 md:pt-12">
         <CollectionTiles />
       </div>

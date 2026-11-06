@@ -82,6 +82,7 @@ export const NAV: NavItem[] = [
 
 export const TOP_LINKS = [
   { label: "Account", href: "/account" },
+  { label: "Wishlist", href: "/wishlist" },
   { label: "Store Locations", href: "/stores" },
   { label: "Wholesale Login", href: "/wholesale" },
 ];

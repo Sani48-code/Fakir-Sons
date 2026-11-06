@@ -16,6 +16,7 @@
   --gold-soft: #e8b84b; /* gold text on dark photos / overlays */
   --madder: #a23b2a;
   --wine: #2b0a0c; /* footer + wholesale band */
+  --studio: #ede8df; /* product photo backdrop (cutouts and their frames) */
 }
 
 @theme inline {
@@ -30,6 +31,7 @@
   --color-gold-soft: var(--gold-soft);
   --color-madder: var(--madder);
   --color-wine: var(--wine);
+  --color-studio: var(--studio);
   --font-sans: var(--font-jost);
   --font-display: var(--font-cormorant);
   --font-bangla: var(--font-hind);
@@ -61,6 +63,10 @@ body {
 .bg-wine :focus-visible,
 .on-dark :focus-visible {
   outline-color: var(--gold);
+}
+/* Large search fields show focus with their underline turning maroon instead of a box. */
+.search-field:focus-visible {
+  outline: none;
 }
 
 /* Underline that grows from the left on hover (250ms) */
@@ -166,4 +172,10 @@ dialog.overlay::backdrop {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Our search fields have their own clear button */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  appearance: none;
 }
