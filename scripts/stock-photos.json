@@ -121,10 +121,11 @@
       "width": 1000,
       "height": 1303
     },
-    "note": "Cropped to remove the worker. Cool teal grade, the weakest-mood equipment pick.",
+    "note": "Cropped to remove the worker; warm grade applied.",
     "src": "/images/stock/equipment/straight-knife.webp",
     "width": 1000,
-    "height": 1303
+    "height": 1303,
+    "grade": "warm"
   },
   {
     "key": "stock-eq-cloth-cutter",
@@ -334,22 +335,6 @@
     "pageUrl": "https://www.pexels.com/photo/spool-of-threads-and-hanging-metal-bobbins-on-shelves-6063465/",
     "alt": "Industrial thread cones on a shelf above a row of metal bobbins",
     "src": "/images/stock/equipment/thread-cones-shelf.webp",
-    "width": 1600,
-    "height": 2400
-  },
-  {
-    "key": "stock-eq-thread-wall",
-    "group": "equipment",
-    "topic": "thread rack",
-    "use": [
-      "wholesale"
-    ],
-    "id": 4614106,
-    "photographer": "cottonbro studio",
-    "pageUrl": "https://www.pexels.com/photo/white-and-brown-labeled-bottles-4614106/",
-    "alt": "Wall rack filled with rows of thread spools",
-    "note": "Borderline: many colours, a little busy.",
-    "src": "/images/stock/equipment/thread-wall.webp",
     "width": 1600,
     "height": 2400
   },
@@ -679,10 +664,11 @@
     "photographer": "Tima Miroshnichenko",
     "pageUrl": "https://www.pexels.com/photo/black-suit-jacket-and-brown-coat-6766385/",
     "alt": "Tidy tailoring atelier with suits and a camel overcoat on wooden stands",
-    "note": "Borderline: cooler and brighter than the rest.",
+    "note": "Warm grade applied to match the mood.",
     "src": "/images/stock/atmosphere/atelier.webp",
     "width": 2400,
-    "height": 1600
+    "height": 1600,
+    "grade": "warm"
   },
   {
     "key": "stock-at-jacket-basted",
@@ -728,22 +714,6 @@
     "src": "/images/stock/atmosphere/kraft-wrap.webp",
     "width": 2400,
     "height": 1600
-  },
-  {
-    "key": "stock-at-kraft-box",
-    "group": "atmosphere",
-    "topic": "parcel",
-    "use": [
-      "empty-state"
-    ],
-    "id": 35042085,
-    "photographer": "Raymond Petrik",
-    "pageUrl": "https://www.pexels.com/photo/eco-friendly-gift-box-on-wooden-surface-35042085/",
-    "alt": "Kraft gift box tied with cord and a red wax seal on pine wood",
-    "note": "Borderline: green sprig reads a little festive.",
-    "src": "/images/stock/atmosphere/kraft-box.webp",
-    "width": 1675,
-    "height": 2400
   },
   {
     "key": "stock-at-hangers-empty",

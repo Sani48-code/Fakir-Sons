@@ -21,6 +21,8 @@ for (const e of entries) {
   }
   let img = sharp(Buffer.from(await res.arrayBuffer())).rotate();
   if (e.crop) img = img.extract(e.crop);
+  // "warm": same gentle grade as our kids photos (scripts/optimize-images.mjs WARM)
+  if (e.grade === "warm") img = img.modulate({ saturation: 0.86 }).linear([1.035, 1.0, 0.93], [0, 0, 0]);
   const file = `${e.key.replace(/^stock-[a-z]+-/, "")}.webp`;
   const dest = path.join("public/images/stock", e.group, file);
   fs.mkdirSync(path.dirname(dest), { recursive: true });
