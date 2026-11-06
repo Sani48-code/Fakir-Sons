@@ -1,7 +1,7 @@
 // Dummy content for building the storefront. Replaced by Supabase data later.
 // Everything here is deterministic (no Math.random / new Date) so prerendering is stable.
 
-import { pic, type Pic } from "./images";
+import { pic, type Pic } from "./images-legacy";
 
 /* ---------- Types ---------- */
 

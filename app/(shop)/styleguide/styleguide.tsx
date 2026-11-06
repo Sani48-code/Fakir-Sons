@@ -26,8 +26,8 @@ import { Swatch } from "@/components/ui/swatch";
 import { Tabs } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/toast";
 import { PRODUCTS, FAQS } from "@/lib/dummy";
-import { img, PHOTOS, pic } from "@/lib/images";
-import type { PhotoGroup } from "@/lib/images";
+import { photo } from "@/lib/images";
+import { PhotoSheet } from "./photo-sheet";
 
 const PALETTE = [
   ["cotton", "#F5F1E8", "Page background"],
@@ -60,7 +60,6 @@ export function Styleguide() {
   const [color, setColor] = useState("Indigo");
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState("all");
-  const [group, setGroup] = useState<"all" | PhotoGroup>("all");
 
   const sample = PRODUCTS.slice(0, 6);
   const sale = PRODUCTS.find((p) => p.salePrice) ?? PRODUCTS[0];
@@ -248,11 +247,11 @@ export function Styleguide() {
             <Reveal className="mt-6 text-stone">Reveal: fade in and rise 16px when 20% visible.</Reveal>
           </div>
           <RevealImage>
-            <Img src={pic("fabric-02-folded-linen", 1400).src} alt="Folded linen on a wooden table" ratio="aspect-[5/4]" sizes="(min-width: 768px) 45vw, 100vw" />
+            <Img src={photo("hero-06-fabric-textile").src} alt="Suiting fabrics and tailoring tools" position="20% 50%" ratio="aspect-[5/4]" sizes="(min-width: 768px) 45vw, 100vw" />
           </RevealImage>
           <div className="relative aspect-[16/9] overflow-hidden md:col-span-2">
             <SlowZoom className="absolute inset-0">
-              <Img src={pic("hero-06-fabric", 2000).src} alt="Folded neutral fabrics on a white shelf" ratio="" className="absolute inset-0" sizes="100vw" />
+              <Img src={photo("hero-04-saree-maroon").src} alt="Woman in a maroon Banarasi silk saree" ratio="" className="absolute inset-0" sizes="100vw" />
             </SlowZoom>
           </div>
         </div>
@@ -288,43 +287,8 @@ export function Styleguide() {
         </div>
       </Block>
 
-      <Block id="images" title={`Image library (${PHOTOS.length} photos)`}>
-        <p className="mb-6 max-w-2xl text-sm text-stone">
-          Every photo in <code>lib/images.ts</code>, with its key. To replace one, change its entry there (url, alt,
-          description, photographer, pageUrl) and everything that uses the key updates.
-        </p>
-        <Tabs
-          ariaLabel="Image group"
-          value={group}
-          onChange={(g) => setGroup(g as "all" | PhotoGroup)}
-          items={[
-            { id: "all", label: "All" },
-            ...Array.from(new Set(PHOTOS.map((p) => p.group))).map((g) => ({ id: g, label: g })),
-          ]}
-          className="mb-6"
-        />
-        <ul className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 xl:grid-cols-5">
-          {PHOTOS.filter((p) => group === "all" || p.group === group).map((p) => (
-            <li key={p.key} className="text-xs">
-              <Img
-                src={img(p.key, 700)}
-                alt={p.alt}
-                ratio={p.orientation === "landscape" ? "aspect-[4/3]" : p.orientation === "square" ? "aspect-square" : "aspect-[3/4]"}
-                sizes="(min-width: 1280px) 18vw, (min-width: 768px) 30vw, 48vw"
-              />
-              <p className="mt-2 break-all font-medium text-ink">{p.key}</p>
-              <p className="mt-1 text-stone">{p.description}</p>
-              <p className="label mt-1 !text-[10px] text-stone">
-                {p.group} · {p.orientation}
-              </p>
-              <p className="mt-1 text-stone">
-                <a href={p.pageUrl} target="_blank" rel="noopener noreferrer" className="link-grow">
-                  {p.photographer} · {p.source}
-                </a>
-              </p>
-            </li>
-          ))}
-        </ul>
+      <Block id="images" title="Photo library">
+        <PhotoSheet />
       </Block>
     </Container>
   );

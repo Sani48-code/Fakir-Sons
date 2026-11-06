@@ -1,0 +1,779 @@
+[
+  {
+    "key": "stock-eq-lockstitch-side",
+    "group": "equipment",
+    "topic": "lockstitch",
+    "use": [
+      "equipment-product"
+    ],
+    "product": "jk-8700-single-needle-lockstitch",
+    "id": 4614237,
+    "photographer": "cottonbro studio",
+    "pageUrl": "https://www.pexels.com/photo/white-and-black-camera-on-white-table-4614237/",
+    "alt": "Side of an industrial lockstitch machine showing the handwheel and belt against a brick wall",
+    "src": "/images/stock/equipment/lockstitch-side.webp",
+    "width": 2400,
+    "height": 1600
+  },
+  {
+    "key": "stock-eq-lockstitch-head",
+    "group": "equipment",
+    "topic": "lockstitch",
+    "use": [
+      "equipment-product"
+    ],
+    "product": "jk-8700-single-needle-lockstitch",
+    "id": 7778187,
+    "photographer": "Ron Lach",
+    "pageUrl": "https://www.pexels.com/photo/close-up-of-a-white-sewing-machine-7778187/",
+    "alt": "White industrial single-needle lockstitch machine head with presser foot and needle plate",
+    "focal": {
+      "desktop": "50% 60%",
+      "mobile": "50% 60%"
+    },
+    "src": "/images/stock/equipment/lockstitch-head.webp",
+    "width": 1600,
+    "height": 2400
+  },
+  {
+    "key": "stock-eq-overlock-hands",
+    "group": "equipment",
+    "topic": "overlock",
+    "use": [
+      "equipment-product",
+      "home-catalogue"
+    ],
+    "product": "sn-4-thread-overlock",
+    "id": 7998337,
+    "photographer": "Cristian Rojas",
+    "pageUrl": "https://www.pexels.com/photo/a-person-using-a-sewing-machine-7998337/",
+    "alt": "Hands feeding navy denim through an industrial overlock machine",
+    "src": "/images/stock/equipment/overlock-hands.webp",
+    "width": 2400,
+    "height": 1600
+  },
+  {
+    "key": "stock-eq-overlock-foot",
+    "group": "equipment",
+    "topic": "overlock",
+    "use": [
+      "equipment-product"
+    ],
+    "product": "sn-4-thread-overlock",
+    "id": 7998342,
+    "photographer": "Cristian Rojas",
+    "pageUrl": "https://www.pexels.com/photo/fabric-on-sewing-machine-7998342/",
+    "alt": "Overlock presser foot finishing the edge of navy fabric",
+    "src": "/images/stock/equipment/overlock-foot.webp",
+    "width": 1600,
+    "height": 2400
+  },
+  {
+    "key": "stock-eq-flatlock-machine",
+    "group": "equipment",
+    "topic": "flatlock (stand-in: overlock machine)",
+    "use": [
+      "equipment-product"
+    ],
+    "product": "flatlock-interlock-machine",
+    "id": 6766354,
+    "photographer": "Tima Miroshnichenko",
+    "pageUrl": "https://www.pexels.com/photo/white-sewing-machine-on-white-table-6766354/",
+    "alt": "White industrial multi-thread machine on a sewing table",
+    "note": "Stand-in: no flatlock/coverstitch photo on Pexels passed. This is an overlock.",
+    "src": "/images/stock/equipment/flatlock-machine.webp",
+    "width": 1600,
+    "height": 2400
+  },
+  {
+    "key": "stock-eq-flatlock-knit",
+    "group": "equipment",
+    "topic": "flatlock (stand-in: knit stitching)",
+    "use": [
+      "equipment-product"
+    ],
+    "product": "flatlock-interlock-machine",
+    "id": 33706427,
+    "photographer": "Jahra Tasfia Reza",
+    "pageUrl": "https://www.pexels.com/photo/close-up-of-sewing-machine-needle-in-action-33706427/",
+    "alt": "Industrial presser foot and needle stitching cream knit fabric",
+    "note": "Stand-in for flatlock: knit stitching close-up.",
+    "src": "/images/stock/equipment/flatlock-knit.webp",
+    "width": 1600,
+    "height": 2400
+  },
+  {
+    "key": "stock-eq-straight-knife",
+    "group": "equipment",
+    "topic": "straight knife cutter",
+    "use": [
+      "equipment-product",
+      "home-catalogue"
+    ],
+    "product": "straight-knife-cutting-machine-8in",
+    "id": 13159717,
+    "photographer": "Taha Balta",
+    "pageUrl": "https://www.pexels.com/photo/man-working-with-textile-machinery-13159717/",
+    "alt": "Upright straight-knife fabric cutting machine on a cutting table",
+    "crop": {
+      "left": 250,
+      "top": 300,
+      "width": 1000,
+      "height": 1303
+    },
+    "note": "Cropped to remove the worker. Cool teal grade, the weakest-mood equipment pick.",
+    "src": "/images/stock/equipment/straight-knife.webp",
+    "width": 1000,
+    "height": 1303
+  },
+  {
+    "key": "stock-eq-cloth-cutter",
+    "group": "equipment",
+    "topic": "cloth cutter",
+    "use": [
+      "equipment-product"
+    ],
+    "product": "straight-knife-cutting-machine-8in",
+    "id": 4621890,
+    "photographer": "cottonbro studio",
+    "pageUrl": "https://www.pexels.com/photo/person-holding-gray-and-black-corded-device-4621890/",
+    "alt": "Hands guiding an electric cloth cutter across cream fabric",
+    "crop": {
+      "left": 0,
+      "top": 570,
+      "width": 2400,
+      "height": 1030
+    },
+    "note": "Round-knife cutter. Cropped below the label to remove readable sticker text.",
+    "src": "/images/stock/equipment/cloth-cutter.webp",
+    "width": 2400,
+    "height": 1030
+  },
+  {
+    "key": "stock-eq-cutting-table",
+    "group": "equipment",
+    "topic": "cutting table",
+    "use": [
+      "equipment-product"
+    ],
+    "product": "fabric-end-cutter",
+    "id": 5830633,
+    "photographer": "Anna Shvets",
+    "pageUrl": "https://www.pexels.com/photo/crop-tailor-measuring-piece-of-fabric-in-workshop-5830633/",
+    "alt": "Hands smoothing navy fabric on a cutting table beside a straight ruler",
+    "crop": {
+      "left": 500,
+      "top": 0,
+      "width": 1900,
+      "height": 1600
+    },
+    "note": "Stand-in: no rail end-cutter photos exist on Pexels. Cropped to drop a red cloth at the left.",
+    "src": "/images/stock/equipment/cutting-table.webp",
+    "width": 1900,
+    "height": 1600
+  },
+  {
+    "key": "stock-eq-cutting-shears",
+    "group": "equipment",
+    "topic": "cutting table",
+    "use": [
+      "equipment-product"
+    ],
+    "product": "fabric-end-cutter",
+    "id": 5830641,
+    "photographer": "Anna Shvets",
+    "pageUrl": "https://www.pexels.com/photo/crop-male-artisan-cutting-piece-of-fabric-at-workbench-5830641/",
+    "alt": "Hands cutting a chalk-marked shape from navy fabric on a wooden cutting table",
+    "src": "/images/stock/equipment/cutting-shears.webp",
+    "width": 2400,
+    "height": 1600
+  },
+  {
+    "key": "stock-eq-steam-iron",
+    "group": "equipment",
+    "topic": "steam iron",
+    "use": [
+      "equipment-product"
+    ],
+    "product": "steam-iron-vacuum-table",
+    "id": 9462682,
+    "photographer": "Liliana Drew",
+    "pageUrl": "https://www.pexels.com/photo/close-up-of-a-person-ironing-9462682/",
+    "alt": "Steam iron gliding over soft brown fabric",
+    "focal": {
+      "desktop": "50% 40%",
+      "mobile": "50% 40%"
+    },
+    "note": "Household iron; no clean industrial iron or vacuum table found. Only one photo for this product.",
+    "src": "/images/stock/equipment/steam-iron.webp",
+    "width": 1600,
+    "height": 2400
+  },
+  {
+    "key": "stock-eq-needles-row",
+    "group": "equipment",
+    "topic": "needles",
+    "use": [
+      "equipment-product"
+    ],
+    "product": "industrial-needle-pack",
+    "id": 28197200,
+    "photographer": "Nic Wood",
+    "pageUrl": "https://www.pexels.com/photo/sewing-needles-28197200/",
+    "alt": "Row of golden needles in macro on a dark brown background",
+    "note": "Hand-sewing needles, not machine needles.",
+    "src": "/images/stock/equipment/needles-row.webp",
+    "width": 2400,
+    "height": 1600
+  },
+  {
+    "key": "stock-eq-needles-fan",
+    "group": "equipment",
+    "topic": "needles",
+    "use": [
+      "equipment-product",
+      "equipment-banner"
+    ],
+    "product": "industrial-needle-pack",
+    "id": 28197199,
+    "photographer": "Nic Wood",
+    "pageUrl": "https://www.pexels.com/photo/sewing-needles-28197199/",
+    "alt": "Fan of golden needles on a dark background with a maroon glow",
+    "src": "/images/stock/equipment/needles-fan.webp",
+    "width": 2400,
+    "height": 1600
+  },
+  {
+    "key": "stock-eq-bobbin-stack",
+    "group": "equipment",
+    "topic": "bobbins",
+    "use": [
+      "equipment-product"
+    ],
+    "product": "bobbin-case-and-hook-set",
+    "id": 38835520,
+    "photographer": "Jahra Tasfia Reza",
+    "pageUrl": "https://www.pexels.com/photo/vintage-sewing-bobbins-with-colorful-thread-38835520/",
+    "alt": "Stack of metal bobbins wound with thread on dark wood",
+    "note": "Loose bobbins; no bobbin case / rotary hook photo passed.",
+    "src": "/images/stock/equipment/bobbin-stack.webp",
+    "width": 1600,
+    "height": 2400
+  },
+  {
+    "key": "stock-eq-bobbins-table",
+    "group": "equipment",
+    "topic": "bobbins",
+    "use": [
+      "equipment-product"
+    ],
+    "product": "bobbin-case-and-hook-set",
+    "id": 39081607,
+    "photographer": "Jahra Tasfia Reza",
+    "pageUrl": "https://www.pexels.com/photo/colorful-sewing-threads-with-metal-bobbins-on-wooden-table-39081607/",
+    "alt": "Metal bobbins and thread spools on a rustic wooden table",
+    "note": "Threads are a little bright.",
+    "src": "/images/stock/equipment/bobbins-table.webp",
+    "width": 2400,
+    "height": 1600
+  },
+  {
+    "key": "stock-eq-needle-spotlight",
+    "group": "equipment",
+    "topic": "needle and presser foot",
+    "use": [
+      "equipment-banner"
+    ],
+    "id": 15125918,
+    "photographer": "Kemal Berkay Dogan",
+    "pageUrl": "https://www.pexels.com/photo/close-up-shot-of-a-sewing-machine-15125918/",
+    "alt": "Sewing machine needle and presser foot lit by a warm spotlight against black",
+    "src": "/images/stock/equipment/needle-spotlight.webp",
+    "width": 2400,
+    "height": 1600
+  },
+  {
+    "key": "stock-eq-lockstitch-sewing",
+    "group": "equipment",
+    "topic": "lockstitch in use",
+    "use": [
+      "home-catalogue"
+    ],
+    "id": 4622206,
+    "photographer": "cottonbro studio",
+    "pageUrl": "https://www.pexels.com/photo/person-sewing-white-sewing-machine-4622206/",
+    "alt": "Hands guiding cream fabric under an industrial lockstitch needle",
+    "src": "/images/stock/equipment/lockstitch-sewing.webp",
+    "width": 1600,
+    "height": 2400
+  },
+  {
+    "key": "stock-eq-leather-stitch",
+    "group": "equipment",
+    "topic": "heavy-duty stitching",
+    "use": [
+      "home-catalogue"
+    ],
+    "id": 6660957,
+    "photographer": "cottonbro studio",
+    "pageUrl": "https://www.pexels.com/photo/a-brown-leather-fabric-on-sewing-machine-6660957/",
+    "alt": "Twin needles and presser foot stitching tan leather",
+    "src": "/images/stock/equipment/leather-stitch.webp",
+    "width": 2400,
+    "height": 1600
+  },
+  {
+    "key": "stock-eq-thread-cones-shelf",
+    "group": "equipment",
+    "topic": "thread cones",
+    "use": [
+      "wholesale"
+    ],
+    "id": 6063465,
+    "photographer": "Nadezhda Moryak",
+    "pageUrl": "https://www.pexels.com/photo/spool-of-threads-and-hanging-metal-bobbins-on-shelves-6063465/",
+    "alt": "Industrial thread cones on a shelf above a row of metal bobbins",
+    "src": "/images/stock/equipment/thread-cones-shelf.webp",
+    "width": 1600,
+    "height": 2400
+  },
+  {
+    "key": "stock-eq-thread-wall",
+    "group": "equipment",
+    "topic": "thread rack",
+    "use": [
+      "wholesale"
+    ],
+    "id": 4614106,
+    "photographer": "cottonbro studio",
+    "pageUrl": "https://www.pexels.com/photo/white-and-brown-labeled-bottles-4614106/",
+    "alt": "Wall rack filled with rows of thread spools",
+    "note": "Borderline: many colours, a little busy.",
+    "src": "/images/stock/equipment/thread-wall.webp",
+    "width": 1600,
+    "height": 2400
+  },
+  {
+    "key": "stock-fab-navy-silk",
+    "group": "fabric",
+    "topic": "silk",
+    "use": [
+      "category-banner"
+    ],
+    "id": 1487809,
+    "photographer": "Engin Akyurt",
+    "pageUrl": "https://www.pexels.com/photo/grey-textile-1487809/",
+    "alt": "Navy silk satin in soft diagonal folds",
+    "src": "/images/stock/fabric/navy-silk.webp",
+    "width": 2400,
+    "height": 1600
+  },
+  {
+    "key": "stock-fab-ivory-silk",
+    "group": "fabric",
+    "topic": "silk",
+    "use": [
+      "about"
+    ],
+    "id": 14935628,
+    "photographer": "Eugenia Remark",
+    "pageUrl": "https://www.pexels.com/photo/close-up-of-folded-silk-and-velvet-fabric-14935628/",
+    "alt": "Folded ivory silk and cream velvet layers",
+    "src": "/images/stock/fabric/ivory-silk.webp",
+    "width": 1800,
+    "height": 2400
+  },
+  {
+    "key": "stock-fab-crimson-velvet",
+    "group": "fabric",
+    "topic": "velvet",
+    "use": [
+      "about"
+    ],
+    "id": 36305726,
+    "photographer": "Sydney Sang",
+    "pageUrl": "https://www.pexels.com/photo/luxurious-red-velvet-fabric-drape-pattern-36305726/",
+    "alt": "Crimson velvet drape in deep shadow with a band of warm light",
+    "src": "/images/stock/fabric/crimson-velvet.webp",
+    "width": 2400,
+    "height": 1600
+  },
+  {
+    "key": "stock-fab-navy-pinstripe",
+    "group": "fabric",
+    "topic": "wool suiting",
+    "use": [
+      "category-banner"
+    ],
+    "id": 1550895,
+    "photographer": "The Lazy Artist Gallery",
+    "pageUrl": "https://www.pexels.com/photo/elegant-blue-fabric-with-classic-striped-pattern-1550895/",
+    "alt": "Navy pinstripe wool suiting in gentle folds",
+    "src": "/images/stock/fabric/navy-pinstripe.webp",
+    "width": 2400,
+    "height": 1922
+  },
+  {
+    "key": "stock-fab-charcoal-suiting",
+    "group": "fabric",
+    "topic": "wool suiting",
+    "use": [
+      "story"
+    ],
+    "id": 3858315,
+    "photographer": "Garima Bhaskar",
+    "pageUrl": "https://www.pexels.com/photo/elegant-gray-material-of-formal-suit-3858315/",
+    "alt": "Charcoal suiting cloth in soft folds",
+    "src": "/images/stock/fabric/charcoal-suiting.webp",
+    "width": 2400,
+    "height": 1600
+  },
+  {
+    "key": "stock-fab-suiting-stack",
+    "group": "fabric",
+    "topic": "folded stack",
+    "use": [
+      "wholesale"
+    ],
+    "id": 6766360,
+    "photographer": "Tima Miroshnichenko",
+    "pageUrl": "https://www.pexels.com/photo/a-stack-of-assorted-folded-fabrics-on-a-shelf-6766360/",
+    "alt": "Stack of folded black, navy, brown and herringbone suiting fabrics",
+    "src": "/images/stock/fabric/suiting-stack.webp",
+    "width": 2400,
+    "height": 1600
+  },
+  {
+    "key": "stock-fab-neutral-stack",
+    "group": "fabric",
+    "topic": "folded stack",
+    "use": [
+      "about"
+    ],
+    "id": 35009337,
+    "photographer": "Berna",
+    "pageUrl": "https://www.pexels.com/photo/stack-of-folded-fabrics-with-neutral-tones-35009337/",
+    "alt": "Stack of folded maroon, taupe, cream and black fabrics in window light",
+    "src": "/images/stock/fabric/neutral-stack.webp",
+    "width": 1600,
+    "height": 2400
+  },
+  {
+    "key": "stock-fab-corduroy-stack",
+    "group": "fabric",
+    "topic": "folded stack",
+    "use": [
+      "category-banner"
+    ],
+    "id": 35009246,
+    "photographer": "Berna",
+    "pageUrl": "https://www.pexels.com/photo/stack-of-assorted-velvet-fabrics-in-neutral-tones-35009246/",
+    "alt": "Folded stack of maroon, cream and taupe corduroy",
+    "src": "/images/stock/fabric/corduroy-stack.webp",
+    "width": 1600,
+    "height": 2400
+  },
+  {
+    "key": "stock-fab-beige-linen",
+    "group": "fabric",
+    "topic": "linen",
+    "use": [
+      "empty-state"
+    ],
+    "id": 7232409,
+    "photographer": "Artem Podrez",
+    "pageUrl": "https://www.pexels.com/photo/close-up-shot-of-a-beige-textile-7232409/",
+    "alt": "Natural beige linen with soft folds",
+    "src": "/images/stock/fabric/beige-linen.webp",
+    "width": 1350,
+    "height": 2400
+  },
+  {
+    "key": "stock-fab-shop-shelves",
+    "group": "fabric",
+    "topic": "fabric shelves",
+    "use": [
+      "wholesale"
+    ],
+    "id": 35138865,
+    "photographer": "Magda Ehlers",
+    "pageUrl": "https://www.pexels.com/photo/cozy-fabric-store-interior-with-shelves-of-textiles-35138865/",
+    "alt": "Wooden shelves of checked and striped fabric rolls in warm light",
+    "crop": {
+      "left": 200,
+      "top": 0,
+      "width": 2200,
+      "height": 3485
+    },
+    "note": "Cropped left to remove boxes with printed text.",
+    "src": "/images/stock/fabric/shop-shelves.webp",
+    "width": 1515,
+    "height": 2400
+  },
+  {
+    "key": "stock-fab-maroon-zari",
+    "group": "fabric",
+    "topic": "zari border",
+    "use": [
+      "category-banner"
+    ],
+    "id": 5439054,
+    "photographer": "Atul Choudhary",
+    "pageUrl": "https://www.pexels.com/photo/red-fabric-with-design-5439054/",
+    "alt": "Maroon silk saree with fine gold paisley and a woven border",
+    "src": "/images/stock/fabric/maroon-zari.webp",
+    "width": 1600,
+    "height": 2400
+  },
+  {
+    "key": "stock-fab-gold-zardozi",
+    "group": "fabric",
+    "topic": "embroidery",
+    "use": [
+      "category-banner"
+    ],
+    "id": 39797482,
+    "photographer": "Uday Ahir",
+    "pageUrl": "https://www.pexels.com/photo/elegant-embroidered-wedding-attire-detail-39797482/",
+    "alt": "Gold zardozi embroidery on cream silk with a woven gold border",
+    "crop": {
+      "left": 0,
+      "top": 230,
+      "width": 2400,
+      "height": 3370
+    },
+    "note": "Cropped top to remove hair and neck.",
+    "src": "/images/stock/fabric/gold-zardozi.webp",
+    "width": 1709,
+    "height": 2400
+  },
+  {
+    "key": "stock-fab-velvet-embroidery",
+    "group": "fabric",
+    "topic": "embroidery",
+    "use": [
+      "about"
+    ],
+    "id": 31157322,
+    "photographer": "Đậu Photograph",
+    "pageUrl": "https://www.pexels.com/photo/elegant-embroidered-peacock-on-velvet-textile-31157322/",
+    "alt": "Silver peacock embroidery on deep maroon velvet",
+    "src": "/images/stock/fabric/velvet-embroidery.webp",
+    "width": 1597,
+    "height": 2400
+  },
+  {
+    "key": "stock-fab-swatches",
+    "group": "fabric",
+    "topic": "swatch book",
+    "use": [
+      "wholesale"
+    ],
+    "id": 15764778,
+    "photographer": "Eugenia Remark",
+    "pageUrl": "https://www.pexels.com/photo/textiles-samples-in-paper-notebook-15764778/",
+    "alt": "Velvet swatches in an open cream notebook",
+    "note": "Weak: flat light.",
+    "src": "/images/stock/fabric/swatches.webp",
+    "width": 1800,
+    "height": 2400
+  },
+  {
+    "key": "stock-at-tape-lapel",
+    "group": "atmosphere",
+    "topic": "measuring tape",
+    "use": [
+      "story"
+    ],
+    "id": 6766284,
+    "photographer": "Tima Miroshnichenko",
+    "pageUrl": "https://www.pexels.com/photo/couturier-measuring-a-suit-s-lapel-6766284/",
+    "alt": "Tailor's hand measuring the lapel of a charcoal suit on a mannequin",
+    "src": "/images/stock/atmosphere/tape-lapel.webp",
+    "width": 2400,
+    "height": 1600
+  },
+  {
+    "key": "stock-at-tape-hands",
+    "group": "atmosphere",
+    "topic": "measuring tape",
+    "use": [
+      "about"
+    ],
+    "id": 6636369,
+    "photographer": "cottonbro studio",
+    "pageUrl": "https://www.pexels.com/photo/person-holding-a-tape-measure-6636369/",
+    "alt": "Hands holding a measuring tape over taupe linen",
+    "src": "/images/stock/atmosphere/tape-hands.webp",
+    "width": 1600,
+    "height": 2400
+  },
+  {
+    "key": "stock-at-chalk",
+    "group": "atmosphere",
+    "topic": "tailor's chalk",
+    "use": [
+      "story"
+    ],
+    "id": 6461095,
+    "photographer": "Pavel Danilyuk",
+    "pageUrl": "https://www.pexels.com/photo/person-putting-markings-on-a-black-fabric-6461095/",
+    "alt": "Hands marking chalk lines on black cloth along a ruler, with shears and kraft pattern pieces",
+    "src": "/images/stock/atmosphere/chalk.webp",
+    "width": 1602,
+    "height": 2400
+  },
+  {
+    "key": "stock-at-pattern",
+    "group": "atmosphere",
+    "topic": "pattern cutting",
+    "use": [
+      "about"
+    ],
+    "id": 6461114,
+    "photographer": "Pavel Danilyuk",
+    "pageUrl": "https://www.pexels.com/photo/woman-tracing-a-sloper-on-a-black-fabric-6461114/",
+    "alt": "Hands tracing a kraft paper pattern with chalk on dark cloth",
+    "src": "/images/stock/atmosphere/pattern.webp",
+    "width": 1602,
+    "height": 2400
+  },
+  {
+    "key": "stock-at-scissors-cutting",
+    "group": "atmosphere",
+    "topic": "scissors on fabric",
+    "use": [
+      "about"
+    ],
+    "id": 6461085,
+    "photographer": "Pavel Danilyuk",
+    "pageUrl": "https://www.pexels.com/photo/a-person-holding-silver-scissor-6461085/",
+    "alt": "Hands cutting dark cloth along a chalk line with tailor's shears",
+    "src": "/images/stock/atmosphere/scissors-cutting.webp",
+    "width": 2400,
+    "height": 1602
+  },
+  {
+    "key": "stock-at-shears-black",
+    "group": "atmosphere",
+    "topic": "shears still life",
+    "use": [
+      "not-found"
+    ],
+    "id": 6655146,
+    "photographer": "Octavian Iordache",
+    "pageUrl": "https://www.pexels.com/photo/photo-of-a-steel-scissors-with-black-background-6655146/",
+    "alt": "Gold-handled tailor's shears on a plain black background",
+    "src": "/images/stock/atmosphere/shears-black.webp",
+    "width": 1328,
+    "height": 2400
+  },
+  {
+    "key": "stock-at-atelier",
+    "group": "atmosphere",
+    "topic": "workshop",
+    "use": [
+      "about"
+    ],
+    "id": 6766385,
+    "photographer": "Tima Miroshnichenko",
+    "pageUrl": "https://www.pexels.com/photo/black-suit-jacket-and-brown-coat-6766385/",
+    "alt": "Tidy tailoring atelier with suits and a camel overcoat on wooden stands",
+    "note": "Borderline: cooler and brighter than the rest.",
+    "src": "/images/stock/atmosphere/atelier.webp",
+    "width": 2400,
+    "height": 1600
+  },
+  {
+    "key": "stock-at-jacket-basted",
+    "group": "atmosphere",
+    "topic": "workshop",
+    "use": [
+      "empty-state"
+    ],
+    "id": 16265660,
+    "photographer": "Berna",
+    "pageUrl": "https://www.pexels.com/photo/hat-and-vest-on-mannequin-16265660/",
+    "alt": "Unfinished grey pinstripe jacket with basting on a mannequin in a dark workshop",
+    "src": "/images/stock/atmosphere/jacket-basted.webp",
+    "width": 1600,
+    "height": 2400
+  },
+  {
+    "key": "stock-at-tracing-wheel",
+    "group": "atmosphere",
+    "topic": "tools",
+    "use": [
+      "story"
+    ],
+    "id": 2974110,
+    "photographer": "Wallace Chuck",
+    "pageUrl": "https://www.pexels.com/photo/brown-wooden-stick-2974110/",
+    "alt": "Tracing wheel and measuring tape on a work table beside a sewing machine",
+    "src": "/images/stock/atmosphere/tracing-wheel.webp",
+    "width": 2400,
+    "height": 1600
+  },
+  {
+    "key": "stock-at-kraft-wrap",
+    "group": "atmosphere",
+    "topic": "parcel",
+    "use": [
+      "empty-state"
+    ],
+    "id": 4568724,
+    "photographer": "cottonbro studio",
+    "pageUrl": "https://www.pexels.com/photo/person-holding-brown-paper-bag-4568724/",
+    "alt": "Hands wrapping an item in kraft paper in warm sunlight",
+    "src": "/images/stock/atmosphere/kraft-wrap.webp",
+    "width": 2400,
+    "height": 1600
+  },
+  {
+    "key": "stock-at-kraft-box",
+    "group": "atmosphere",
+    "topic": "parcel",
+    "use": [
+      "empty-state"
+    ],
+    "id": 35042085,
+    "photographer": "Raymond Petrik",
+    "pageUrl": "https://www.pexels.com/photo/eco-friendly-gift-box-on-wooden-surface-35042085/",
+    "alt": "Kraft gift box tied with cord and a red wax seal on pine wood",
+    "note": "Borderline: green sprig reads a little festive.",
+    "src": "/images/stock/atmosphere/kraft-box.webp",
+    "width": 1675,
+    "height": 2400
+  },
+  {
+    "key": "stock-at-hangers-empty",
+    "group": "atmosphere",
+    "topic": "hangers",
+    "use": [
+      "empty-state"
+    ],
+    "id": 18725622,
+    "photographer": "Esra Erdem",
+    "pageUrl": "https://www.pexels.com/photo/hangers-on-bar-18725622/",
+    "alt": "Empty wooden hangers on a brass rail against warm wood panelling",
+    "src": "/images/stock/atmosphere/hangers-empty.webp",
+    "width": 2400,
+    "height": 1600
+  },
+  {
+    "key": "stock-at-shirt-rail",
+    "group": "atmosphere",
+    "topic": "hangers",
+    "use": [
+      "category-banner"
+    ],
+    "id": 102129,
+    "photographer": "Daian Gan",
+    "pageUrl": "https://www.pexels.com/photo/pile-of-shirts-hanged-in-shirt-rack-102129/",
+    "alt": "Row of shirts on hangers along a rail in amber backlight",
+    "note": "Hangers carry small size tags (M).",
+    "src": "/images/stock/atmosphere/shirt-rail.webp",
+    "width": 2400,
+    "height": 1600
+  }
+]

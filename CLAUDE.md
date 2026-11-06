@@ -113,4 +113,7 @@ Connection check: `GET /api/health/supabase`.
 - [x] Storefront global layout (announcement bar, header, mobile drawer, footer): built
 - [x] Storefront PROMPTS.md Page 0 (foundation): built
 - [x] Storefront PROMPTS.md Page 1 (home, winter as lead campaign): built
-- [ ] Home redesign (premium editorial photo library, full-viewport hero, 1600px layout, New season + Winter edit): built, awaiting review
+- [x] Home redesign (premium editorial photo library, full-viewport hero, 1600px layout, New season + Winter edit): built
+- [x] Own photos optimised to public/images (hero + collections), lib/images.ts rebuilt around local files
+- [ ] Pexels stock picks (47) in public/images/stock, contact sheet in /styleguide: awaiting approval
+- [ ] Next: restructure nav + dummy.ts around real collections, 6-slide hero, full home page, drop remote image hosts
