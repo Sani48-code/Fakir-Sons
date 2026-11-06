@@ -23,7 +23,7 @@ type Base = {
   focal: Focal;
 };
 
-export type Collection = "winter" | "panjabi" | "suits" | "hoodies" | "sarees" | "boys" | "brand";
+export type Collection = "winter" | "panjabi" | "suits" | "hoodies" | "sarees" | "boys" | "brand" | "home" | "products";
 
 export type OwnPhoto = Base & { stock: false; collection: Collection };
 
@@ -229,10 +229,66 @@ export const OWN_PHOTOS: OwnPhoto[] = [
     desktop: "50% 50%",
     mobile: "50% 50%",
   }),
+
+  // Home crops: cut from the hero banners at the exact aspect of their slot
+  // (tiles 2:3, features 2:1), so the browser downloads the right size.
+  home("tile-winter-knit", "tiles/winter-knit", 483, 724, "Woman in an oversized cream chunky knit sweater"),
+  home("tile-panjabi", "tiles/panjabi", 483, 724, "Man in an ivory panjabi with gold embroidery"),
+  home("tile-sarees", "tiles/sarees", 483, 724, "Woman in a maroon Banarasi silk saree with gold zari"),
+  home("tile-suits", "tiles/suits", 483, 724, "Tailor measuring a man in a black bandhgala"),
+  home("feature-saree", "features/saree", 1448, 724, "Woman seated in a maroon Banarasi silk saree against a maroon wall"),
+  home("feature-panjabi", "features/panjabi", 1448, 724, "Man in an ivory embroidered panjabi leaning against a pale column"),
 ];
 
+/**
+ * Product cutouts: background removed (rembg, scripts/product-cutouts.py), placed on one
+ * studio backdrop #EDE8DF, 3:4, head at 7% from the top, native resolution (no upscaling).
+ * Products not listed here (halos, tailor in frame, or too low-res) keep their original photo.
+ */
+const CUTOUTS: [slug: string, w: number, h: number, alt: string][] = [
+  ["black-bomber-jacket", 663, 884, "Black bomber jacket over a white tee"],
+  ["black-fleece-hoodie", 572, 763, "Black fleece pullover hoodie"],
+  ["black-hooded-puffer-jacket", 941, 1255, "Black hooded puffer jacket over a cream knit"],
+  ["bottle-green-embroidered-panjabi", 806, 1075, "Bottle-green panjabi with tone-on-tone embroidered placket"],
+  ["bottle-green-fleece-hoodie", 386, 515, "Bottle-green fleece pullover hoodie"],
+  ["cream-chunky-knit-sweater", 572, 763, "Oversized cream chunky knit sweater"],
+  ["cream-fleece-hoodie", 455, 607, "Cream fleece pullover hoodie"],
+  ["ivory-embroidered-panjabi", 574, 765, "Ivory panjabi with gold thread embroidery"],
+  ["navy-two-piece-suit", 712, 949, "Plain navy two-piece suit with white shirt and navy tie"],
+  ["camel-wool-overcoat", 623, 831, "Camel wool overcoat over a black turtleneck"],
+  ["boys-denim-jacket", 319, 425, "Boy's denim jacket over a grey hoodie"],
+  ["brown-leather-jacket", 655, 873, "Saddle-brown leather jacket"],
+  ["navy-windowpane-three-piece-suit", 1114, 1485, "Navy windowpane-check three-piece suit"],
+];
+
+/** Cutouts we tried and rejected; these products keep their original photo. */
+export const CUTOUT_REJECTED: { slug: string; reason: string }[] = [
+  { slug: "black-bandhgala", reason: "Tailor's hand and tape stay in the cutout" },
+  { slug: "boys-olive-puffer-jacket", reason: "Blue sky fringe in the hair" },
+  { slug: "boys-navy-suit", reason: "Red backdrop halo in the hair, even after defringing" },
+  { slug: "maroon-banarasi-silk-saree", reason: "Maroon wall pieces left around the hair" },
+  { slug: "navy-puffer-jacket", reason: "Too small once framed (329px wide): would look soft" },
+  { slug: "ecru-trucker-jacket", reason: "Too small once framed (345px wide): would look soft" },
+  { slug: "mustard-silk-saree", reason: "Too small (309px wide); original is no sharper either" },
+];
+
+export const CUTOUT_PHOTOS: OwnPhoto[] = CUTOUTS.map(([slug, w, h, alt]) => ({
+  key: `product-${slug}`,
+  src: `/images/products/${slug}.webp`,
+  width: w,
+  height: h,
+  alt,
+  focal: { desktop: "50% 50%", mobile: "50% 50%" },
+  collection: "products",
+  stock: false,
+}));
+
+function home(key: string, file: string, width: number, height: number, alt: string): OwnPhoto {
+  return { key, src: `/images/${file}.webp`, width, height, alt, focal: { desktop: "50% 50%", mobile: "50% 50%" }, collection: "home", stock: false };
+}
+
 /* ------------------------------------------------------------------ */
-/* Stock (Pexels): pending approval, not used on pages yet             */
+/* Stock (Pexels)                                                      */
 /* ------------------------------------------------------------------ */
 
 type StockEntry = Omit<StockPhoto, "stock" | "focal"> & { id: number; focal?: Focal };
@@ -248,7 +304,7 @@ export const STOCK_PHOTOS: StockPhoto[] = (
 
 export type AnyPhoto = HeroPhoto | OwnPhoto | StockPhoto;
 
-const BY_KEY = new Map<string, AnyPhoto>([...HERO_PHOTOS, ...OWN_PHOTOS, ...STOCK_PHOTOS].map((p) => [p.key, p]));
+const BY_KEY = new Map<string, AnyPhoto>([...HERO_PHOTOS, ...OWN_PHOTOS, ...CUTOUT_PHOTOS, ...STOCK_PHOTOS].map((p) => [p.key, p]));
 
 export function photo(key: string): AnyPhoto {
   const p = BY_KEY.get(key);
@@ -257,12 +313,27 @@ export function photo(key: string): AnyPhoto {
 }
 
 /** A photo ready for <Img>: src, alt and focal points (pos = desktop object-position). */
-export type Pic = { key: string; src: string; alt: string; pos: string; posMobile: string };
+export type Pic = {
+  key: string;
+  src: string;
+  alt: string;
+  pos: string;
+  posMobile: string;
+  /** Source pixel size (lets <Img> download enough pixels when the box crops it). */
+  source: { width: number; height: number };
+};
 
 /** Look up a photo for use in data. Pass `pos` to re-aim a shared shot (e.g. one person in a group photo). */
 export function pic(key: string, pos?: string, alt?: string): Pic {
   const p = photo(key);
-  return { key, src: p.src, alt: alt ?? p.alt, pos: pos ?? p.focal.desktop, posMobile: pos ?? p.focal.mobile };
+  return {
+    key,
+    src: p.src,
+    alt: alt ?? p.alt,
+    pos: pos ?? p.focal.desktop,
+    posMobile: pos ?? p.focal.mobile,
+    source: { width: p.width, height: p.height },
+  };
 }
 
 /** Brand files in public/. */

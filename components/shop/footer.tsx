@@ -13,7 +13,7 @@ export function Footer() {
     <footer>
       {/* Brand area on cotton */}
       <div className="border-t border-thread bg-cotton text-ink">
-        <div className="mx-auto flex max-w-[1600px] flex-col items-start gap-8 px-5 py-14 sm:flex-row sm:items-center sm:justify-between md:px-10">
+        <div className="mx-auto flex max-w-[1440px] flex-col items-start gap-8 px-5 py-14 sm:flex-row sm:items-center sm:justify-between md:px-12">
           <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-8">
             <Image
               src="/brand/logo.png"
@@ -48,7 +48,7 @@ export function Footer() {
 
       {/* Links + legal on wine */}
       <div className="bg-wine text-cotton/80">
-      <div className="mx-auto max-w-[1600px] px-5 py-16 md:px-10">
+      <div className="mx-auto max-w-[1440px] px-5 py-16 md:px-12">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1.4fr]">
           {FOOTER_COLUMNS.map((col) => (
             <div key={col.title}>
@@ -127,7 +127,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-cotton/10">
-        <p className="mx-auto max-w-[1600px] px-5 py-4 text-xs text-cotton/50 md:px-10">
+        <p className="mx-auto max-w-[1440px] px-5 py-4 text-xs text-cotton/50 md:px-12">
           © {SITE.copyrightYear} {SITE.name}. All rights reserved.
         </p>
       </div>

@@ -116,4 +116,5 @@ Connection check: `GET /api/health/supabase`.
 - [x] Home redesign (premium editorial photo library, full-viewport hero, 1600px layout, New season + Winter edit): built
 - [x] Own photos optimised to public/images (hero + collections), lib/images.ts rebuilt around local files
 - [x] Pexels stock picks (45) approved, in public/images/stock
-- [ ] Home rebuilt on our own photos: nav + dummy.ts around real collections (Men: Panjabi/Suits/Winter/Hoodies, Women: Sarees/Winter knits, Kids: Boys, Winter, Textile Equipment), 6-slide hero, full home page, basic /category/[slug]/[sub] pages, remote image hosts removed: built, awaiting review
+- [x] Home rebuilt on our own photos, real collections, 6-slide hero, basic /category pages
+- [ ] Home simplified + image quality fix (retina audit, pre-cropped slots, q85/q90, 13 product cutouts on #EDE8DF, 1440px container): built, awaiting review

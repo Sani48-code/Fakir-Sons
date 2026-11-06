@@ -8,9 +8,9 @@ import { taka } from "@/lib/format";
 
 /** Catalogue-style list, not a fashion grid. */
 export function EquipmentList() {
-  const rows = EQUIPMENT.slice(0, 6);
+  const rows = EQUIPMENT.slice(0, 4);
   return (
-    <Container as="section" className="py-20 md:py-32">
+    <Container as="section" className="py-8 md:py-12">
       <Reveal>
         <SectionHeader
           number="05"
@@ -31,6 +31,8 @@ export function EquipmentList() {
                 src={e.images[0].src}
                 alt={e.images[0].alt}
                 position={e.images[0].pos}
+                source={e.images[0].source}
+                box={1}
                 ratio="aspect-square"
                 sizes="96px"
                 className="w-20 shrink-0 md:w-24"

@@ -2,8 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    // All photos are local (public/images). 90 is used for the hero only.
-    qualities: [75, 90],
+    // All photos are local (public/images). 85 by default (<Img>), 90 for the hero and large images.
+    qualities: [85, 90],
   },
   /* config options here */
   cacheComponents: true,

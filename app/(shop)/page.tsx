@@ -1,14 +1,10 @@
 import type { Metadata } from "next";
-import { CollectionGrid } from "@/components/home/collection-grid";
-import { CollectionRow } from "@/components/home/collection-row";
+import { CollectionTiles } from "@/components/home/collection-tiles";
 import { EquipmentList } from "@/components/home/equipment-list";
+import { FeatureBanner } from "@/components/home/feature-banner";
 import { HeroSlider } from "@/components/home/hero-slider";
 import { Newsletter } from "@/components/home/newsletter";
-import { Packaging } from "@/components/home/packaging";
 import { ProductRow } from "@/components/home/product-row";
-import { PromiseStrip } from "@/components/home/promise-strip";
-import { SplitFeature } from "@/components/home/split-feature";
-import { StoryStrip } from "@/components/home/story-strip";
 import { TrustRow } from "@/components/home/trust-row";
 import { WholesaleBand } from "@/components/home/wholesale-band";
 import { Container } from "@/components/ui/container";
@@ -27,68 +23,39 @@ export const metadata: Metadata = {
   },
 };
 
+/** Fewer, larger sections. Section spacing: 48px above + below = 96px desktop (64px mobile). */
 export default function HomePage() {
   return (
     <>
       <HeroSlider slides={HERO_SLIDES} />
-      <PromiseStrip />
-      <CollectionGrid />
+      <div className="pt-8 md:pt-12">
+        <CollectionTiles />
+      </div>
 
-      <Container as="section" className="pb-20 md:pb-32">
-        <ProductRow
-          number="02"
-          title="New season"
-          label="Autumn · Winter"
-          href={categoryHref("winter")}
-          products={HOME.newSeason}
-        />
+      <Container as="section" className="py-8 md:py-12">
+        <ProductRow number="02" label="Autumn · Winter" title="New season" href={categoryHref("winter")} products={HOME.newSeason} />
       </Container>
 
-      <SplitFeature
-        image={HOME.winterEdit.image}
-        label="Winter 2026"
-        title="The winter edit"
-        text="Coats, puffers and knits in camel, cream and black, for men, women and boys."
-        href={categoryHref("winter")}
-        linkLabel="Shop winter"
-        panelLabel="Four pieces to begin"
-        products={HOME.winterEdit.products}
-      />
-
-      <CollectionRow
-        number="03"
-        label="Panjabi"
-        title="Panjabi collection"
-        href={categoryHref("men", "panjabi")}
-        image={HOME.panjabi.image}
-        caption="Embroidered by hand, cut for weddings, Eid and every evening in between."
-        products={HOME.panjabi.products}
-      />
-
-      <SplitFeature
-        wide
-        image={{ src: HOME.sarees.image.src, alt: HOME.sarees.image.alt, pos: "58% 35%" }}
+      <FeatureBanner
+        image={HOME.sareeFeature}
         label="Saree collection"
         title="Woven for the occasion"
         text="Banarasi silk with gold zari, and soft silks light enough for every day."
         href={categoryHref("women", "sarees")}
         linkLabel="Explore sarees"
-        panelLabel="Two sarees to begin"
-        products={HOME.sarees.products}
+      />
+      <FeatureBanner
+        mirrored
+        image={HOME.panjabiFeature}
+        label="Panjabi collection"
+        title="Embroidered by hand"
+        text="Cotton silk and fine cotton, cut for weddings, Eid and every evening in between."
+        href={categoryHref("men", "panjabi")}
+        linkLabel="Explore panjabi"
       />
 
-      <CollectionRow
-        number="04"
-        label="Suits"
-        title="Suits & tailoring"
-        href={categoryHref("men", "suits")}
-        products={HOME.suits}
-      />
-
-      <StoryStrip />
       <WholesaleBand />
       <EquipmentList />
-      <Packaging />
       <TrustRow />
       <Newsletter />
     </>

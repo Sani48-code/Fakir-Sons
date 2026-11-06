@@ -101,7 +101,7 @@ export function CategoryView({ slug, sub }: { slug: string; sub?: string }) {
         <ul className="mt-10 border-t border-thread">
           {machines.map((e) => (
             <li key={e.id} className="grid grid-cols-[96px_1fr] gap-x-5 gap-y-2 border-b border-thread py-6 md:grid-cols-[160px_1fr_auto] md:items-center md:gap-x-8">
-              <Img src={e.images[0].src} alt={e.images[0].alt} position={e.images[0].pos} ratio="aspect-[4/3]" sizes="160px" />
+              <Img src={e.images[0].src} alt={e.images[0].alt} position={e.images[0].pos} source={e.images[0].source} box={4 / 3} ratio="aspect-[4/3]" sizes="160px" />
               <div>
                 <p className="label text-stone">{e.brand}</p>
                 <h2 className="mt-1 text-[17px] font-medium">{e.model}</h2>

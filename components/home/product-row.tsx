@@ -117,14 +117,14 @@ export function ProductRow({
         role="region"
         aria-label={title}
         tabIndex={0}
-        className={`no-scrollbar -mx-5 mt-8 scroll-px-5 overflow-x-auto px-5 md:-mx-10 md:scroll-px-10 md:px-10 ${
+        className={`@container no-scrollbar -mx-5 mt-8 scroll-px-5 overflow-x-auto px-5 md:-mx-12 md:scroll-px-12 md:px-12 ${
           dragging ? "cursor-grabbing select-none" : "cursor-grab snap-x snap-mandatory"
         }`}
       >
         <Stagger className="flex w-max gap-4 pb-1 md:gap-6">
           {products.map((p, i) => (
-            <StaggerItem key={p.id} index={i} className="w-[240px] shrink-0 snap-start sm:w-[290px] lg:w-[340px]">
-              <ProductCard product={p} />
+            <StaggerItem key={p.id} index={i} className="w-[240px] shrink-0 snap-start sm:w-[290px] lg:w-[calc((100cqw-72px)/4)]">
+              <ProductCard product={p} sizes="(min-width: 1440px) 320px, (min-width: 1024px) 23vw, (min-width: 640px) 290px, 240px" />
             </StaggerItem>
           ))}
         </Stagger>

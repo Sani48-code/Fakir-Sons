@@ -10,9 +10,9 @@ const FACTS = [
 
 export function WholesaleBand() {
   return (
-    <section className="on-dark relative bg-wine text-cotton">
+    <section className="on-dark relative my-8 bg-wine text-cotton md:my-12">
       <div aria-hidden className="pointer-events-none absolute inset-4 border border-gold/50" />
-      <Container className="relative py-20 md:py-28">
+      <Container className="relative py-16 md:py-24">
         <div className="grid gap-12 md:grid-cols-12 md:items-end">
           <Reveal className="md:col-span-7">
             <p className="label text-gold">Wholesale &amp; B2B</p>

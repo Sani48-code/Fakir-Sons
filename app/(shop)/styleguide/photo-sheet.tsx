@@ -1,5 +1,7 @@
 import { Img } from "@/components/ui/img";
 import {
+  CUTOUT_PHOTOS,
+  CUTOUT_REJECTED,
   HERO_PHOTOS,
   OWN_PHOTOS,
   STOCK_PHOTOS,
@@ -69,6 +71,27 @@ export function PhotoSheet() {
   return (
     <div className="space-y-16">
       <section>
+        <h3 className="font-display text-2xl">Product cutouts ({CUTOUT_PHOTOS.length} approved)</h3>
+        <p className="mt-2 max-w-2xl text-sm text-stone">
+          Background removed with rembg (<code>scripts/product-cutouts.py</code>), placed on the #EDE8DF studio backdrop,
+          3:4, head at 7% from the top, native resolution. Saved to <code>public/images/products/</code>.
+        </p>
+        <ul className={`mt-6 ${grid}`}>
+          {CUTOUT_PHOTOS.map((p) => (
+            <Tile key={p.key} p={p} />
+          ))}
+        </ul>
+        <h4 className="label mt-10 mb-3 text-gold">Rejected: these keep their original photo</h4>
+        <ul className="space-y-1 text-sm text-stone">
+          {CUTOUT_REJECTED.map((r) => (
+            <li key={r.slug}>
+              <span className="font-medium text-ink">{r.slug}</span>: {r.reason}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section>
         <h3 className="font-display text-2xl">Our photos</h3>
         <p className="mt-2 max-w-2xl text-sm text-stone">
           From <code>Images/</code>, optimised by <code>scripts/optimize-images.mjs</code>. Tiles use each photo&apos;s desktop
@@ -100,7 +123,7 @@ export function PhotoSheet() {
       </section>
 
       <section>
-        <h3 className="font-display text-2xl">Stock picks: pending approval ({STOCK_PHOTOS.length})</h3>
+        <h3 className="font-display text-2xl">Stock photos ({STOCK_PHOTOS.length})</h3>
         <p className="mt-2 max-w-2xl text-sm text-stone">
           Free Pexels photos, downloaded to <code>public/images/stock/</code> and flagged <code>stock: true</code> in{" "}
           <code>lib/images.ts</code> so they can be replaced after our photoshoot. Not used on any page yet.

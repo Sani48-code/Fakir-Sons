@@ -2,7 +2,12 @@
 // Everything here is deterministic (no Math.random / new Date) so prerendering is stable.
 // Products are our real garments: one product per garment in our own photos.
 
-import { HERO_PHOTOS, pic, type HeroPhoto, type Pic } from "./images";
+import { CUTOUT_PHOTOS, HERO_PHOTOS, pic, type HeroPhoto, type Pic } from "./images";
+
+const CUTOUT_SLUGS = new Set(CUTOUT_PHOTOS.map((p) => p.key.replace(/^product-/, "")));
+
+/** A 4-up card is 318px wide at 1440: 636 device px on retina, allow 15% -> 553 source px. */
+const sharpInCard = (p: Pic) => Math.min(p.source.width, p.source.height * 0.75) >= 553;
 
 /* ---------- Types ---------- */
 
@@ -474,7 +479,11 @@ export const PRODUCTS: Product[] = ROWS.map((r, i) => {
     sizes: r.sizes ?? CLOTHING_SIZES,
     soldOutSizes: r.soldOut ?? [],
     colors: r.colors.map((c) => SWATCHES[c]),
-    images: r.images,
+    // Studio cutout first when we have a clean one; the original photo shows on hover.
+    // Hover photo only when it stays sharp in a 4-up card on retina (3:4 crop >= 553px wide).
+    images: CUTOUT_SLUGS.has(slugify(r.name))
+      ? [pic("product-" + slugify(r.name)), r.images[0]].filter((p, n) => n === 0 || sharpInCard(p))
+      : r.images.filter((p, n) => n === 0 || sharpInCard(p)),
     stock: r.stock ?? 12 + ((i * 7) % 30),
     isNew: !!r.fresh,
     isBestSeller: !!r.best,
@@ -665,39 +674,32 @@ export const equipmentIn = (sub?: string) => EQUIPMENT.filter((e) => !sub || e.s
 /* ---------- Home sections (no product repeats across sections) ---------- */
 
 export const HOME = {
-  newSeason: byName([
-    "Navy Puffer Jacket",
-    "Ecru Trucker Jacket",
-    "Black Fleece Hoodie",
-    "Brown Leather Jacket",
-    "Cream Fleece Hoodie",
-    "Black Bomber Jacket",
-    "Bottle-Green Fleece Hoodie",
-    "Boys Denim Jacket",
-  ]),
-  winterEdit: {
-    image: pic("winter-ecru-trucker-jacket", "50% 40%", "Man in an ecru jacket by a still lake at dusk with snow peaks behind"),
-    products: byName(["Camel Wool Overcoat", "Cream Chunky Knit Sweater", "Black Hooded Puffer Jacket", "Boys Olive Puffer Jacket"]),
-  },
-  panjabi: {
-    image: pic("stock-fab-gold-zardozi", "50% 45%"),
-    products: byName(["Ivory Embroidered Panjabi", "Bottle-Green Embroidered Panjabi"]),
-  },
-  sarees: {
-    image: HERO_SLIDES[3].image,
-    products: byName(["Maroon Banarasi Silk Saree", "Mustard Silk Saree"]),
-  },
-  suits: byName(["Navy Windowpane Three-Piece Suit", "Black Bandhgala", "Navy Two-Piece Suit", "Boys Navy Suit"]),
-  /** "Shop by collection" tiles: one strong photo per collection. */
-  collections: [
-    { name: "Winter", number: "01", href: categoryHref("winter"), image: pic("winter-black-hooded-puffer", "50% 20%") },
-    { name: "Panjabi", number: "02", href: categoryHref("men", "panjabi"), image: pic("panjabi-bottle-green-embroidered", "50% 25%") },
-    { name: "Suits", number: "03", href: categoryHref("men", "suits"), image: pic("suits-navy-check-three-piece", "50% 20%") },
-    { name: "Sarees", number: "04", href: categoryHref("women", "sarees"), image: pic("hero-04-saree-maroon", "58% 30%") },
-    { name: "Hoodies", number: "05", href: categoryHref("men", "hoodies"), image: pic("hoodies-hoodie-trio", "50% 25%") },
-    { name: "Boys", number: "06", href: categoryHref("kids", "boys"), image: pic("boys-winter-pair", "50% 30%") },
-    { name: "Textile Equipment", number: "07", href: categoryHref("textile-equipment"), image: pic("stock-eq-overlock-hands", "50% 50%") },
+  /** 4 large tiles, cut from the hero banners at 2:3 (public/images/tiles). */
+  tiles: [
+    { name: "Winter", number: "01", href: categoryHref("winter"), image: pic("tile-winter-knit") },
+    { name: "Panjabi", number: "02", href: categoryHref("men", "panjabi"), image: pic("tile-panjabi") },
+    { name: "Sarees", number: "03", href: categoryHref("women", "sarees"), image: pic("tile-sarees") },
+    { name: "Suits & tailoring", number: "04", href: categoryHref("men", "suits"), image: pic("tile-suits") },
   ],
+  /** Thin text row under the tiles. */
+  moreLinks: [
+    { label: "Hoodies", href: categoryHref("men", "hoodies") },
+    { label: "Boys", href: categoryHref("kids", "boys") },
+    { label: "Textile Equipment", href: categoryHref("textile-equipment") },
+  ],
+  /** 8 products with sharp studio cutouts (source wide enough for a 4-across card on retina). */
+  newSeason: byName([
+    "Black Hooded Puffer Jacket",
+    "Ivory Embroidered Panjabi",
+    "Camel Wool Overcoat",
+    "Cream Chunky Knit Sweater",
+    "Navy Windowpane Three-Piece Suit",
+    "Bottle-Green Embroidered Panjabi",
+    "Brown Leather Jacket",
+    "Black Fleece Hoodie",
+  ]),
+  sareeFeature: pic("feature-saree"),
+  panjabiFeature: pic("feature-panjabi"),
 };
 
 export const effectivePrice = (p: Product) => p.salePrice ?? p.price;

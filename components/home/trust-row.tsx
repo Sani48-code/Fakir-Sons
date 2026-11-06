@@ -49,7 +49,7 @@ const ITEMS = [
 
 export function TrustRow() {
   return (
-    <Container as="section" className="py-12 md:py-16">
+    <Container as="section" className="py-8 md:py-12">
       <ul className="grid grid-cols-2 border-y border-thread md:grid-cols-4 md:divide-x md:divide-thread">
         {ITEMS.map(({ Icon, title, text }, i) => (
           <li

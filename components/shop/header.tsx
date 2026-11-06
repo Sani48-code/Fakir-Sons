@@ -36,7 +36,7 @@ export function Header() {
           scrolled ? "h-[60px] lg:h-[80px]" : "h-[68px] lg:h-[112px]"
         }`}
       >
-        <div className="mx-auto grid h-full max-w-[1600px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 lg:flex lg:justify-between lg:px-10">
+        <div className="mx-auto grid h-full max-w-[1440px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 lg:flex lg:justify-between lg:px-12">
           {/* Mobile hamburger */}
           <button
             onClick={() => setDrawerOpen(true)}
@@ -81,7 +81,7 @@ export function Header() {
 
                   {item.children && (
                     <div className="invisible absolute left-0 right-0 top-full border-t border-thread bg-paper text-ink opacity-0 transition-opacity duration-200 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
-                      <div className="mx-auto grid max-w-[1600px] grid-cols-4 gap-8 px-10 py-8">
+                      <div className="mx-auto grid max-w-[1440px] grid-cols-4 gap-8 px-12 py-8">
                         <div>
                           <p className="label mb-3 text-stone">
                             {item.label}

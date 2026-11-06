@@ -10,16 +10,20 @@ import type { Product } from "@/lib/dummy";
 import { cn } from "@/lib/format";
 import { BagIcon, HeartIcon, PlusIcon } from "./icons";
 
-const SIZES = "(min-width: 1280px) 22vw, (min-width: 768px) 30vw, 48vw";
+// Matches the 4-up grid inside the 1440px container (48px gutters, 24px gaps).
+const SIZES = "(min-width: 1440px) 320px, (min-width: 1280px) 23vw, (min-width: 768px) 31vw, 48vw";
 
 export function ProductCard({
   product,
   priority = false,
+  sizes = SIZES,
   onQuickAdd,
   className,
 }: {
   product: Product;
   priority?: boolean;
+  /** Override when the card is not in the standard 4-up grid. */
+  sizes?: string;
   onQuickAdd?: (p: Product) => void;
   className?: string;
 }) {
@@ -44,9 +48,11 @@ export function ProductCard({
             <Img
               src={product.images[0].src}
               alt={product.name}
-              sizes={SIZES}
+              sizes={sizes}
               ratio=""
               position={product.images[0].pos}
+              source={product.images[0].source}
+              box={3 / 4}
               priority={priority}
               className={cn("absolute inset-0", soldOut && "opacity-55")}
             />
@@ -54,9 +60,11 @@ export function ProductCard({
               <Img
                 src={product.images[1].src}
                 alt=""
-                sizes={SIZES}
+                sizes={sizes}
                 ratio=""
                 position={product.images[1].pos}
+                source={product.images[1].source}
+                box={3 / 4}
                 className={cn(
                   "absolute inset-0 opacity-0 transition-opacity duration-[400ms] ease-out hoverable:group-hover:opacity-100 hoverable:group-focus-within:opacity-100",
                   soldOut && "!opacity-0",

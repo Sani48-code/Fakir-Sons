@@ -56,10 +56,12 @@ Dark sections (footer, wholesale band) use `--wine` background with `--cotton` t
 
 ## Editorial layout (home redesign)
 
-- Container max 1600px with 40px gutters (20px mobile). Editorial images (category tiles, the Winter edit split) run edge to edge.
-- Section titles 48-56px Cormorant (36px mobile). Product names and prices 15px. Section spacing 128px desktop / 80px mobile.
+- Container max 1440px with 48px gutters (20px mobile). Only the hero runs edge to edge.
+- Section titles 48-56px Cormorant (36px mobile). Product names and prices 15px. Section spacing 96px desktop / 64px mobile.
+- Image sharpness rule: rendered CSS width x 2 (retina) must not exceed the source by more than ~15%. If it does, show the image smaller; never upscale. Crop files to the exact aspect of their slot (no CSS cover-crop of a much wider source), or pass `source` + `box` to `<Img>` so `sizes` asks for enough pixels. Quality: 85 default, 90 for hero and large images.
+- Product photos: studio cutouts on one backdrop (#EDE8DF, 3:4, head at 7% from the top) from `public/images/products/`; products whose cutout failed keep their original photo.
 - Hero: desktop height min(80svh, 820px), mobile a 4:5 crop. 6 slides, crossfade 1.2s + slow zoom, autoplay 6s, swipe/arrows/keyboard. No box behind text. Desktop: text on the empty side of the photo (`textSide` in lib/images.ts) over a soft vignette on that side only. Mobile: text at the bottom over a soft bottom vignette. English only. Bottom bar: "01 — 06" with a clickable thin progress line per slide.
-- Home order: hero, promise strip, Shop by collection (Winter large), New season row, Winter edit split, Panjabi collection row, Saree split feature, Suits & tailoring row, story strip, wholesale band, textile equipment list, packaging, trust row, newsletter. Do not repeat the same product across sections.
+- Home order (fewer, larger): hero, Shop by collection (4 tiles cut from the hero banners + a text row: Hoodies, Boys, Textile Equipment), New season (8 cutout cards, 4 visible), saree split feature, panjabi split feature (mirrored), wholesale band, textile equipment (4 rows), trust row, newsletter. Never put the snow, mountain, lake or red-backdrop photos in a large tile. Story strip and packaging move to About.
 - Photography: our own photos first; Pexels stock only where we have none (flagged `stock: true`). Every photo must literally show what its title says. `lib/images.ts` is the single source.
 
 ## Shape, line and space

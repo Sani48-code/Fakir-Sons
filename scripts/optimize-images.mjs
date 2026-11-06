@@ -96,11 +96,34 @@ const JOBS = [
 
   // ---- Brand ----
   { out: "brand/bags.webp", src: "bags design.png" },
+
+  // ---- Home: pre-cropped at the exact aspect of their slot, so `sizes` is honest ----
+  // (cropping in CSS with object-cover makes the browser fetch a variant that is
+  // far too small for the box height: the main cause of soft images before.)
+  // Collection tiles, 2:3 at the banners' full height (483x724).
+  { out: "tiles/winter-knit.webp", src: H1, crop: { left: 1010, top: 0, width: 483, height: 724 }, q: 90 },
+  { out: "tiles/panjabi.webp", src: H3, crop: { left: 1150, top: 0, width: 483, height: 724 }, q: 90 },
+  { out: "tiles/sarees.webp", src: H4, crop: { left: 1060, top: 0, width: 483, height: 724 }, q: 90 },
+  { out: "tiles/suits.webp", src: H5, crop: { left: 1010, top: 0, width: 483, height: 724 }, q: 90 },
+  // Split features, 2:1 (1448x724).
+  { out: "features/saree.webp", src: H4, crop: { left: 500, top: 0, width: 1448, height: 724 }, q: 90 },
+  { out: "features/panjabi.webp", src: H3, crop: { left: 500, top: 0, width: 1448, height: 724 }, q: 90 },
 ];
 
-const only = process.argv[2]; // optional substring filter
+// `--png <dir>`: write lossless PNGs of the collection crops (source for product cutouts).
+const pngDir = process.argv[2] === "--png" ? process.argv[3] : null;
+const only = pngDir ? "collections/" : process.argv[2]; // optional substring filter
 for (const job of JOBS) {
   if (only && !job.out.includes(only)) continue;
+  if (pngDir) {
+    let img = sharp(path.join(SRC, job.src));
+    if (job.crop) img = img.extract(job.crop);
+    if (job.grade) img = img.modulate({ saturation: job.grade.saturation }).linear([job.grade.r, job.grade.g, job.grade.b], [0, 0, 0]);
+    const dest = path.join(pngDir, job.out.replace(/\.webp$/, ".png"));
+    fs.mkdirSync(path.dirname(dest), { recursive: true });
+    await img.png().toFile(dest);
+    continue;
+  }
   let img = sharp(path.join(SRC, job.src));
   if (job.crop) img = img.extract(job.crop);
   img = img.resize({ width: 2400, withoutEnlargement: true });

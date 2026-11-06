@@ -4,7 +4,7 @@ import { SITE, TOP_LINKS } from "@/lib/site";
 export function AnnouncementBar() {
   return (
     <div className="bg-maroon text-cotton text-xs">
-      <div className="mx-auto flex h-9 max-w-[1600px] items-center justify-between gap-4 px-5 md:px-10">
+      <div className="mx-auto flex h-9 max-w-[1440px] items-center justify-between gap-4 px-5 md:px-12">
         <p className="truncate">
           <a href={`tel:${SITE.tel}`} className="font-medium">
             Hotline: {SITE.phone}
